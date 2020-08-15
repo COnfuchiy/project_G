@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /**
  * Created by Dima on 14.08.2020.
  */
@@ -60,3 +61,6 @@ class Platforms {
         return levels_arr
     }
 }
+=======
+
+>>>>>>> origin/master
