@@ -1,7 +1,3 @@
-/**
- * Created by Dima on 14.08.2020.
- */
-
 class Platform_level {
     constructor( y_level, x_level) {
         this._y_level = y_level;
