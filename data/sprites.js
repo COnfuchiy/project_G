@@ -13,7 +13,7 @@ score_text.text(score_num.toString());
 let player = Crafty.e('2D, Canvas, Color, Twoway, Gravity,Collision')
     .attr({x: 0, y: 0, w: 30, h: 30})
     .color('#F00')
-    .twoway(400,1600)
+    .twoway(400,700)
     .gravity('Floor')
     .preventGroundTunneling(true)
     .gravityConst(2050)
