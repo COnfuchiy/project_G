@@ -7,7 +7,7 @@ class Platform_level {
         this._y_level = y_level;
         this._x_level = x_level;
         this._name = 'GEN_Platform';
-        this._random_count = 0;
+        this._random_count = getRandomInt(5);
         return this;
     }
 
