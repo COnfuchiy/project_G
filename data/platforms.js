@@ -42,7 +42,7 @@ class Platforms {
     static level_y = Platforms.get_level_wights();
     static random_wight =[280,304, 323, 310, 320, 331,390];
     static random_delay = [3000,2900,2800,2300, 2500,3700,2850];
-    static start_delay = [3000, 1500,2000,1700];
+    static start_delay = [3000, 1500,2500,1700];
     static current_speed = 4;
     static level_x = document.documentElement.clientWidth+100;
 
