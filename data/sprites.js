@@ -10,7 +10,7 @@ let score_text = Crafty.e('2D, DOM, Text')
     });
 let score_num = 0;
 score_text.text(score_num.toString());
-Crafty.e('2D, Canvas, Color, Twoway, Gravity,Collision')
+let player = Crafty.e('2D, Canvas, Color, Twoway, Gravity,Collision')
     .attr({x: 0, y: 0, w: 30, h: 30})
     .color('#F00')
     .twoway(400,1600)
