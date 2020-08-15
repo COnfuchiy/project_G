@@ -18,14 +18,17 @@
     <script src="data/platforms.js"></script>
     <script src="data/actions.js"></script>
     <script src="data/sprites.js"></script>
-    <div id="button">
+    <div class="button-up">
         <img src="stok/arrow_up.png">
     </div>
-    <div>
+    <div class="button-down">
         <img src="stok/arrow_down.png">
     </div>
     <script>
-        document.getElementById('button').onclick = function(){player.jump()};
+        document.getElementsByClassName('button-up')[0].onclick = function(){player.jump()};
+        document.getElementsByClassName('button-down')[0].onclick = function(){
+            if(player.y<=450)
+                player.ground.removeComponent('Floor')};
     </script>
 </body>
 </html>
