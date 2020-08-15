@@ -8,6 +8,7 @@ function getRandomInt(max) {
 //hz how is working, but is here
 let switch_screen = 0;
 Crafty.viewport.scale(1.5);
+Crafty.mobile = true;
 // window.addEventListener("orientationchange", function() {
 //     if (document.documentElement.clientWidth<document.documentElement.clientHeight){
 //         Crafty.viewport.scale(0.6);
