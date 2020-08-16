@@ -3,17 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <title>Project G</title>
-
-
+    <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+    <script type="text/javascript" src="https://rawgithub.com/craftyjs/Crafty/release/dist/crafty-min.js"></script>
+    <link type="text/css" rel="stylesheet" href="css/main.css">
 </head>
 <body>
     <div id="game">
 
 
     </div>
-    <script type="text/javascript" src="https://rawgithub.com/craftyjs/Crafty/release/dist/crafty-min.js"></script>
+
     <script>
-        Crafty.init(document.documentElement.clientWidth,1000, document.getElementById('game'));
+        Crafty.init(document.documentElement.clientWidth,800, document.getElementById('game'));
     </script>
     <script src="data/platforms.js"></script>
     <script src="data/actions.js"></script>
@@ -24,11 +25,37 @@
     <div class="button-down">
         <img src="stok/arrow_down.png">
     </div>
+    <div class="button-left">
+        <img src="stok/arrow_up.png">
+    </div>
+    <div class="button-right">
+        <img src="stok/arrow_up.png">
+    </div>
     <script>
-        document.getElementsByClassName('button-up')[0].onclick = function(){player.jump()};
-        document.getElementsByClassName('button-down')[0].onclick = function(){
-            if(player.y<=450)
-                player.ground.removeComponent('Floor')};
+        $('.button-up').on('touchstart',function(){player.jump()});
+        $('.button-down').on('touchstart',function(){
+            if(player.y<=450){
+                let lost_ground =  player.ground;
+                player.ground.removeComponent('Floor');
+                setTimeout(()=>lost_ground.addComponent('Floor'),500);
+            }
+        });
+        $('.button-left').on('touchstart',function () {
+            let evt = new KeyboardEvent('keydown', {'keyCode':37, 'which':37});
+            document.dispatchEvent(evt);
+        });
+        $('.button-left').on('touchend', function () {
+            let evt = new KeyboardEvent('keyup', {'keyCode':37, 'which':37});
+            document.dispatchEvent(evt);
+        });
+        $('.button-right').on('touchstart',function () {
+            let evt = new KeyboardEvent('keydown', {'keyCode':39, 'which':39});
+            document.dispatchEvent(evt);
+        });
+        $('.button-right').on('touchend',function () {
+            let evt = new KeyboardEvent('keyup', {'keyCode':39, 'which':39});
+            document.dispatchEvent(evt);
+        });
     </script>
 </body>
 </html>
