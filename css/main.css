@@ -1,5 +1,10 @@
+/*
 img {
     pointer-events: none;
+}
+*/
+img:active {
+    transform: scale(.98);
 }
 .button-up{
     position: absolute;
