@@ -13,30 +13,48 @@ class Item{
         this._color = color;
         return this;
     }
-    drop(){
-        // if (getRandomInt(99)+1<=85){
-            let item_x = this.calc_x_drop();
-            let item_score = this._score;
-            Crafty.e('2D, Canvas, Collision, Color,'+this._att_name)
-                .attr({
-                    x: item_x,
-                    y: this._height-40,
-                    w:20,
-                    h:20
-                })
-                .color(this._color)
-                .onHit('player',function(e) {
-                    user_score+=item_score;
-                    user_score_text.text(user_score.toString());
+    set_item(x){
+        let item_score = this._score;
+        Crafty.e('2D, Canvas, Collision, Color,'+this._att_name)
+            .attr({
+                x: x,
+                y: this._height-40,
+                w:20,
+                h:20
+            })
+            .color(this._color)
+            .onHit('player',function(e) {
+                user_score+=item_score;
+                user_score_text.text(user_score.toString());
+                this.destroy();
+            })
+            .bind("UpdateFrame", function () {
+                this.x = this.x - Platforms.current_speed;
+                if (this.x < -this.w)
                     this.destroy();
-                })
-                .bind("UpdateFrame", function () {
-                    this.x = this.x - Platforms.current_speed;
-                    if (this.x < -this.w)
-                        this.destroy();
-                });
-        // }else
-        //     this.double_drop();
+            });
+    }
+    drop(){
+        if (getRandomInt(99)+1>=85 && this._platforms_width>180){
+            // double drop
+            let first_item = this.calc_x_drop();
+            let second_item = 0;
+            if (first_item>267){
+                second_item = Platforms.level_x+45-10+getRandomInt(1)*90;
+            }
+            else{
+                if (this._platforms_width===267)
+                    second_item = Platforms.level_x+45-10+180;
+                else
+                    second_item = Platforms.level_x+45-10+180+getRandomInt(1)*90;
+            }
+            this.set_item(first_item);
+            this.set_item(second_item);
+        }else{
+            let item_x = this.calc_x_drop();
+            this.set_item(item_x);
+        }
+
     }
     calc_x_drop(){
         switch (this._platforms_width){
@@ -51,7 +69,7 @@ class Item{
         }
 
     }
-    double_drop(){}
+
 }
 
 class ItemDrop{
