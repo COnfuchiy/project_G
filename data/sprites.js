@@ -1,7 +1,10 @@
 /**
  * Created by Dima on 05.08.2020.
  */
-
+Crafty.sprite(96,20,"stok/plat.png", {plat:[0,0]});
+Crafty.sprite(180,20,"stok/plat2.png", {platx2:[0,0]});
+Crafty.sprite(267,20,"stok/plat3.png", {platx3:[0,0]});
+Crafty.sprite(354,20,"stok/plat4.png", {platx4:[0,0]});
 let player = Crafty.e('2D, Canvas, Color, Twoway, Gravity,Collision,Motion')
     .attr({x: 0, y: 0, z:12, w: 30, h: 30})
     .color('#F00')

@@ -11,14 +11,12 @@ class Platform_level {
 
         setTimeout(() => {
             // delete color when get sprite
-            Crafty.e('2D, Canvas, Floor, Color')
+            Crafty.e('2D, Canvas, Floor, '+Platforms.random_wight[this._random_count])
                 .attr({
                     x: this._x_level,
                     y: this._y_level,
-                    w: Platforms.random_wight[this._random_count],
-                    h: 20
+
                 })
-                .color('#2dff00')
                 .bind("UpdateFrame", function () {
                     this.x = this.x - Platforms.current_speed;
                     if (this.x < -this.w)
@@ -36,8 +34,8 @@ class Platforms {
     static spacing_plat = 100;
     static num_level = 4;
     static level_y = Platforms.get_level_wights();
-    static random_wight =[280,304, 323, 310, 320, 331,390];
-    static random_delay = [3000,2900,2800,2300, 2500,3700,2850];
+    static random_wight =['plat','platx2','platx4','platx3','platx3','platx2', 'platx4'];
+    static random_delay = [1800,2000,2700,2200, 2500,2150, 2400];
     static start_delay = [3000, 1500,3500,1700];
     static current_speed = 4;
     static level_x = document.documentElement.clientWidth+100;
