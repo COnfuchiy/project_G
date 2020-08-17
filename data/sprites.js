@@ -5,6 +5,7 @@ Crafty.sprite(96,20,"stok/plat.png", {plat:[0,0]});
 Crafty.sprite(180,20,"stok/plat2.png", {platx2:[0,0]});
 Crafty.sprite(267,20,"stok/plat3.png", {platx3:[0,0]});
 Crafty.sprite(354,20,"stok/plat4.png", {platx4:[0,0]});
+Crafty.sprite(66,30,"stok/cd.png",{cd:[0,0]});
 let user_score=0;
 let score_text = Crafty.e('2D, DOM, Text')
     .attr({

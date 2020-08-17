@@ -61,6 +61,15 @@
             let evt = new KeyboardEvent('keyup', {'keyCode':39, 'which':39});
             document.dispatchEvent(evt);
         });
+        $('.button-enter').on('touchend',function () {
+            Crafty.e('2D, Canvas, cd')
+                .attr({x:player.x+20, y:player.y-10})
+                .bind("UpdateFrame", function () {
+                this.x = this.x + 10;
+                if (this.x > document.documentElement.clientWidth+100)
+                    this.destroy();
+            });
+        });
     </script>
 </body>
 </html>
