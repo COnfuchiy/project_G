@@ -3,26 +3,26 @@ img {
 }
 .button-up{
     position: absolute;
-    top:900px;
+    top:890px;
     left:40%;
 }
 .button-left{
     position: absolute;
     top:1100px;
-    left:20%;
+    left:19%;
 }
 .button-right{
     position: absolute;
     top:1100px;
-    left:60%;
+    left:61%;
 }
 .button-down{
     position: absolute;
-    top:1300px;
+    top:1310px;
     left:40%;
 }
 .button-enter{
     position: absolute;
-    top:1113px;
-    left:41.4%;
+    top:1100px;
+    left:40%;
 }
