@@ -9,7 +9,6 @@ let user_score=0;
 let user_num_cd =0;
 let is_active_item=true;
 setInterval(function () {
-    is_active_item=false;
     setTimeout(function () {
         Crafty.e('2D, Canvas, cd_exchanger, Collision')
             .attr({x:Platforms.level_x, y:450})
@@ -24,7 +23,6 @@ setInterval(function () {
                     user_num_cd++;
                 }
                 cd_num_text.text(':'+user_num_cd.toString());
-                is_active_item=true;
                 user_score_text.text(user_score.toString());
                 this.removeComponent('Collision');
             });
