@@ -4,25 +4,25 @@ img {
 .button-up{
     position: absolute;
     top:890px;
-    left:24%;
+    left:40%;
 }
 .button-left{
     position: absolute;
     top:1100px;
-    left:3%;
+    left:19%;
 }
 .button-right{
     position: absolute;
     top:1100px;
-    left:45%;
+    left:61%;
 }
 .button-down{
     position: absolute;
     top:1310px;
-    left:24%;
+    left:40%;
 }
 .button-enter{
     position: absolute;
     top:1100px;
-    left:75%;
+    left:40%;
 }

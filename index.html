@@ -62,13 +62,18 @@
             document.dispatchEvent(evt);
         });
         $('.button-enter').on('touchend',function () {
-            Crafty.e('2D, Canvas, cd')
-                .attr({x:player.x+20, y:player.y-10})
-                .bind("UpdateFrame", function () {
-                this.x = this.x + 10;
-                if (this.x > document.documentElement.clientWidth+100)
-                    this.destroy();
-            });
+            if (user_num_cd){
+                user_num_cd--;
+                cd_num_text.text(':'+user_num_cd.toString());
+                Crafty.e('2D, Canvas, cd')
+                    .attr({x:player.x+20, y:player.y-10})
+                    .bind("UpdateFrame", function () {
+                        this.x = this.x + 10;
+                        if (this.x > document.documentElement.clientWidth+100)
+                            this.destroy();
+                    });
+            }
+
         });
     </script>
 </body>

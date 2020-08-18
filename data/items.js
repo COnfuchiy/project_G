@@ -112,14 +112,14 @@ class ItemDrop{
         {
             color:'#388533',
             score:800,
-            chance:100,
+            chance:99,
         },
 
     ];
     static chance_drop = 80;
 
     static get_drop(platforms_width,height){
-        if (ItemDrop.check_drop()){
+        if (ItemDrop.check_drop() && is_active_item){
             let dropped_item = ItemDrop.get_type_of_drop();
             (new Item(1,platforms_width,height,1,dropped_item.score,dropped_item.color)).drop();
         }
