@@ -26,6 +26,8 @@ Crafty.sprite(42,40,"sprites/items/proc_3.png",{proc_3:[0,0]});
 Crafty.sprite(42,40,"sprites/items/proc_4.png",{proc_4:[0,0]});
 Crafty.sprite(59,40,"sprites/items/usb.png",{usb:[0,0]});
 Crafty.sprite(47,40,"sprites/items/wired_keyboard.png",{wired_keyboard:[0,0]});
+Crafty.sprite(70,70,"sprites/player.png",{player:[0,0]});
+
 // cd num field
 Crafty.e('2D, Canvas, cd')
     .attr({x:450, y:525});
@@ -61,9 +63,14 @@ user_score_text.textFont({
     weight: 'bold'
 });
 user_score_text.text(user_score.toString());
-let player = Crafty.e('2D, Canvas, Color, Twoway, Gravity,Collision,Motion,player')
-    .attr({x: 0, y: 0, z:12, w: 30, h: 30})
-    .color('#F00')
+let player = Crafty.e('2D, Canvas, Twoway, Gravity,Collision,Motion,player, SpriteAnimation')
+    .attr({x: 0, y: 0, z:12, })
+    .reel("run", 1000, [
+        [0, 0], [1, 0], [2, 0],
+        [0, 1], [1, 1], [2, 1],
+        [0, 2], [1, 2],
+    ])
+    .animate("run", -1)
     .twoway(400,650)
     .gravity('Floor')
     .gravityConst(2050)
