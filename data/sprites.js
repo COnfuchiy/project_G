@@ -70,17 +70,27 @@ let player = Crafty.e('2D, Canvas, Twoway, Gravity,Collision,Motion,player, Spri
         [0, 1], [1, 1], [2, 1],
         [0, 2], [1, 2],
     ])
+    .reel('jump',1,[[1,1]])
     .animate("run", -1)
-    .twoway(400,650)
+    .twoway(300,650)
     .gravity('Floor')
     .gravityConst(2050)
     .onHit("Floor", function(e) {
-        // if(e[0].obj.y<this.y)
-        //     this.y-=this.y-e[0].obj.y;
-        // this.resetMotion();
         let to_ground = e[0].obj;
         to_ground.removeComponent('Floor');
         setTimeout(()=>to_ground.addComponent('Floor'),200);
+    })
+    .bind('LandedOnGround',function () {
+        player.animate("run", -1);
+    })
+    .bind('CheckLanding',function (e) {
+        if (player.ay && e.x +10>=player.x+player.w-10 && player.dy>0)
+            player.canLand=false;
+    })
+    .bind('LiftedOffGround',function (e) {
+        e.removeComponent('Floor');
+        setTimeout(()=>e.addComponent('Floor'),300);
+        player.animate('jump',-1)
     });
 Crafty.e('2D, Canvas, Color,Floor')
     .attr({x: 0, y: 500, w: document.documentElement.clientWidth, h: 20})
