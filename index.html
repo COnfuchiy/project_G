@@ -39,11 +39,13 @@
     <script>
         $('.button-up').on('touchstart',function(){player.jump()});
         $('.button-down').on('touchstart',function(){
-            if(player.y<=450){
-                let lost_ground =  player.ground;
-                player.ground.removeComponent('Floor');
-                setTimeout(()=>lost_ground.addComponent('Floor'),500);
-            }
+            if(player.ground){
+                    if(player.y<=430){
+                    let lost_ground =  player.ground;
+                    player.ground.removeComponent('Floor');
+                    setTimeout(()=>lost_ground.addComponent('Floor'),500);
+                    }
+                }
         });
         $('.button-left').on('touchstart',function () {
             let evt = new KeyboardEvent('keydown', {'keyCode':37, 'which':37});
@@ -73,7 +75,32 @@
                             this.destroy();
                     });
             }
+            
 
+        });
+        document.addEventListener('keydown', function(event) {
+        if (event.code == 'ArrowDown' || event.code == 'KeyS') {
+            if(player.ground){
+                    if(player.y<=430){
+                    let lost_ground =  player.ground;
+                    player.ground.removeComponent('Floor');
+                    setTimeout(()=>lost_ground.addComponent('Floor'),500);
+                    }
+                }
+        }
+        else if (event.code == "Space"){
+                if (user_num_cd){
+                user_num_cd--;
+                cd_num_text.text(':'+user_num_cd.toString());
+                Crafty.e('2D, Canvas, cd')
+                    .attr({x:player.x+20, y:player.y+20})
+                    .bind("UpdateFrame", function () {
+                        this.x = this.x + 10;
+                        if (this.x > document.documentElement.clientWidth+100)
+                            this.destroy();
+                    });
+            }
+        }
         });
     </script>
 </body>
