@@ -68,7 +68,7 @@
                 user_num_cd--;
                 cd_num_text.text(':'+user_num_cd.toString());
                 Crafty.e('2D, Canvas, cd')
-                    .attr({x:player.x+20, y:player.y-10})
+                    .attr({x:player.x+20, y:player.y+20})
                     .bind("UpdateFrame", function () {
                         this.x = this.x + 10;
                         if (this.x > document.documentElement.clientWidth+100)
