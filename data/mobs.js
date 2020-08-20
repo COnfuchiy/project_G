@@ -14,7 +14,7 @@ class Monster {
         let animate_counter = 0;
         let animate_speed = 0;
         let mob_life = 2;
-        Crafty.e('2D, Canvas, Collision, SpriteAnimation, ' + this._sprites.name)
+        Crafty.e('2D, Canvas, Collision, Gravity, SpriteAnimation, ' + this._sprites.name)
             .attr({
                 x: x + this._sprites.w,
                 y: this._height - this._sprites.h,
@@ -32,30 +32,39 @@ class Monster {
                 }
 
             })
-            .reel('back', 800, this._sprites.reels[1])
-            .reel('ahead', 800, this._sprites.reels[0])
+            .gravity('Floor')
+            .gravityConst(2050)
+            .reel('left', 300, this._sprites.reels[0])
+            .animate('left',-1)
             .bind("UpdateFrame", function () {
-                if (this.x < document.documentElement.clientWidth) {
-                    if (!animate_speed) {
-                        animate_speed = 1;
-                        this.animate('ahead', -1);
-                    }
-                    animate_counter++;
-                    if (animate_counter > 40) {
-                        animate_speed = -1;
-                        if (!this.isPlaying('back'))
-                            this.animate('back', -1);
-                    }
-                    if (animate_counter > 80) {
-                        animate_counter = 0;
-                        animate_speed = 0;
-                    }
-                }
-                this.x = this.x - Platforms.current_speed - animate_speed;
-                if (this.x < -this.w)
-                    this.destroy();
-
-            });
+                    this.x = this.x - Platforms.current_speed - 1;
+                    if (this.x < -this.w)
+                        this.destroy();
+                });
+            // .reel('back', 800, this._sprites.reels[1])
+            // .reel('ahead', 800, this._sprites.reels[0])
+            // .bind("UpdateFrame", function () {
+            //     if (this.x < document.documentElement.clientWidth) {
+            //         if (!animate_speed) {
+            //             animate_speed = 1;
+            //             this.animate('ahead', -1);
+            //         }
+            //         animate_counter++;
+            //         if (animate_counter > 40) {
+            //             animate_speed = -1;
+            //             if (!this.isPlaying('back'))
+            //                 this.animate('back', -1);
+            //         }
+            //         if (animate_counter > 80) {
+            //             animate_counter = 0;
+            //             animate_speed = 0;
+            //         }
+            //     }
+            //     this.x = this.x - Platforms.current_speed - animate_speed;
+            //     if (this.x < -this.w)
+            //         this.destroy();
+            //
+            // });
     }
 
     spawn() {
@@ -131,6 +140,15 @@ class MonsterSpawn {
             ],
             w: 32,
             h: 50
+        },
+        {
+            name: 'skeleton',
+            type: 'left_walking',
+            reels: [
+                [[0, 0], [1, 0], [2, 0], [3, 0], [4, 0], [5, 0], [6, 0]],// to left
+            ],
+            w: 49,
+            h: 60
         }
     ];
     static destriy_score = 200;
@@ -138,7 +156,7 @@ class MonsterSpawn {
 
     static get_spawn(platforms_width, height, items) {
         if (MonsterSpawn.check_spawn()) {
-            (new Monster(platforms_width, height, MonsterSpawn.sprite_monsters[0], items)).spawn();
+            (new Monster(platforms_width, height, MonsterSpawn.sprite_monsters[1], items)).spawn();
         }
     }
 
