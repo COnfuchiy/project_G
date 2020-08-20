@@ -27,7 +27,7 @@ Crafty.sprite(42,40,"sprites/items/proc_4.png",{proc_4:[0,0]});
 Crafty.sprite(59,40,"sprites/items/usb.png",{usb:[0,0]});
 Crafty.sprite(47,40,"sprites/items/wired_keyboard.png",{wired_keyboard:[0,0]});
 Crafty.sprite(50,60,"sprites/player.png",{player:[0,0]});
-
+Crafty.sprite(32,50,"sprites/mobs/robot_1.png",{robot_1:[0,0]});
 // cd num field
 Crafty.e('2D, Canvas, cd')
     .attr({x:450, y:525});

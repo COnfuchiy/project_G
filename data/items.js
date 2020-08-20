@@ -48,9 +48,11 @@ class Item {
             }
             this.set_item(first_item);
             this.set_item(second_item);
+            return [first_item,second_item];
         } else {
             let item_x = this.calc_x_drop();
             this.set_item(item_x);
+            return [item_x];
         }
 
     }
@@ -58,7 +60,7 @@ class Item {
     calc_x_drop() {
         switch (this._platforms_width) {
             case 93:
-                return Platforms.level_x + 47;
+                return Platforms.level_x + 45;
             case 180:
                 return Platforms.level_x + 45 + getRandomInt(1) * 90;
             case 267:
@@ -224,8 +226,10 @@ class ItemDrop {
     static get_drop(platforms_width, height) {
         if (ItemDrop.check_drop() && is_active_item) {
             let dropped_item = ItemDrop.get_type_of_drop();
-            (new Item(1, platforms_width, height,  dropped_item.sprites, dropped_item.score)).drop();
+            return (new Item(1, platforms_width, height,  dropped_item.sprites, dropped_item.score)).drop();
         }
+        else
+            return [];
     }
 
     static check_drop() {
