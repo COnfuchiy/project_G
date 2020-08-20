@@ -40,13 +40,20 @@
     <script>
         $('.button-up').on('touchstart',function(){player.jump()});
         $('.button-down').on('touchstart',function(){
-            if(player.ground){
+            let evt = new KeyboardEvent('keydown', {code:'ArrowDown'});
+            document.dispatchEvent(evt);
+            document.go_down = setInterval(()=>{
+                if(player.ground){
                     if(player.y<=430){
-                    let lost_ground =  player.ground;
-                    player.ground.removeComponent('Floor');
-                    setTimeout(()=>lost_ground.addComponent('Floor'),500);
+                        let lost_ground =  player.ground;
+                        player.ground.removeComponent('Floor');
+                        setTimeout(()=>lost_ground.addComponent('Floor'),500);
                     }
                 }
+            },200);
+        });
+        $('.button-down').on('touchend', function () {
+            clearInterval(document.go_down);
         });
         $('.button-left').on('touchstart',function () {
             let evt = new KeyboardEvent('keydown', {'keyCode':37, 'which':37});
@@ -80,6 +87,7 @@
 
         });
         document.addEventListener('keydown', function(event) {
+            console.log(1);
         if (event.code == 'ArrowDown' || event.code == 'KeyS') {
             if(player.ground){
                     if(player.y<=430){
