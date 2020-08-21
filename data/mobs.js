@@ -20,7 +20,7 @@ class Monster {
                 y: this._height - this._sprites.h,
             })
             .onHit('player', function (e) {
-                e[0].obj.destroy(); //kill player
+                Crafty.trigger('Death'); //kill player
             })
             .onHit('cd', function (e) {
                 e[0].obj.destroy();
@@ -60,7 +60,7 @@ class Monster {
 
     left_mob(x) {
         let mob_life = 2;
-        Crafty.e('2D, Canvas, Collision, SpriteAnimation, Gravity, Jumper, ' + this._sprites.name)
+        let mob = Crafty.e('2D, Canvas, Collision, SpriteAnimation, Gravity, Jumper, ' + this._sprites.name)
             .attr({
                 x: x + this._sprites.w,
                 y: this._height - this._sprites.h,
@@ -69,7 +69,7 @@ class Monster {
             .gravityConst(2050)
             .jumpSpeed(650)
             .onHit('player', function (e) {
-                e[0].obj.destroy(); //kill player
+               Crafty.trigger('Death'); //kill player
             })
             .onHit('cd', function (e) {
                 e[0].obj.destroy();
@@ -95,6 +95,7 @@ class Monster {
             .bind('LiftedOffGround',function (e) {
                 this.jump();
             });
+        mob.cbr()._h=60;
     }
 
     set_mob(x) {
@@ -195,6 +196,15 @@ class MonsterSpawn {
             ],
             w: 49,
             h: 60
+        },
+        {
+            name: 'cam',
+            type: 'left_walking',
+            reels: [
+                [[7, 0], [6, 0], [5, 0], [4, 0],],// to left
+            ],
+            w: 57,
+            h: 84
         }
     ];
     static walking_speed = 1;
@@ -207,7 +217,7 @@ class MonsterSpawn {
         if (MonsterSpawn.check_spawn()) {
             if (MonsterSpawn.current_counter === MonsterSpawn.event_counter) {
                 MonsterSpawn.current_counter = 0;
-                (new Monster(platforms_width, height, MonsterSpawn.sprite_event_monsters[0], items)).spawn();
+                (new Monster(platforms_width, height, MonsterSpawn.sprite_event_monsters[getRandomInt(MonsterSpawn.sprite_event_monsters.length-1)], items)).spawn();
             }
             else {
                 MonsterSpawn.current_counter++;

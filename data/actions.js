@@ -8,6 +8,11 @@ function getRandomInt(max) {
 let user_score=0;
 let user_num_cd =0;
 let is_active_item=true;
+Crafty.bind('Death', function () {
+   // here would be death screen
+    location.reload();
+});
+//pc spawn
 setInterval(function () {
     setTimeout(function () {
         Crafty.e('2D, Canvas, cd_exchanger, Collision')
