@@ -32,8 +32,8 @@ class Monster {
                 }
 
             })
-            .reel('back', 800, this._sprites.reels[1])
-            .reel('ahead', 800, this._sprites.reels[0])
+            .reel('back', this._sprites.time, this._sprites.reels[1])
+            .reel('ahead', this._sprites.time, this._sprites.reels[0])
             .bind("UpdateFrame", function () {
                 if (this.x < document.documentElement.clientWidth) {
                     if (!animate_speed) {
@@ -81,7 +81,7 @@ class Monster {
                 }
 
             })
-            .reel('left', 300, this._sprites.reels[0])
+            .reel('left', this._sprites.time, this._sprites.reels[0])
             .animate('left', -1)
             .bind("UpdateFrame", function () {
                 this.x = this.x - Platforms.current_speed - MonsterSpawn.walking_speed;
@@ -183,7 +183,8 @@ class MonsterSpawn {
                 [[7, 0], [2, 0], [3, 0], [4, 0], [4, 0], [5, 0], [6, 0], [7, 0]] // to right
             ],
             w: 32,
-            h: 50
+            h: 50,
+            time: 800
         },
 
     ];
@@ -195,7 +196,8 @@ class MonsterSpawn {
                 [[0, 0], [1, 0], [2, 0], [3, 0], [4, 0], [5, 0], [6, 0]],// to left
             ],
             w: 49,
-            h: 60
+            h: 60,
+            time:300
         },
         {
             name: 'cam',
@@ -204,7 +206,8 @@ class MonsterSpawn {
                 [[7, 0], [6, 0], [5, 0], [4, 0],],// to left
             ],
             w: 57,
-            h: 84
+            h: 84,
+            time:300
         }
     ];
     static walking_speed = 1;
