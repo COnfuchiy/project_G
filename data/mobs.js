@@ -10,61 +10,104 @@ class Monster {
         return this;
     }
 
-    set_mob(x) {
+    walking_mob(x) {
         let animate_counter = 0;
         let animate_speed = 0;
         let mob_life = 2;
-        Crafty.e('2D, Canvas, Collision, Gravity, SpriteAnimation, ' + this._sprites.name)
+        Crafty.e('2D, Canvas, Collision, SpriteAnimation, ' + this._sprites.name)
             .attr({
                 x: x + this._sprites.w,
                 y: this._height - this._sprites.h,
             })
             .onHit('player', function (e) {
-                e[0].obj.destroy();
+                e[0].obj.destroy(); //kill player
             })
-            .onHit('cd',function (e) {
+            .onHit('cd', function (e) {
                 e[0].obj.destroy();
                 mob_life--;
-                if (mob_life===0){
-                    user_score += MonsterSpawn.destriy_score;
+                if (mob_life === 0) {
+                    user_score += MonsterSpawn.destroy_score;
                     user_score_text.text(user_score.toString());
                     this.destroy();
                 }
 
             })
+            .reel('back', 800, this._sprites.reels[1])
+            .reel('ahead', 800, this._sprites.reels[0])
+            .bind("UpdateFrame", function () {
+                if (this.x < document.documentElement.clientWidth) {
+                    if (!animate_speed) {
+                        animate_speed = MonsterSpawn.walking_speed;
+                        this.animate('ahead', -1);
+                    }
+                    animate_counter++;
+                    if (animate_counter > 40) {
+                        animate_speed = -MonsterSpawn.walking_speed;
+                        if (!this.isPlaying('back'))
+                            this.animate('back', -1);
+                    }
+                    if (animate_counter > 80) {
+                        animate_counter = 0;
+                        animate_speed = 0;
+                    }
+                }
+                this.x = this.x - Platforms.current_speed - animate_speed;
+                if (this.x < -this.w)
+                    this.destroy();
+
+            });
+    }
+
+    left_mob(x) {
+        let mob_life = 2;
+        Crafty.e('2D, Canvas, Collision, SpriteAnimation, Gravity, Jumper, ' + this._sprites.name)
+            .attr({
+                x: x + this._sprites.w,
+                y: this._height - this._sprites.h,
+            })
             .gravity('Floor')
             .gravityConst(2050)
+            .jumpSpeed(650)
+            .onHit('player', function (e) {
+                e[0].obj.destroy(); //kill player
+            })
+            .onHit('cd', function (e) {
+                e[0].obj.destroy();
+                mob_life--;
+                if (mob_life === 0) {
+                    user_score += MonsterSpawn.destroy_score;
+                    user_score_text.text(user_score.toString());
+                    this.destroy();
+                }
+
+            })
             .reel('left', 300, this._sprites.reels[0])
-            .animate('left',-1)
+            .animate('left', -1)
             .bind("UpdateFrame", function () {
-                    this.x = this.x - Platforms.current_speed - 1;
-                    if (this.x < -this.w)
-                        this.destroy();
-                });
-            // .reel('back', 800, this._sprites.reels[1])
-            // .reel('ahead', 800, this._sprites.reels[0])
-            // .bind("UpdateFrame", function () {
-            //     if (this.x < document.documentElement.clientWidth) {
-            //         if (!animate_speed) {
-            //             animate_speed = 1;
-            //             this.animate('ahead', -1);
-            //         }
-            //         animate_counter++;
-            //         if (animate_counter > 40) {
-            //             animate_speed = -1;
-            //             if (!this.isPlaying('back'))
-            //                 this.animate('back', -1);
-            //         }
-            //         if (animate_counter > 80) {
-            //             animate_counter = 0;
-            //             animate_speed = 0;
-            //         }
-            //     }
-            //     this.x = this.x - Platforms.current_speed - animate_speed;
-            //     if (this.x < -this.w)
-            //         this.destroy();
-            //
-            // });
+                this.x = this.x - Platforms.current_speed - MonsterSpawn.walking_speed;
+                if (this.x < -this.w)
+                    this.destroy();
+
+            })
+            .bind("CheckJumping", function(ground) {
+            if (!ground && this.y>100)
+                this.canJump = true;})
+            .bind('LiftedOffGround',function (e) {
+                this.jump();
+            });
+    }
+
+    set_mob(x) {
+        switch (this._sprites.type) {
+            case 'sort_walking':
+                this.walking_mob(x);
+                return;
+            case 'left_walking':
+                this.left_mob(x);
+                return;
+        }
+
+
     }
 
     spawn() {
@@ -78,9 +121,9 @@ class Monster {
             if (this._items.length === 2 && this._platforms_width === 267)
                 return;
             let non_occupied_positions = [93, 180, 267, 354];
-            non_occupied_positions.map((item, index)=>{
-                if (item>this._platforms_width)
-                    non_occupied_positions.splice(index,1);
+            non_occupied_positions.map((item, index) => {
+                if (item > this._platforms_width)
+                    non_occupied_positions.splice(index, 1);
             });
 
             for (let item_x of this._items) {
@@ -130,7 +173,7 @@ class Monster {
 }
 
 class MonsterSpawn {
-    static sprite_monsters = [
+    static sprite_walk_monsters = [
         {
             name: 'robot_1',
             type: 'sort_walking',
@@ -141,6 +184,9 @@ class MonsterSpawn {
             w: 32,
             h: 50
         },
+
+    ];
+    static sprite_event_monsters = [
         {
             name: 'skeleton',
             type: 'left_walking',
@@ -151,12 +197,23 @@ class MonsterSpawn {
             h: 60
         }
     ];
-    static destriy_score = 200;
+    static walking_speed = 1;
+    static destroy_score = 200;
     static chance_spawn = 30;
+    static event_counter = 5;
+    static current_counter = 0;
 
     static get_spawn(platforms_width, height, items) {
         if (MonsterSpawn.check_spawn()) {
-            (new Monster(platforms_width, height, MonsterSpawn.sprite_monsters[1], items)).spawn();
+            if (MonsterSpawn.current_counter === MonsterSpawn.event_counter) {
+                MonsterSpawn.current_counter = 0;
+                (new Monster(platforms_width, height, MonsterSpawn.sprite_event_monsters[0], items)).spawn();
+            }
+            else {
+                MonsterSpawn.current_counter++;
+                (new Monster(platforms_width, height,
+                    MonsterSpawn.sprite_walk_monsters[getRandomInt(MonsterSpawn.sprite_walk_monsters.length-1)], items)).spawn();
+            }
         }
     }
 
