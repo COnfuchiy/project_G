@@ -244,7 +244,7 @@ class Monster {
 
 class MonsterSpawn {
     static sprite_walk_monsters = [
-        {
+       {
             name: 'robot_1',
             type: 'sort_walking',
             reels: [
@@ -255,6 +255,41 @@ class MonsterSpawn {
             h: 50,
             time: 800
         },
+        {
+            name: 'yellow_robot',
+            type: 'sort_walking',
+            reels: [
+                [[15, 0], [14, 0], [13, 0], [12, 0], [11, 0], [10, 0], [9, 0], [8, 0]],// to left
+                [[0,0], [1, 0], [2, 0], [3, 0], [4, 0], [5, 0], [6, 0], [7, 0]] // to right
+            ],
+            w: 28,
+            h: 50,
+            time: 650
+        },
+        {
+            name: 'robocat',
+            type: 'sort_walking',
+            reels: [
+                [[15, 0], [14, 0], [13, 0], [12, 0], [11, 0], [10, 0], [9, 0], [8, 0]],// to left
+                [[0, 0], [1, 0], [2, 0], [3, 0], [4, 0], [5, 0], [6, 0], [7, 0]] // to right
+            ],
+            w: 26,
+            h: 50,
+            time: 500
+        },
+        {
+            name: 'octopus',
+            type: 'sort_walking',
+            reels: [
+                [[7, 0], [6, 0], [5, 0], [4, 0]],// to left
+                [[0, 0], [1, 0], [2, 0], [3, 0]] // to right
+            ],
+            w: 30,
+            h: 50,
+            time: 500
+        },
+        
+        
 
     ];
     static sprite_event_monsters = [
