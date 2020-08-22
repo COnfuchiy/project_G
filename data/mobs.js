@@ -132,6 +132,35 @@ class Monster {
 
     }
 
+    fly_mob(x){
+        let direction = true; //true as up
+        Crafty.e('2D, Canvas, Collision, SpriteAnimation, ' + this._sprites.name)
+            .attr({
+                x: x + this._sprites.w,
+                y: this._height - this._sprites.h,
+            })
+            .onHit('player', function (e) {
+                Crafty.trigger('Death'); //kill player
+            })
+            .reel('fly', this._sprites.time, this._sprites.reels[0])
+            .animate('fly',-1)
+            .bind("UpdateFrame", function () {
+                if (direction) {
+                    this.y-=MonsterSpawn.walking_speed*2;
+                    if (this.y===0)
+                        direction = false;
+                }
+                else{
+                    this.y+=MonsterSpawn.walking_speed*2;
+                    if (this.y+this.h===500)
+                        direction = true;
+                }
+                this.x = this.x - Platforms.current_speed;
+
+            })
+
+    }
+
     set_mob(x) {
         switch (this._sprites.type) {
             case 'sort_walking':
@@ -142,6 +171,9 @@ class Monster {
                 return;
             case 'laser':
                 this.laser_beam(x);
+                return;
+            case 'fly':
+                this.fly_mob(x);
                 return;
         }
 
@@ -256,7 +288,17 @@ class MonsterSpawn {
             w: 584,
             h: 64,
             time: 500
-        }
+        },
+        {
+            name: 'fly_bot',
+            type: 'fly',
+            reels: [
+                [[0, 0], [1, 0], [2, 0], [3,0]],// fly
+            ],
+            w: 35,
+            h: 52,
+            time: 300
+        },
     ];
     static walking_speed = 1;
     static destroy_score = 200;
