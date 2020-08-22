@@ -32,7 +32,7 @@ Crafty.sprite(49,60,"sprites/mobs/skeleton.png",{skeleton:[0,0]});
 Crafty.sprite(57,84,"sprites/mobs/cam_shoot.png",{cam:[0,0]});
 Crafty.sprite(584,64,"sprites/mobs/laser-evtanazer.png",{laser:[0,6]});
 Crafty.sprite(35,52,"sprites/mobs/fly_bot.png",{fly_bot:[0,0]});
-Crafty.background('#18fff3');
+Crafty.sprite(3756,574,"sprites/fon.png",{fon:[0,0]});
 // cd num field
 Crafty.e('2D, Canvas, cd')
     .attr({x:450, y:525});
@@ -98,5 +98,16 @@ let player = Crafty.e('2D, Canvas, Twoway, Gravity,Collision,Motion,player, Spri
         player.animate('jump',-1)
     });
 Crafty.e('2D, Canvas, Color,Floor')
-    .attr({x: 0, y: 500, w: document.documentElement.clientWidth, h: 20})
+    .attr({x: 0, y: 500, w: document.documentElement.clientWidth, h: 20, z:2})
     .color('#2dff00');
+Crafty.e('2D, Canvas, fon')
+    .attr({x: 0, y: 0,z:0})
+    .bind('UpdateFrame',function () {
+        this.x = this.x - 0.5;
+        if (this.x+this.w===document.documentElement.clientWidth+100){
+            let copy = this.clone();
+            copy.x=this.x+this.w;
+        }
+        if (this.x+this.w===0)
+            this.destroy();
+    });
