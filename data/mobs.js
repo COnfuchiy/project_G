@@ -268,12 +268,12 @@ class MonsterSpawn {
         if (MonsterSpawn.check_spawn()) {
             if (MonsterSpawn.current_counter === MonsterSpawn.event_counter) {
                 MonsterSpawn.current_counter = 0;
-                (new Monster(platforms_width, height, MonsterSpawn.sprite_event_monsters[getRandomInt(MonsterSpawn.sprite_event_monsters.length - 1)], items)).spawn();
+                (new Monster(platforms_width, height, MonsterSpawn.sprite_event_monsters[getRandomInt(MonsterSpawn.sprite_event_monsters.length)], items)).spawn();
             }
             else {
                 MonsterSpawn.current_counter++;
                 (new Monster(platforms_width, height,
-                    MonsterSpawn.sprite_walk_monsters[getRandomInt(MonsterSpawn.sprite_walk_monsters.length - 1)], items)).spawn();
+                    MonsterSpawn.sprite_walk_monsters[getRandomInt(MonsterSpawn.sprite_walk_monsters.length)], items)).spawn();
             }
         }
     }
