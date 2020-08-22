@@ -32,6 +32,7 @@ Crafty.sprite(49,60,"sprites/mobs/skeleton.png",{skeleton:[0,0]});
 Crafty.sprite(57,84,"sprites/mobs/cam_shoot.png",{cam:[0,0]});
 Crafty.sprite(584,64,"sprites/mobs/laser-evtanazer.png",{laser:[0,6]});
 Crafty.sprite(35,52,"sprites/mobs/fly_bot.png",{fly_bot:[0,0]});
+Crafty.sprite(211,221,"sprites/mobs/proff_G.png",{proff_G:[0,0]});
 Crafty.sprite(800,500,"sprites/fon.png",{fon:[0,0]});
 // cd num field
 Crafty.e('2D, Canvas, cd')

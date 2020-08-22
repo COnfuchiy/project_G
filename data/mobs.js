@@ -299,6 +299,16 @@ class MonsterSpawn {
             h: 52,
             time: 300
         },
+        {
+            name: 'proff_G',
+            type: 'left_walking',
+            reels: [
+                [[0, 0], [1, 0], [2, 0], [3, 0], [4, 0], [5, 0]],// to left
+            ],
+            w: 221,
+            h: 221,
+            time: 300
+        },
     ];
     static walking_speed = 1;
     static destroy_score = 200;
@@ -310,7 +320,7 @@ class MonsterSpawn {
         if (MonsterSpawn.check_spawn()) {
             if (MonsterSpawn.current_counter === MonsterSpawn.event_counter) {
                 MonsterSpawn.current_counter = 0;
-                (new Monster(platforms_width, height, MonsterSpawn.sprite_event_monsters[getRandomInt(MonsterSpawn.sprite_event_monsters.length)], items)).spawn();
+                (new Monster(platforms_width, height, MonsterSpawn.sprite_event_monsters[4], items)).spawn();
             }
             else {
                 MonsterSpawn.current_counter++;
