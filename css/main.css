@@ -8,6 +8,10 @@ img, .DOM {
     user-select: none;
 }
 
+body{
+    margin: 0;
+}
+
 .button-up{
     position: absolute;
     top:890px;
