@@ -60,7 +60,7 @@ class Monster {
 
     left_mob(x) {
         let mob_life = 2;
-        let mob = Crafty.e('2D, Canvas, Collision, SpriteAnimation, Gravity, Jumper, ' + this._sprites.name)
+        Crafty.e('2D, Canvas, Collision, SpriteAnimation, Gravity, Jumper, ' + this._sprites.name)
             .attr({
                 x: x + this._sprites.w,
                 y: this._height - this._sprites.h,
@@ -69,7 +69,7 @@ class Monster {
             .gravityConst(2050)
             .jumpSpeed(650)
             .onHit('player', function (e) {
-               Crafty.trigger('Death'); //kill player
+                Crafty.trigger('Death'); //kill player
             })
             .onHit('cd', function (e) {
                 e[0].obj.destroy();
@@ -89,13 +89,47 @@ class Monster {
                     this.destroy();
 
             })
-            .bind("CheckJumping", function(ground) {
-            if (!ground && this.y>100)
-                this.canJump = true;})
-            .bind('LiftedOffGround',function (e) {
+            .bind("CheckJumping", function (ground) {
+                if (!ground && this.y > 100)
+                    this.canJump = true;
+            })
+            .bind('LiftedOffGround', function (e) {
                 this.jump();
             });
-        mob.cbr()._h=60;
+    }
+
+    laser_beam(x) {
+        let shoot_check = false;
+        Crafty.e('2D, Canvas, Collision, SpriteAnimation, ' + this._sprites.name)
+            .attr({
+                x: x + this._sprites.w,
+                y: this._height - this._sprites.h,
+            })
+            .reel('before', this._sprites.time, this._sprites.reels[0])
+            .reel('after', this._sprites.time, this._sprites.reels[1])
+            .bind("UpdateFrame", function () {
+                if (this.x < document.documentElement.clientWidth - 350 -this.w) {
+                    if (!shoot_check) {
+                        shoot_check = true;
+                        setTimeout(()=> {
+                            this.onHit('player', function (e) {
+                                Crafty.trigger('Death'); //kill player
+                            });
+                            this.animate('before');
+                        },2000);
+                    }
+                }
+                else
+                    this.x = this.x - Platforms.current_speed - MonsterSpawn.walking_speed;
+
+            })
+            .bind('AnimationEnd', function (e) {
+
+                this.removeComponent('Collision');
+                this.animate('after');
+                setTimeout(() => this.destroy(), 300)
+            });
+
     }
 
     set_mob(x) {
@@ -105,6 +139,9 @@ class Monster {
                 return;
             case 'left_walking':
                 this.left_mob(x);
+                return;
+            case 'laser':
+                this.laser_beam(x);
                 return;
         }
 
@@ -197,7 +234,7 @@ class MonsterSpawn {
             ],
             w: 49,
             h: 60,
-            time:300
+            time: 300
         },
         {
             name: 'cam',
@@ -207,25 +244,36 @@ class MonsterSpawn {
             ],
             w: 57,
             h: 84,
-            time:300
+            time: 300
+        },
+        {
+            name: 'laser',
+            type: 'laser',
+            reels: [
+                [[0, 5], [0, 4], [0, 3], [0, 2], [0, 1], [0, 0]],// before shoot
+                [[0, 0], [0, 1], [0, 2], [0, 3], [0, 4], [0, 5]],// after shoot
+            ],
+            w: 584,
+            h: 64,
+            time: 500
         }
     ];
     static walking_speed = 1;
     static destroy_score = 200;
     static chance_spawn = 30;
-    static event_counter = 5;
+    static event_counter = 3;
     static current_counter = 0;
 
     static get_spawn(platforms_width, height, items) {
         if (MonsterSpawn.check_spawn()) {
             if (MonsterSpawn.current_counter === MonsterSpawn.event_counter) {
                 MonsterSpawn.current_counter = 0;
-                (new Monster(platforms_width, height, MonsterSpawn.sprite_event_monsters[getRandomInt(MonsterSpawn.sprite_event_monsters.length-1)], items)).spawn();
+                (new Monster(platforms_width, height, MonsterSpawn.sprite_event_monsters[getRandomInt(MonsterSpawn.sprite_event_monsters.length - 1)], items)).spawn();
             }
             else {
                 MonsterSpawn.current_counter++;
                 (new Monster(platforms_width, height,
-                    MonsterSpawn.sprite_walk_monsters[getRandomInt(MonsterSpawn.sprite_walk_monsters.length-1)], items)).spawn();
+                    MonsterSpawn.sprite_walk_monsters[getRandomInt(MonsterSpawn.sprite_walk_monsters.length - 1)], items)).spawn();
             }
         }
     }
