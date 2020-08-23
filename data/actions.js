@@ -50,6 +50,8 @@ Crafty.viewport.scale(1.5);
 // }, false);
 
 // buttons actions
+
+//Wrapper for setting text
 function setText (inputX,inputY,textString,cStyles)
 {
     let tempText = Crafty.e('2D, DOM, Text')
@@ -61,4 +63,10 @@ function setText (inputX,inputY,textString,cStyles)
     tempText.text(textString);
     return tempText;
 }
+let cd_num_text = setText(790,780,':'+user_num_cd.toString(),{size: '50px',
+    weight: 'bold'})
+// score field
+let score_text = setText(300,780,'Score:',{size: '50px', weight: 'bold'})
+// user score number
+let user_score_text = setText(500,780,user_score.toString(),{size: '50px', weight: 'bold'})
 Platforms.loop();
