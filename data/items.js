@@ -12,6 +12,27 @@ class Item {
         return this;
     }
 
+    comp_drop(){
+        let x = this.calc_x_drop();
+        let comp_on = this._sprites[1].name;
+        Crafty.e('2D, Canvas, Collision,' + this._sprites[0].name)
+            .attr({
+                x: x-parseInt(this._sprites[0].w/2),
+                y: this._height - this._sprites[0].h,
+            })
+            .onHit('player', function (e) {
+                computer_score += 1;
+                this.sprite(comp_on);
+                this.removeComponent('Collision');
+            })
+            .bind("UpdateFrame", function () {
+                this.x = this.x - Platforms.current_speed;
+                if (this.x < -this.w)
+                    this.destroy();
+            });
+        return [x];
+    }
+
     set_item(x) {
         let item_score = this._score;
         let selected_sprite = Array.isArray(this._sprites)? this._sprites[getRandomInt(this._sprites.length)]:this._sprites;
@@ -221,19 +242,42 @@ class ItemDrop {
         },
 
     ];
+    static special_items = [{
+        sprites: [
+            {
+                name: 'comp_off',
+                w: 62,
+                h: 50,
+            },
+            {
+                name: 'comp_on',
+                w: 62,
+                h: 50,
+            },
+        ],
+    },];
     static chance_drop = 80;
+    static computer_chance = 40;
 
     static get_drop(platforms_width, height) {
         if (ItemDrop.check_drop() && is_active_item) {
             let dropped_item = ItemDrop.get_type_of_drop();
             return (new Item(1, platforms_width, height,  dropped_item.sprites, dropped_item.score)).drop();
         }
-        else
-            return [];
+        else{
+            if (ItemDrop.check_comp_drop())
+                return (new Item(1, platforms_width, height,  ItemDrop.special_items[0].sprites, 1)).comp_drop();
+        }
+        return [];
+
     }
 
     static check_drop() {
         return ItemDrop.chance_drop > (getRandomInt(99) + 1)
+    }
+
+    static check_comp_drop() {
+        return ItemDrop.computer_chance > (getRandomInt(99) + 1)
     }
 
     static get_type_of_drop() {

@@ -6,6 +6,7 @@ function getRandomInt(max) {
     return Math.floor(Math.random() * Math.floor(max));
 }
 let user_score=0;
+let computer_score = 0;
 let user_num_cd =0;
 let is_active_item=true;
 Crafty.bind('Death', function () {

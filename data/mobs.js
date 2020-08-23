@@ -355,7 +355,7 @@ class MonsterSpawn {
         if (MonsterSpawn.check_spawn()) {
             if (MonsterSpawn.current_counter === MonsterSpawn.event_counter) {
                 MonsterSpawn.current_counter = 0;
-                (new Monster(platforms_width, height, MonsterSpawn.sprite_event_monsters[4], items)).spawn();
+                (new Monster(platforms_width, height, MonsterSpawn.sprite_event_monsters[getRandomInt(MonsterSpawn.sprite_event_monsters.length)], items)).spawn();
             }
             else {
                 MonsterSpawn.current_counter++;
