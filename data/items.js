@@ -15,15 +15,26 @@ class Item {
     comp_drop(){
         let x = this.calc_x_drop();
         let comp_on = this._sprites[1].name;
+        let twice_check = 0;
         Crafty.e('2D, Canvas, Collision,' + this._sprites[0].name)
             .attr({
                 x: x-parseInt(this._sprites[0].w/2),
                 y: this._height - this._sprites[0].h,
             })
             .onHit('player', function (e) {
-                computer_score += 1;
-                this.sprite(comp_on);
-                this.removeComponent('Collision');
+                if (this[0]!==twice_check){
+                    is_active_spawn = false;
+                    twice_check = this[0];
+                    computer_score += 1;
+                    comp_score_text.text(computer_score.toString()+'/10');
+                    if (computer_score===1){
+                        Crafty.trigger('Boss');
+                        computer_score = 0;
+                        comp_score_text.text(computer_score.toString()+'/10');
+                    }
+                    this.sprite(comp_on);
+                }
+
             })
             .bind("UpdateFrame", function () {
                 this.x = this.x - Platforms.current_speed;
@@ -260,7 +271,7 @@ class ItemDrop {
     static computer_chance = 40;
 
     static get_drop(platforms_width, height) {
-        if (ItemDrop.check_drop() && is_active_item) {
+        if (ItemDrop.check_drop()) {
             let dropped_item = ItemDrop.get_type_of_drop();
             return (new Item(1, platforms_width, height,  dropped_item.sprites, dropped_item.score)).drop();
         }

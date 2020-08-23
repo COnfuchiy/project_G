@@ -98,11 +98,11 @@ class Monster {
             });
     }
 
-    laser_beam(x) {
+    laser_beam() {
         let shoot_check = false;
         Crafty.e('2D, Canvas, Collision, SpriteAnimation, ' + this._sprites.name)
             .attr({
-                x: x + this._sprites.w,
+                x: Platforms.level_x,
                 y: this._height - this._sprites.h,
             })
             .reel('before', this._sprites.time, this._sprites.reels[0])
@@ -120,7 +120,7 @@ class Monster {
                     }
                 }
                 else
-                    this.x = this.x - Platforms.current_speed - MonsterSpawn.walking_speed;
+                    this.x = this.x - Platforms.current_speed - MonsterSpawn.walking_speed*4;
 
             })
             .bind('AnimationEnd', function (e) {
@@ -227,6 +227,8 @@ class Monster {
         }
     }
 
+
+
     calc_x_spawn() {
         switch (this._platforms_width) {
             case 93:
@@ -240,6 +242,8 @@ class Monster {
         }
 
     }
+
+
 }
 
 class MonsterSpawn {
@@ -334,17 +338,17 @@ class MonsterSpawn {
             h: 52,
             time: 300
         },
-        {
-            name: 'proff_G',
-            type: 'left_walking',
-            reels: [
-                [[0, 0], [1, 0], [2, 0], [3, 0], [4, 0], [5, 0]],// to left
-            ],
-            w: 221,
-            h: 221,
-            time: 300
-        },
     ];
+    static G = {
+        name: 'proff_G',
+        type: 'left_walking',
+        reels: [
+            [[0, 0], [1, 0], [2, 0], [3, 0], [4, 0], [5, 0]],// to left
+        ],
+        w: 221,
+        h: 221,
+        time: 300
+    };
     static walking_speed = 1;
     static destroy_score = 200;
     static chance_spawn = 30;
@@ -367,5 +371,90 @@ class MonsterSpawn {
 
     static check_spawn() {
         return MonsterSpawn.chance_spawn > (getRandomInt(99) + 1)
+    }
+    static boss_spawn(y_level){
+        let laser_pos = MonsterSpawn.calc_y_laser(y_level);
+        let boss_plat;
+        let boss_g =  Crafty.e('2D, Canvas, Collision, SpriteAnimation, '+MonsterSpawn.G.name)
+            .attr({
+                x: Platforms.level_x+MonsterSpawn.G.w,
+                y: y_level-MonsterSpawn.G.h,
+                z:14
+            })
+            .onHit('player', function (e) {
+                Crafty.trigger('Death'); //kill player
+            })
+            .onHit('cd', function (e) {
+                e[0].obj.destroy();
+                boss_hit_point-=5;
+                boss_hp_text.text(boss_hit_point.toString()+'/100');
+                if (boss_hit_point===0){
+                    this.destroy();
+                    boss_hit_point =100;
+                }
+
+            })
+            .reel('left', MonsterSpawn.G.time, MonsterSpawn.G.reels[0])
+            .animate('left', -1)
+            .bind("UpdateFrame", function () {
+                if (!is_active_spawn) {
+
+                    this.x = this.x - Platforms.current_speed;
+                    if (this.x < document.documentElement.clientWidth - 300 - this.w) {
+                        is_active_spawn = true;
+                        boss_hp_text = setText(document.documentElement.clientWidth / 2, 50, boss_hit_point.toString() + '/100', {
+                            size: '50px',
+                            weight: 'bold'
+                        });
+                        this.pauseAnimation();
+                        (new Monster(93, laser_pos[0], MonsterSpawn.sprite_event_monsters[2], [])).spawn();
+                        (new Monster(93, laser_pos[1], MonsterSpawn.sprite_event_monsters[2], [])).spawn();
+                        setTimeout(() => {
+                            this.animate('left', -1);
+                            this.bind('UpdateFrame', function () {
+                                this.x = this.x + Platforms.current_speed;
+                                if (this.x > document.documentElement.clientWidth + this.w) {
+                                    boss_hp_text.destroy();
+                                    this.destroy();
+                                }
+                            });
+                            if (boss_plat !== undefined) {
+                                boss_plat.bind('UpdateFrame', function () {
+                                    this.x = this.x + Platforms.current_speed;
+                                    if (this.x > document.documentElement.clientWidth + this.w)
+                                        this.destroy();
+                                });
+                            }
+                        }, 4000);
+                    }
+                }
+            });
+        if (y_level!==500){
+            boss_plat = Crafty.e('2D, Canvas, Floor, platx3')
+                .attr({
+                    x: Platforms.level_x-100,
+                    y: y_level,
+                    z:14
+                })
+                .bind("UpdateFrame", function () {
+                    this.x = this.x - Platforms.current_speed;
+                    if (this.x < document.documentElement.clientWidth-300-this.w)
+                        this.unbind('UpdateFrame');
+                });
+            boss_g.x -= boss_plat.w;
+        }
+
+
+    }
+
+    static calc_y_laser(y){
+        switch (y) {
+            case 300:
+                return [500, 400];
+            case 400:
+                return [500, 100];
+            case 500:
+                return [100, 200];
+        }
     }
 }

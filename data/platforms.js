@@ -10,8 +10,10 @@ class PlatformLevel {
     start(delay) {
 
         setTimeout(() => {
-            let item_spawn = ItemDrop.get_drop(Platforms.get_sprite_wigth(Platforms.random_wight[this._random_count]),this._y_level);
-            MonsterSpawn.get_spawn(Platforms.get_sprite_wigth(Platforms.random_wight[this._random_count]),this._y_level,item_spawn);
+            if (is_active_spawn){
+                let item_spawn = ItemDrop.get_drop(Platforms.get_sprite_wigth(Platforms.random_wight[this._random_count]),this._y_level);
+                MonsterSpawn.get_spawn(Platforms.get_sprite_wigth(Platforms.random_wight[this._random_count]),this._y_level,item_spawn);
+            }
             Crafty.e('2D, Canvas, Floor, '+Platforms.random_wight[this._random_count])
                 .attr({
                     x: this._x_level,
