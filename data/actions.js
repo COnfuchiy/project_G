@@ -50,5 +50,15 @@ Crafty.viewport.scale(1.5);
 // }, false);
 
 // buttons actions
-
+function setText (inputX,inputY,textString,cStyles)
+{
+    let tempText = Crafty.e('2D, DOM, Text')
+    .attr({
+        x: inputX,
+        y: inputY
+    });
+    tempText.textFont(cStyles);
+    tempText.text(textString);
+    return tempText;
+}
 Platforms.loop();

@@ -41,38 +41,12 @@ Crafty.sprite(800,500,"sprites/fon.png",{fon:[0,0]});
 // cd num field
 Crafty.e('2D, Canvas, cd')
     .attr({x:450, y:525});
-let cd_num_text = Crafty.e('2D, DOM, Text')
-    .attr({
-        x: 790,
-        y: 780
-    });
-cd_num_text.textFont({
-    size: '50px',
-    weight: 'bold'
-});
-cd_num_text.text(':'+user_num_cd.toString());
+let cd_num_text = setText(790,780,':'+user_num_cd.toString(),{size: '50px',
+    weight: 'bold'})
 // score field
-let score_text = Crafty.e('2D, DOM, Text')
-    .attr({
-        x: 300,
-        y: 780
-    });
-score_text.textFont({
-    size: '50px',
-    weight: 'bold'
-});
-score_text.text('Score:');
+let score_text = setText(300,780,'Score:',{size: '50px', weight: 'bold'})
 // user score number
-let user_score_text = Crafty.e('2D, DOM, Text')
-    .attr({
-        x: 500,
-        y: 780
-    });
-user_score_text.textFont({
-    size: '50px',
-    weight: 'bold'
-});
-user_score_text.text(user_score.toString());
+let user_score_text = setText(500,780,user_score.toString(),{size: '50px', weight: 'bold'})
 let player = Crafty.e('2D, Canvas, Twoway, Gravity,Collision,Motion,player, SpriteAnimation')
     .attr({x: 0, y: 0, z:12, })
     .reel("run", 900, [
