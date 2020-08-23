@@ -32,7 +32,7 @@ Crafty.sprite(28,50,"sprites/mobs/yellow_robot_28x50.png",{yellow_robot:[0,0]});
 Crafty.sprite(30,50,"sprites/mobs/octopus_30x50.png",{octopus:[0,0]});
 Crafty.sprite(26,50,"sprites/mobs/robocat_26x50.png",{robocat:[0,0]});
 Crafty.sprite(49,60,"sprites/mobs/skeleton.png",{skeleton:[0,0]});
-Crafty.sprite(57,84,"sprites/mobs/cam_shoot.png",{cam:[0,0]});
+Crafty.sprite(48,82,"sprites/mobs/cam_shoot.png",{cam:[0,0]});
 Crafty.sprite(584,64,"sprites/mobs/laser-evtanazer.png",{laser:[0,6]});
 Crafty.sprite(35,52,"sprites/mobs/fly_bot.png",{fly_bot:[0,0]});
 Crafty.sprite(211,221,"sprites/mobs/proff_G.png",{proff_G:[0,0]});
