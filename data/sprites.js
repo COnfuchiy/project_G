@@ -1,10 +1,10 @@
 /**
  * Created by Dima on 05.08.2020.
  */
-Crafty.sprite(96,20,"stok/plat.png", {plat:[0,0]});
-Crafty.sprite(180,20,"stok/plat2.png", {platx2:[0,0]});
-Crafty.sprite(267,20,"stok/plat3.png", {platx3:[0,0]});
-Crafty.sprite(354,20,"stok/plat4.png", {platx4:[0,0]});
+Crafty.sprite(93,20,"stok/plat.png", {plat:[0,0]});
+Crafty.sprite(93*2,20,"stok/plat2.png", {platx2:[0,0]});
+Crafty.sprite(93*3,20,"stok/plat3.png", {platx3:[0,0]});
+Crafty.sprite(93*4,20,"stok/plat4.png", {platx4:[0,0]});
 Crafty.sprite(66,30,"stok/cd.png",{cd:[0,0]});
 Crafty.sprite(61,50,"stok/cd-pc.png",{cd_exchanger:[0,0]});
 // item sprites
