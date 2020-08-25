@@ -46,7 +46,7 @@ class Item {
     set_item(x) {
         let item_score = this._score;
         let selected_sprite = Array.isArray(this._sprites) ? this._sprites[getRandomInt(this._sprites.length)] : this._sprites;
-        Crafty.e('2D, Canvas, Collision,' + selected_sprite.name)
+        Crafty.e('2D, Canvas, '+ItemDrop.name_component+',Collision, ' + selected_sprite.name)
             .attr({
                 x: x - parseInt(selected_sprite.w / 2),
                 y: this._height - ItemDrop.fly_drop_height - selected_sprite.h,
@@ -92,6 +92,7 @@ class Item {
 }
 
 class ItemDrop {
+    static name_component = Setting.items.name_component;
     static item_types = Setting.items.dropped_items;
     static special_items = Setting.items.special_items;
     static chance_drop = Setting.items.chance_drop;

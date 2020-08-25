@@ -85,6 +85,7 @@ class Setting {
         fon_number:Math.round(Math.floor(document.documentElement.clientWidth / 1.5)/567)+2
     };
     static items = {
+        name_component:'item',
         dropped_items: [ //chance of 100 %
             {
                 sprites: [
@@ -267,6 +268,7 @@ class Setting {
 
     };
     static player = {
+        cd_speed:10,
         speed:300,
         jump_speed:650,
         hit_up_delay:200,//delay(platform off) when jumping onto the platform
@@ -275,6 +277,7 @@ class Setting {
 
     };
     static mobs = {
+        name_component:'mob',
         walk_monsters_sprites: [
             {
                 name: 'robot_1',

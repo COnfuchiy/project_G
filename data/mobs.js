@@ -15,14 +15,11 @@ class Monster {
         let animate_counter = 0;
         let animate_speed = 0;
         let mob_life = MonsterSpawn.mob_num_life.sort_walking;
-        Crafty.e('2D, Canvas, Collision, SpriteAnimation, ' + this._sprites.name)
+        Crafty.e('2D, Canvas, Collision,'+MonsterSpawn.name_component+',SpriteAnimation, ' + this._sprites.name)
             .attr({
                 x: x + this._sprites.w,
                 y: this._height - this._sprites.h,
                 z: MonsterSpawn.z_index_mobs.sort_walking,
-            })
-            .onHit('player', function (e) {
-                Crafty.trigger('Death'); //kill player
             })
             .onHit('cd', function (e) {
                 e[0].obj.destroy();
@@ -98,10 +95,9 @@ class Monster {
 
     laser_beam() {
         let shoot_check = false;
-        let escape_check = false;
         Crafty.e('2D, Canvas, Collision, SpriteAnimation, ' + this._sprites.name)
             .attr({
-                x: Platforms.level_x+50-this._sprites.w,
+                x: Platforms.level_x + 50 - this._sprites.w,
                 y: this._height - this._sprites.h,
                 z: MonsterSpawn.z_index_mobs.laser,
             })
@@ -112,31 +108,28 @@ class Monster {
                     if (!shoot_check) {
                         shoot_check = true;
                         setTimeout(() => {
-                            this.onHit('player', function (e) {
-                                Crafty.trigger('Death'); //kill player
-                            });
                             this.animate('before');
                         }, MonsterSpawn.laser_delay);
                     }
                 }
                 else {
-                    if (!escape_check)
-                        this.x = this.x - Platforms.current_speed - MonsterSpawn.walking_speed;
-                    else {
-                        this.reelPosition('end');
-                        this.pauseAnimation();
-                        this.x = this.x + Platforms.current_speed + MonsterSpawn.walking_speed;
-                        if (this.x >= Platforms.level_x + this.w)
-                            this.destroy();
-                    }
+                    this.x = this.x - Platforms.current_speed - MonsterSpawn.walking_speed;
                 }
             })
             .bind('AnimationEnd', function (e) {
-                this.removeComponent('Collision');
-                this.animate('after');
-                shoot_check = true;
-                escape_check = true;
-                this.x +=1;
+                if (e.id==='after')
+                    this.destroy();
+                else{
+                    this.addComponent(MonsterSpawn.name_component);
+                    this.onHit(MonsterSpawn.name_component, function (e) {
+                        e[0].obj.destroy();
+                    });
+                    this.onHit(Setting.items.name_component, function (e) {
+                        e[0].obj.destroy();
+                    });
+                    this.animate('after');
+                }
+
             });
 
     }
@@ -144,14 +137,11 @@ class Monster {
     fly_mob(x) {
         let direction = true; //true as up
         let mob_life = MonsterSpawn.mob_num_life.fly;
-        Crafty.e('2D, Canvas, Collision, SpriteAnimation, ' + this._sprites.name)
+        Crafty.e('2D, Canvas, Collision,'+MonsterSpawn.name_component+',SpriteAnimation, ' + this._sprites.name)
             .attr({
                 x: x + this._sprites.w,
                 y: this._height - this._sprites.h,
                 z: MonsterSpawn.z_index_mobs.fly,
-            })
-            .onHit('player', function (e) {
-                Crafty.trigger('Death'); //kill player
             })
             .onHit('cd', function (e) {
                 e[0].obj.destroy();
@@ -228,12 +218,13 @@ class Monster {
                     non_occupied_positions.splice(non_occupied_positions.indexOf(Platforms.sprites[3].w), 1);
             }
             let mob_x = non_occupied_positions[getRandomInt(non_occupied_positions.length - 1)];
-            this.set_mob(Platforms.level_x+ mob_x - Math.floor(Platforms.sprites[0].w/2));
+            this.set_mob(Platforms.level_x + mob_x - Math.floor(Platforms.sprites[0].w / 2));
         }
     }
 }
 
 class MonsterSpawn {
+    static name_component = Setting.mobs.name_component;
     static sprite_walk_monsters = Setting.mobs.walk_monsters_sprites;
     static sprite_event_monsters = Setting.mobs.event_monsters_sprites;
     static walk_monsters_start_pos = Setting.mobs.walk_monsters_start_pos;
@@ -252,12 +243,13 @@ class MonsterSpawn {
     static boss_delay = Setting.game.boss_delay;
     static boss_available_levels = Setting.mobs.boss_available_levels;
     static mob_num_life = Setting.mobs.mob_num_life;
+    static pseudo_random_events = [];
 
     static get_spawn(platforms_width, height, items) {
         if (MonsterSpawn.check_spawn()) {
             if (special_mob_counter === MonsterSpawn.event_counter) {
                 special_mob_counter = 0;
-                (new Monster(platforms_width, height, MonsterSpawn.sprite_event_monsters[getRandomInt(MonsterSpawn.sprite_event_monsters.length)], items)).spawn();
+                (new Monster(platforms_width, height, MonsterSpawn.get_event_mob_sprite(), items)).spawn();
             }
             else {
                 special_mob_counter++;
@@ -275,22 +267,19 @@ class MonsterSpawn {
         let level_y = MonsterSpawn.boss_available_levels[getRandomInt(MonsterSpawn.boss_available_levels.length)];
         let laser_pos = MonsterSpawn.calc_y_laser(level_y);
         let boss_plat;
-        let boss_g = Crafty.e('2D, Canvas, Collision, SpriteAnimation, ' + MonsterSpawn.G.name)
+        let boss_g = Crafty.e('2D, Canvas, Collision, '+MonsterSpawn.name_component+',SpriteAnimation, ' + MonsterSpawn.G.name)
             .attr({
                 x: Platforms.level_x + MonsterSpawn.G.w,
                 y: level_y - MonsterSpawn.G.h,
                 z: MonsterSpawn.z_index_boss,
-            })
-            .onHit('player', function () {
-                Crafty.trigger('Death'); //kill player
             })
             .onHit('cd', function (e) {
                 e[0].obj.destroy();
                 boss_hit_point -= MonsterSpawn.cd_value_boss;
                 boss_hp_text.text(boss_hit_point.toString() + '/100');
                 if (boss_hit_point === 0) {
-                    total_computer_score+=Setting.game.increase_num_comp;
-                    comp_score_text.text(current_computer_score.toString() + '/'+total_computer_score);
+                    total_computer_score += Setting.game.increase_num_comp;
+                    comp_score_text.text(current_computer_score.toString() + '/' + total_computer_score);
                     boss_hp_text.destroy();
                     this.destroy();
                     boss_hit_point = 100;
@@ -322,7 +311,7 @@ class MonsterSpawn {
                             });
                             if (boss_plat !== undefined) {
                                 boss_plat.bind('UpdateFrame', function () {
-                                    this.x = this.x + 2*Platforms.current_speed;
+                                    this.x = this.x + 2 * Platforms.current_speed;
                                     if (this.x > Platforms.level_x + this.w)
                                         this.destroy();
                                 });
@@ -348,12 +337,31 @@ class MonsterSpawn {
 
     }
 
+    static get_event_mob_sprite() {
+        let free_sprites = [];
+        let random_event;
+        if (MonsterSpawn.sprite_event_monsters.length !== MonsterSpawn.pseudo_random_events.length) {
+            for (let event of MonsterSpawn.sprite_event_monsters) {
+                if (MonsterSpawn.pseudo_random_events.indexOf(event.name) === -1) {
+                    free_sprites.push(event)
+                }
+            }
+            random_event = free_sprites[getRandomInt(free_sprites.length)];
+        }
+        else{
+            MonsterSpawn.pseudo_random_events = [];
+            random_event = MonsterSpawn.sprite_event_monsters[getRandomInt(MonsterSpawn.sprite_event_monsters.length)];
+        }
+        MonsterSpawn.pseudo_random_events.push(random_event.name);
+        return random_event;
+    }
+
     static calc_y_laser(y) {
         switch (y) {
             case MonsterSpawn.boss_available_levels[0]:
-                return [MonsterSpawn.boss_available_levels[2] - Platforms.spacing_plat, MonsterSpawn.boss_available_levels[2]-2*Platforms.spacing_plat];
+                return [MonsterSpawn.boss_available_levels[2] - Platforms.spacing_plat, MonsterSpawn.boss_available_levels[2] - 2 * Platforms.spacing_plat];
             case MonsterSpawn.boss_available_levels[1]:
-                return [MonsterSpawn.boss_available_levels[0], MonsterSpawn.boss_available_levels[2]-2*Platforms.spacing_plat];
+                return [MonsterSpawn.boss_available_levels[0], MonsterSpawn.boss_available_levels[2] - 2 * Platforms.spacing_plat];
             case MonsterSpawn.boss_available_levels[2]:
                 return [MonsterSpawn.boss_available_levels[0], MonsterSpawn.boss_available_levels[1]];
         }

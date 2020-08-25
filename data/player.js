@@ -8,6 +8,10 @@ let player = Crafty.e('2D, Canvas, Twoway, Gravity,Collision,Motion,player, Spri
         [0, 1], [1, 1], [2, 1],
         [0, 2], [1, 2],
     ])
+    .onHit('mob', function () {
+        this.destroy();
+        Crafty.trigger('Death');
+    })
     .reel('jump',1,[[1,1]])
     .animate("run", -1)
     .twoway(Setting.player.speed,Setting.player.jump_speed)
@@ -22,7 +26,7 @@ let player = Crafty.e('2D, Canvas, Twoway, Gravity,Collision,Motion,player, Spri
         player.animate("run", -1);
     })
     .bind('CheckLanding',function (e) {
-        if (player.ay && e.y<=player.y+player.h && player.dy>0 && e.x-10>=player.x+player.h)
+        if (player.ay && player.vx && e.y+15<player.y+player.h && e.x<player.x+player.w && e.y!==500)
             player.canLand=false;
     })
     .bind('LiftedOffGround',function (e) {

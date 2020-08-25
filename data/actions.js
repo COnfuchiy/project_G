@@ -30,7 +30,7 @@ function set_cd_exchanger_daley() {
     let middle_in_sec = (Setting.game.cd_exchanger_max_delay - Setting.game.cd_exchanger_min_delay)/Setting.game.cd_exchanger_delay_step;
     return Setting.game.cd_exchanger_min_delay + getRandomInt(middle_in_sec) * Setting.game.cd_exchanger_delay_step;
 }
-function spawn_cd_exchanger(delay) {
+function spawn_cd_exchanger() {
     if (is_active_spawn){
         setTimeout(function () {
             Crafty.e('2D, Canvas, cd_exchanger, Collision')
@@ -48,10 +48,19 @@ function spawn_cd_exchanger(delay) {
                     cd_num_text.text(':' + user_num_cd.toString());
                     user_score_text.text(user_score.toString());
                 });
-            spawn_cd_exchanger(set_cd_exchanger_daley());
+            spawn_cd_exchanger();
         }, set_cd_exchanger_daley());
 
     }
+}
+function cd_shoot() {
+    Crafty.e('2D, Canvas, Collision, cd')
+        .attr({x:player.x+Math.floor(player.h/2), y:player.y+Math.floor(player.w/2)})
+        .bind("UpdateFrame", function () {
+            this.x = this.x + Setting.player.cd_speed;
+            if (this.x > Platforms.level_x)
+                this.destroy();
+        });
 }
 set_background();
 //global variable
