@@ -68,7 +68,10 @@ Crafty.e('2D, Canvas, Floor')
 //global events
 Crafty.bind('Death', function () {
     if (confirm("You Died"))
+    {
+        player.destroy();
         location.reload();
+    }
 });
 Crafty.bind('Boss', function () {
     is_active_spawn = false;
