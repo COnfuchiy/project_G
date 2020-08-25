@@ -67,8 +67,8 @@ Crafty.e('2D, Canvas, Floor')
     .attr({x: 0, y: Setting.platforms.ground, w: Platforms.level_x, h: 20});
 //global events
 Crafty.bind('Death', function () {
-    alert("You Died");
-    location.reload();
+    if (confirm("You Died"))
+        location.reload();
 });
 Crafty.bind('Boss', function () {
     is_active_spawn = false;
