@@ -101,14 +101,14 @@ class Monster {
         let escape_check = false;
         Crafty.e('2D, Canvas, Collision, SpriteAnimation, ' + this._sprites.name)
             .attr({
-                x: Platforms.level_x,
+                x: Platforms.level_x+50-this._sprites.w,
                 y: this._height - this._sprites.h,
                 z: MonsterSpawn.z_index_mobs.laser,
             })
             .reel('before', this._sprites.time, this._sprites.reels[0])
             .reel('after', this._sprites.time, this._sprites.reels[1])
             .bind("UpdateFrame", function () {
-                if (this.x < Platforms.level_x - this.w) {
+                if (this.x <= Platforms.level_x - this.w) {
                     if (!shoot_check) {
                         shoot_check = true;
                         setTimeout(() => {
@@ -126,7 +126,7 @@ class Monster {
                         this.reelPosition('end');
                         this.pauseAnimation();
                         this.x = this.x + Platforms.current_speed + MonsterSpawn.walking_speed;
-                        if (this.x > Platforms.level_x + this.w)
+                        if (this.x >= Platforms.level_x + this.w)
                             this.destroy();
                     }
                 }
@@ -289,6 +289,8 @@ class MonsterSpawn {
                 boss_hit_point -= MonsterSpawn.cd_value_boss;
                 boss_hp_text.text(boss_hit_point.toString() + '/100');
                 if (boss_hit_point === 0) {
+                    total_computer_score+=Setting.game.increase_num_comp;
+                    comp_score_text.text(current_computer_score.toString() + '/'+total_computer_score);
                     boss_hp_text.destroy();
                     this.destroy();
                     boss_hit_point = 100;

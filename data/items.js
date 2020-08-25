@@ -29,7 +29,6 @@ class Item {
                     if (current_computer_score === total_computer_score) {
                         Crafty.trigger('Boss');
                         current_computer_score = 0;
-                        total_computer_score+=Setting.game.increase_num_comp;
                         comp_score_text.text(current_computer_score.toString() + '/'+total_computer_score);
                     }
                     this.sprite(comp_on);
