@@ -1,72 +1,75 @@
 class PlatformLevel {
-    constructor( y_level, x_level) {
-        this._y_level = y_level;
-        this._x_level = x_level;
-        this._name = 'GEN_Platform';
-        this._random_count = getRandomInt(5);
+    constructor(level_y, level_x) {
+        this._level_y = level_y;
+        this._level_x = level_x;
+        this._random_count = getRandomInt(Platforms.random_platforms.length-2);
         return this;
     }
 
     start(delay) {
-
         setTimeout(() => {
-            if (is_active_spawn){
-                let item_spawn = ItemDrop.get_drop(Platforms.get_sprite_wigth(Platforms.random_wight[this._random_count]),this._y_level);
-                MonsterSpawn.get_spawn(Platforms.get_sprite_wigth(Platforms.random_wight[this._random_count]),this._y_level,item_spawn);
+            if (!Crafty.isPaused()) {
+                if (is_active_spawn) {
+                    let item_spawn = ItemDrop.get_drop(Platforms.get_sprite_width(Platforms.random_platforms[this._random_count].name), this._level_y);
+                    MonsterSpawn.get_spawn(Platforms.get_sprite_width(Platforms.random_platforms[this._random_count].name), this._level_y, item_spawn);
+                }
+                Crafty.e('2D, Canvas, Floor, ' + Platforms.random_platforms[this._random_count].name)
+                    .attr({
+                        x: this._level_x,
+                        y: this._level_y,
+                        z: Platforms.z_index
+                    })
+                    .bind("UpdateFrame", function () {
+                        this.x = this.x - Platforms.current_speed;
+                        if (this.x < -this.w)
+                            this.destroy();
+                    });
+                this.start(Platforms.random_platforms[this._random_count].delay);
+                this._random_count++;
+                if (this._random_count === Platforms.random_platforms.length)
+                    this._random_count = getRandomInt(Platforms.random_platforms.length-2);
             }
-            Crafty.e('2D, Canvas, Floor, '+Platforms.random_wight[this._random_count])
-                .attr({
-                    x: this._x_level,
-                    y: this._y_level,
-
-                })
-                .bind("UpdateFrame", function () {
-                    this.x = this.x - Platforms.current_speed;
-                    if (this.x < -this.w)
-                        this.destroy();
-                });
-
-            this.start(Platforms.random_delay[this._random_count]);
-            this._random_count++;
-            if (this._random_count===7)
-                this._random_count=getRandomInt(5);
-        },delay);
+                else
+                    this.start(delay);
+        }, delay);
     }
 }
 
 class Platforms {
-    static spacing_plat = 100;
-    static num_level = 4;
-    static level_y = Platforms.get_level_wights();
-    static random_wight =['platx2','platx4','platx3','plat','platx3','platx2', 'platx4'];
-    static random_delay = [2000,2700,2200, 1800,2500,2150, 2400];
-    static start_delay = [3000, 1500,3500,1700];
-    static current_speed = 4;
-    static level_x = document.documentElement.clientWidth+100;
+    static spacing_plat = Setting.platforms.spacing_plat;
+    static num_levels = Setting.platforms.num_levels;
+    static levels_y = Platforms.get_level_wights();
+    static random_platforms = Setting.platforms.pseudo_random_platforms;
+    static start_delay = Setting.platforms.start_delay;
+    static current_speed = Setting.platforms.current_speed;
+    static level_x = Setting.screen.width;
+    static z_index = Setting.platforms.z_index;
+    static sprites = Setting.platforms.sprites;
 
     static loop() {
-        for (let i = 0; i < Platforms.num_level; i++) {
-            (new PlatformLevel(Platforms.level_y[i], Platforms.level_x)).start(Platforms.start_delay[i]);
+        for (let i = 0; i < Platforms.num_levels; i++) {
+            (new PlatformLevel(Platforms.levels_y[i], Platforms.level_x)).start(Platforms.start_delay[i]);
         }
     }
 
     static get_level_wights() {
         let levels_arr = [];
-        for (let i = 0; i < Platforms.num_level; i++) {
+        for (let i = 0; i < Platforms.num_levels; i++) {
             levels_arr.push(i * Platforms.spacing_plat + Platforms.spacing_plat);
         }
         return levels_arr
     }
-    static get_sprite_wigth(sprite_name){
-        switch (sprite_name){
-            case 'plat':
-                return 93;
-            case 'platx2':
-                return 180;
-            case 'platx3':
-                return 267;
-            case 'platx4':
-                return 354;
+
+    static get_sprite_width(sprite_name) {
+        switch (sprite_name) {
+            case Platforms.sprites[0].name:
+                return Platforms.sprites[0].w;
+            case Platforms.sprites[1].name:
+                return Platforms.sprites[1].w;
+            case Platforms.sprites[2].name:
+                return Platforms.sprites[2].w;
+            case Platforms.sprites[3].name:
+                return Platforms.sprites[3].w;
         }
     }
 }

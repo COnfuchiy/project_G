@@ -37,53 +37,5 @@ Crafty.sprite(584,64,"sprites/mobs/laser-evtanazer.png",{laser:[0,6]});
 Crafty.sprite(35,52,"sprites/mobs/fly_bot.png",{fly_bot:[0,0]});
 Crafty.sprite(211,221,"sprites/mobs/proff_G.png",{proff_G:[0,0]});
 Crafty.sprite(62,50,"sprites/items/computer.png",{comp_off:[0,0],comp_on:[1,0]});
-Crafty.sprite(800,500,"sprites/fon.png",{fon:[0,0]});
-// cd num field
-Crafty.e('2D, Canvas, cd')
-    .attr({x:450, y:525});
-let player = Crafty.e('2D, Canvas, Twoway, Gravity,Collision,Motion,player, SpriteAnimation')
-    .attr({x: 0, y: 0, z:12, })
-    .reel("run", 900, [
-        [0, 0], [1, 0], [2, 0],
-        [0, 1], [1, 1], [2, 1],
-        [0, 2], [1, 2],
-    ])
-    .reel('jump',1,[[1,1]])
-    .animate("run", -1)
-    .twoway(300,650)
-    .gravity('Floor')
-    .gravityConst(2050)
-    .onHit("Floor", function(e) {
-        let to_ground = e[0].obj;
-        to_ground.removeComponent('Floor');
-        setTimeout(()=>to_ground.addComponent('Floor'),200);
-    })
-    .bind('LandedOnGround',function () {
-        player.animate("run", -1);
-    })
-    .bind('CheckLanding',function (e) {
-        if (player.ay && e.x +10>=player.x+player.w-10 && player.dy>0)
-            player.canLand=false;
-    })
-    .bind('LiftedOffGround',function (e) {
-        e.removeComponent('Floor');
-        setTimeout(()=>e.addComponent('Floor'),300);
-        player.animate('jump',-1)
-    });
-Crafty.e('2D, Canvas, Color,Floor')
-    .attr({x: 0, y: 500, w: document.documentElement.clientWidth, h: 20, z:2})
-    .color('#2dff00');
-Crafty.e('2D, Canvas, fon') //first fon
-    .attr({x: 0, y: 0,z:0})
-    .bind('UpdateFrame',function () {
-        this.x = this.x - 0.5;
-        if (this.x+this.w===0)
-            this.x = document.documentElement.clientWidth-300;
-    });
-Crafty.e('2D, Canvas, fon') //second fon
-    .attr({x: document.documentElement.clientWidth-300, y: 0,z:0})
-    .bind('UpdateFrame',function () {
-        this.x = this.x - 0.5;
-        if (this.x+this.w===0)
-            this.x = document.documentElement.clientWidth-300;
-    });
+Crafty.sprite(567,520,"sprites/fon.png",{fon:[0,0]});
+
