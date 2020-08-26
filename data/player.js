@@ -1,7 +1,7 @@
 /**
  * Created by Dima on 25.08.2020.
  */
-let player = Crafty.e('2D, Canvas, Twoway, Gravity,Collision,Motion,player, SpriteAnimation')
+let player = Crafty.e('2D, Canvas, Persist, Twoway, Gravity,Collision,Motion,player, SpriteAnimation')
     .attr({x: 0, y: 0, z:Setting.player.z_index})
     .reel("run", 900, [
         [0, 0], [1, 0], [2, 0],
@@ -26,7 +26,8 @@ let player = Crafty.e('2D, Canvas, Twoway, Gravity,Collision,Motion,player, Spri
         player.animate("run", -1);
     })
     .bind('CheckLanding',function (e) {
-        if (player.ay && player.vx && e.y+15<player.y+player.h && e.x<player.x+player.w && e.y!==500)
+        //hz how but is work do not mind
+        if (player.ay && e.x +10>=player.x+player.w-10 && player.dy>0)
             player.canLand=false;
     })
     .bind('LiftedOffGround',function (e) {
