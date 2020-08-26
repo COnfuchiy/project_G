@@ -16,22 +16,22 @@ function setText(inputX, inputY, textString, cStyles) {
     return tempText;
 }
 function set_background() {
-    for (let i = 0; i<Setting.screen.fon_number;i++){
+    for (let i = 0; i < Setting.screen.fon_number; i++) {
         Crafty.e('2D, Canvas, fon')
-            .attr({x: Setting.screen.fon_width*i, y: 0,z:Setting.screen.fon_z_index})
-            .bind('UpdateFrame',function () {
+            .attr({x: Setting.screen.fon_width * i, y: 0, z: Setting.screen.fon_z_index})
+            .bind('UpdateFrame', function () {
                 this.x = this.x - Setting.screen.fon_speed;
-                if (this.x+this.w===-Setting.screen.fon_speed)
-                    this.x = (Setting.screen.fon_width-1)*(Setting.screen.fon_number-1);
+                if (this.x + this.w === -Setting.screen.fon_speed)
+                    this.x = (Setting.screen.fon_width - 1) * (Setting.screen.fon_number - 1);
             });
     }
 }
 function set_cd_exchanger_daley() {
-    let middle_in_sec = (Setting.game.cd_exchanger_max_delay - Setting.game.cd_exchanger_min_delay)/Setting.game.cd_exchanger_delay_step;
+    let middle_in_sec = (Setting.game.cd_exchanger_max_delay - Setting.game.cd_exchanger_min_delay) / Setting.game.cd_exchanger_delay_step;
     return Setting.game.cd_exchanger_min_delay + getRandomInt(middle_in_sec) * Setting.game.cd_exchanger_delay_step;
 }
 function spawn_cd_exchanger() {
-    if (is_active_spawn){
+    if (is_active_spawn) {
         cd_exchanger_loop = setTimeout(function () {
             Crafty.e('2D, Canvas, cd_exchanger, Collision')
                 .attr({x: Platforms.level_x, y: 450})
@@ -55,7 +55,11 @@ function spawn_cd_exchanger() {
 }
 function cd_shoot() {
     Crafty.e('2D, Canvas, Collision, cd')
-        .attr({x:player.x+Math.floor(player.h/2), y:player.y+Math.floor(player.w/2)})
+        .attr({
+            x: player.x + Math.floor(player.h / 2),
+            y: player.y + Math.floor(player.w / 2),
+            z: Setting.player.cd_z_index
+        })
         .bind("UpdateFrame", function () {
             this.x = this.x + Setting.player.cd_speed;
             if (this.x > Platforms.level_x)
@@ -77,7 +81,7 @@ Crafty.e('2D, Canvas, Floor')
     .attr({x: 0, y: Setting.platforms.ground, w: Platforms.level_x, h: 20});
 //global events
 Crafty.bind('Death', function () {
-    Crafty.defineScene("died", function() {
+    Crafty.defineScene("died", function () {
         Crafty.background("#000");
     });
     Crafty.enterScene('died');
@@ -85,12 +89,12 @@ Crafty.bind('Death', function () {
     clearTimeout(cd_exchanger_loop);
     Crafty.viewport.scale(Setting.screen.scale);
     Crafty.e('2D, Canvas, Gravity,player, SpriteAnimation')
-        .attr({x: player.x, y: player.y, z:Setting.player.z_index})
-        .reel('jump',1,[[1,1]])
+        .attr({x: player.x, y: player.y, z: Setting.player.z_index})
+        .reel('jump', 1, [[1, 1]])
         .gravity('Floor')
-        .animate('jump',-1)
+        .animate('jump', -1)
         .bind('UpdateFrame', function () {
-            if (this.y >Math.floor(document.documentElement.clientHeight/1.5)){
+            if (this.y > Math.floor(document.documentElement.clientHeight / 1.5)) {
                 this.destroy();
                 location.reload();
             }
@@ -98,6 +102,32 @@ Crafty.bind('Death', function () {
         });
 });
 Crafty.bind('Boss', function () {
+    is_active_spawn = false;
+    MonsterSpawn.boss_spawn();
+});
+Crafty.bind('Shield', function () {
+    is_active_spawn = false;
+    MonsterSpawn.boss_spawn();
+});
+Crafty.bind('Magnet', function () {
+    let absorb_field = Crafty.e('2D, Canvas, Collision, absorb')
+        .attr(
+            {
+                x: player.x - Setting.items.magnet_area,
+                y: player.y - Setting.items.magnet_area,
+                h: Setting.items.magnet_area*2 + player.h,
+                w: Setting.items.magnet_area*2 + player.w,
+            }
+        )
+        .bind("UpdateFrame", function () {
+            this.x = player.x - Setting.items.magnet_area;
+            this.y = player.y - Setting.items.magnet_area;
+        });
+    setTimeout(() => {
+        absorb_field.destroy();
+    }, Setting.items.magnet_time);
+});
+Crafty.bind('Increase', function () {
     is_active_spawn = false;
     MonsterSpawn.boss_spawn();
 });

@@ -211,16 +211,7 @@ class Setting {
                     h: 40,
                 },
                 score: 600,
-                chance: 94,
-            },
-            {
-                sprites: {
-                    name: 'usb',
-                    w: 59,
-                    h: 40,
-                },
-                score: 700,
-                chance: 98,
+                chance: 92,
             },
             {
                 sprites: {
@@ -229,7 +220,7 @@ class Setting {
                     h: 40,
                 },
                 score: 800,
-                chance: 100,
+                chance: 96,
             },
 
         ],
@@ -247,14 +238,44 @@ class Setting {
                         h: 50,
                     },
                 ],
-            }
+            },
+            baff_items:[
+                {
+                    sprites: {
+                        name: 'usb',
+                        w: 59,
+                        h: 40,
+                    },
+                    type:'shield'
+                },
+                {
+                    sprites: {
+                        name: 'usb',
+                        w: 59,
+                        h: 40,
+                    },
+                    type:'magnet'
+                },
+                {
+                    sprites: {
+                        name: 'usb',
+                        w: 59,
+                        h: 40,
+                    },
+                    type:'increase'
+                },
+            ],
         },
         fly_drop_height: 10,
         chance_drop: 80,
-        chance_double_drop: 80,
+        chance_double_drop: 50,
         computer_chance: 40,
+        buff_chance:50,
         z_index_drop:z_index_map.dropped_items,
-        z_index_comp:z_index_map.computer
+        z_index_comp:z_index_map.computer,
+        magnet_area: 100,
+        magnet_speed:6,
+        magnet_time:7000//time in msc
     };
     static game = {
         start_num_comp: 10, //start number computer for spawn boss
@@ -269,11 +290,13 @@ class Setting {
     };
     static player = {
         cd_speed:10,
+        cd_z_index:z_index_map.player,
         speed:300,
         jump_speed:650,
         hit_up_delay:200,//delay(platform off) when jumping onto the platform
         jump_delay:300,//platform jump delay(platform off)
-        z_index:z_index_map.player
+        z_index:z_index_map.player,
+
 
     };
     static mobs = {

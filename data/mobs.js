@@ -200,25 +200,9 @@ class Monster {
                 return;
             if (this._items.length === 2 && this._platforms_width === Platforms.sprites[1].w)
                 return;
-            let non_occupied_positions = [Platforms.sprites[0].w, Platforms.sprites[1].w, Platforms.sprites[2].w, Platforms.sprites[3].w];
-            non_occupied_positions.map((item, index) => {
-                if (item > this._platforms_width)
-                    non_occupied_positions.splice(index, 1);
-            });
 
-            for (let item_x of this._items) {
-                item_x -= Platforms.level_x;
-                if (item_x < Platforms.sprites[0].w)
-                    non_occupied_positions.splice(non_occupied_positions.indexOf(Platforms.sprites[0].w), 1);
-                if (item_x > Platforms.sprites[0].w && item_x < Platforms.sprites[1].w)
-                    non_occupied_positions.splice(non_occupied_positions.indexOf(Platforms.sprites[1].w), 1);
-                if (item_x > Platforms.sprites[1].w && item_x < Platforms.sprites[2].w)
-                    non_occupied_positions.splice(non_occupied_positions.indexOf(Platforms.sprites[2].w), 1);
-                if (item_x > Platforms.sprites[2].w)
-                    non_occupied_positions.splice(non_occupied_positions.indexOf(Platforms.sprites[3].w), 1);
-            }
-            let mob_x = non_occupied_positions[getRandomInt(non_occupied_positions.length - 1)];
-            this.set_mob(Platforms.level_x + mob_x - Math.floor(Platforms.sprites[0].w / 2));
+            let mob_x = ItemDrop.calc_non_occupied_position(this._items,this._platforms_width);
+            this.set_mob(mob_x);
         }
     }
 }
