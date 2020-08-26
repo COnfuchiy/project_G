@@ -90,8 +90,11 @@ Crafty.bind('Death', function () {
         .gravity('Floor')
         .animate('jump',-1)
         .bind('UpdateFrame', function () {
-            if (this.y >Math.floor(document.documentElement.clientHeight/1.5))
+            if (this.y >Math.floor(document.documentElement.clientHeight/1.5)){
+                this.destroy();
                 location.reload();
+            }
+
         });
 });
 Crafty.bind('Boss', function () {
