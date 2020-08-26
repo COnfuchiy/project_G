@@ -32,7 +32,7 @@ function set_cd_exchanger_daley() {
 }
 function spawn_cd_exchanger() {
     if (is_active_spawn){
-        setTimeout(function () {
+        cd_exchanger_loop = setTimeout(function () {
             Crafty.e('2D, Canvas, cd_exchanger, Collision')
                 .attr({x: Platforms.level_x, y: 450})
                 .bind("UpdateFrame", function () {
@@ -65,6 +65,7 @@ function cd_shoot() {
 set_background();
 //global variable
 let user_score = 0;
+let cd_exchanger_loop;
 let current_computer_score = 0;
 let special_mob_counter = 0;
 let total_computer_score = Setting.game.start_num_comp;
@@ -76,11 +77,25 @@ Crafty.e('2D, Canvas, Floor')
     .attr({x: 0, y: Setting.platforms.ground, w: Platforms.level_x, h: 20});
 //global events
 Crafty.bind('Death', function () {
-    if (confirm("You Died"))
-    {
-        player.destroy();
-        location.reload();
-    }
+    Crafty.defineScene("died", function() {
+        Crafty.background("#000");
+    });
+    Crafty.enterScene('died');
+    Platforms.stop_loop();
+    clearTimeout(cd_exchanger_loop);
+    Crafty.viewport.scale(Setting.screen.scale);
+    Crafty.e('2D, Canvas, Gravity,player, SpriteAnimation')
+        .attr({x: player.x, y: player.y, z:Setting.player.z_index})
+        .reel('jump',1,[[1,1]])
+        .gravity('Floor')
+        .animate('jump',-1)
+        .bind('UpdateFrame', function () {
+            if (this.y >Math.floor(document.documentElement.clientHeight/1.5)){
+                this.destroy();
+                location.reload();
+            }
+
+        });
 });
 Crafty.bind('Boss', function () {
     is_active_spawn = false;
