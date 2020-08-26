@@ -82,7 +82,6 @@ Crafty.bind('Death', function () {
     });
     Crafty.enterScene('died');
     Platforms.stop_loop();
-    $('.buttons').empty();
     clearTimeout(cd_exchanger_loop);
     Crafty.viewport.scale(Setting.screen.scale);
     Crafty.e('2D, Canvas, Gravity,player, SpriteAnimation')

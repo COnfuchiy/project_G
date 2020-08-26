@@ -15,7 +15,7 @@
     </div>
 
     <script>
-        Crafty.init(document.documentElement.clientWidth,document.documentElement.clientHeight, document.getElementById('game'));
+        Crafty.init(document.documentElement.clientWidth,900, document.getElementById('game'));
     </script>
     <script src="data/settings.js"></script>
     <script src="data/sprites.js"></script>
@@ -24,7 +24,7 @@
     <script src="data/player.js"></script>
     <script src="data/items.js"></script>
     <script src="data/mobs.js"></script>
-    <div class="buttons"><div class="button-up">
+    <div class="button-up">
         <img src="stok/arrow_up.png">
     </div>
     <div class="button-down">
@@ -38,7 +38,7 @@
     </div>
     <div class="button-enter">
         <img src="stok/enter_key.png" >
-    </div></div>
+    </div>
     <script>
         $('.button-up').on('touchstart',function(){player.jump()});
         $('.button-down').on('touchstart',function(){
