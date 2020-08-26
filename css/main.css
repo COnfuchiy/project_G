@@ -24,6 +24,7 @@ body{
     bottom: 150px;
     left: 50%;
     transform: translateX(-50%);
+    border-collapse: collapse;
 }
 
 .buttons td {
