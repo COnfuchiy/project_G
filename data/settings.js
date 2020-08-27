@@ -242,15 +242,15 @@ class Setting {
             baff_items:[
                 {
                     sprites: {
-                        name: 'usb',
+                        name: 'usb_coin',
                         w: 59,
                         h: 40,
                     },
-                    type:'shield'
+                    type:'increase'
                 },
                 {
                     sprites: {
-                        name: 'usb',
+                        name: 'usb_magnet',
                         w: 59,
                         h: 40,
                     },
@@ -258,11 +258,11 @@ class Setting {
                 },
                 {
                     sprites: {
-                        name: 'usb',
+                        name: 'usb_shield',
                         w: 59,
                         h: 40,
                     },
-                    type:'increase'
+                    type:'shield'
                 },
             ],
         },
@@ -275,7 +275,9 @@ class Setting {
         z_index_comp:z_index_map.computer,
         magnet_area: 100,
         magnet_speed:6,
-        magnet_time:7000//time in msc
+        increase_multiplier:2,
+        buff_time:7000,//time in msc
+        buff_cooldown:3000
     };
     static game = {
         start_num_comp: 10, //start number computer for spawn boss
@@ -289,6 +291,18 @@ class Setting {
 
     };
     static player = {
+        buff_effect_sprites:[
+            {
+                name: 'magnet',
+                w: 24,
+                h: 25,
+            },
+            {
+                name: 'shield',
+                w: 90,
+                h: 120,
+            },
+        ],
         cd_speed:10,
         cd_z_index:z_index_map.player,
         speed:300,

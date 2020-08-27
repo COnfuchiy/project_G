@@ -8,9 +8,9 @@ let player = Crafty.e('2D, Canvas, Persist, Twoway, Gravity,Collision,Motion,pla
         [0, 1], [1, 1], [2, 1],
         [0, 2], [1, 2],
     ])
-    .onHit('mob', function () {
-        this.destroy();
-        Crafty.trigger('Death');
+    .onHit('mob', function (mob, check_twice) {
+        if (check_twice)
+            Crafty.trigger('Death');
     })
     .reel('jump',1,[[1,1]])
     .animate("run", -1)

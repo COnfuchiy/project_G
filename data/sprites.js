@@ -7,6 +7,12 @@ Crafty.sprite(93*3,20,"stok/plat3.png", {platx3:[0,0]});
 Crafty.sprite(93*4,20,"stok/plat4.png", {platx4:[0,0]});
 Crafty.sprite(66,30,"stok/cd.png",{cd:[0,0]});
 Crafty.sprite(61,50,"stok/cd-pc.png",{cd_exchanger:[0,0]});
+// buff sprites
+Crafty.sprite(24,25,"sprites/effects/magnet.png",{magnet:[0,0]});
+Crafty.sprite(90,120,"sprites/effects/shield.png",{shield:[0,0]});
+Crafty.sprite(59,40,"sprites/items/usb_magnet.png",{usb_magnet:[0,0]});
+Crafty.sprite(59,40,"sprites/items/usb_coin.png",{usb_coin:[0,0]});
+Crafty.sprite(59,40,"sprites/items/usb_shield.png",{usb_shield:[0,0]});
 // item sprites
 Crafty.sprite(51,40,"sprites/items/cooler.png",{cooler:[0,0]});
 Crafty.sprite(57,40,"sprites/items/disk_driver.png",{disk_driver:[0,0]});

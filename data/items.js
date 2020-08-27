@@ -54,8 +54,11 @@ class Item {
             })
             .bind("UpdateFrame", function () {
                 this.x = this.x - Platforms.current_speed;
-                if (this.x < -this.w)
+                if (this.x < -this.w){
+                    ItemDrop.possibility_buff = true;
                     this.destroy();
+                }
+
             });
         if (this._type === 'shield') {
             buff_item.onHit('player', function () {
@@ -103,7 +106,7 @@ class Item {
                 }
             })
             .onHit('player', function () {
-                user_score += item_score;
+                user_score += item_score*current_increase_score;
                 user_score_text.text(user_score.toString());
                 this.destroy();
             })
@@ -141,6 +144,8 @@ class ItemDrop {
     static z_index_drop = Setting.items.z_index_drop;
     static z_index_comp = Setting.items.z_index_comp;
     static magnet_speed = Setting.items.magnet_speed;
+    static possibility_buff = true;
+    static last_buff_item;
 
     static get_drop(platforms_width, height) {
         if (ItemDrop.check_drop()) {
@@ -158,8 +163,12 @@ class ItemDrop {
         }
         if (ItemDrop.check_comp_drop())
             return (new Item(platforms_width, height, ItemDrop.special_items.comp.sprites)).comp_drop();
-        if (ItemDrop.check_buff_drop()) {
-            let dropped_buff = ItemDrop.special_items.baff_items[1];
+        if (ItemDrop.check_buff_drop() && ItemDrop.possibility_buff) {
+            ItemDrop.possibility_buff = false;
+            let dropped_buff = Crafty.math.randomElementOfArray(ItemDrop.special_items.baff_items);
+            if (ItemDrop.last_buff_item && dropped_buff === ItemDrop.last_buff_item)
+                dropped_buff = ItemDrop.not_twice_together(ItemDrop.special_items.baff_items,ItemDrop.last_buff_item);
+            ItemDrop.last_buff_item = dropped_buff;
             return (new Item(platforms_width, height, dropped_buff.sprites, 0, dropped_buff.type)).baff_drop();
         }
         return [];
@@ -197,6 +206,14 @@ class ItemDrop {
                 last_item = ItemDrop.item_types[i];
         }
         return last_item;
+    }
+
+    static not_twice_together(array, before_item){
+        let random_index = getRandomInt(array.length-2)+1;
+        if (array[random_index]===before_item){
+            return array[random_index+Crafty.math.negate(50)];
+        }
+        return array[random_index];
     }
 
     static calc_non_occupied_position(items, platforms_width) {
