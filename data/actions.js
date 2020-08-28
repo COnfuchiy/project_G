@@ -93,7 +93,7 @@ function set_buff_timer(sprite, del_callback) {
             buff_time -= 1000;
             timer_num.text(buff_time / 1000).toString();
         }
-    }, 1000);
+    }, 1000,-1);
 }
 set_background();
 //global variable
@@ -138,7 +138,7 @@ Crafty.bind('Death', function () {
                         <span class="total_label">` + current_score + `</span>
                         <span class="total_label">` + total_score + `</span>
                     `);
-                $('.death-screen').append('<a href="#" class="btn btn--restart" onclick="location.restart();">Restart</a>');
+                $('.death-screen').append('<a href="#" class="btn btn--restart" onclick="location.reload();">Restart</a>');
             }
 
         });
