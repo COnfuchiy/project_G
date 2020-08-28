@@ -107,15 +107,14 @@
                 }
         }
         else if (event.code == "Space"){
-                if (!document.shooter)
-                    document.shooter = Crafty.e("Delay").delay(cd_shoot(),200,-1);
+                cd_shoot();
             }
         });
-        document.addEventListener('keydown', function(event) {
-            if (event.code ==='Space')
-                if (!document.shooter)
-                    document.shooter = Crafty.e("Delay").delay(cd_shoot(),200,-1);
-        })
+//        document.addEventListener('keydown', function(event) {
+//            if (event.code ==='Space')
+//                if (!document.shooter)
+//                    document.shooter = Crafty.e("Delay").delay(cd_shoot(),200,1);
+//        })
     </script>
 </body>
 </html>

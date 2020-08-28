@@ -55,19 +55,22 @@ function spawn_cd_exchanger() {
 }
 function cd_shoot() {
     if (Crafty.stage.elem.style.background !== "rgb(0, 0, 0)") {//check death screen
-        user_num_cd--;
-        cd_num_text.text(':'+user_num_cd.toString());
-        Crafty.e('2D, Canvas, Collision, cd')
-            .attr({
-                x: player.x + Math.floor(player.h / 2),
-                y: player.y + Math.floor(player.w / 2),
-                z: Setting.player.cd_z_index
-            })
-            .bind("UpdateFrame", function () {
-                this.x = this.x + Setting.player.cd_speed;
-                if (this.x > Platforms.level_x)
-                    this.destroy();
-            });
+        if (user_num_cd) {
+            user_num_cd--;
+            cd_num_text.text(':'+user_num_cd.toString());
+            Crafty.e('2D, Canvas, Collision, cd')
+                .attr({
+                    x: player.x + Math.floor(player.h / 2),
+                    y: player.y + Math.floor(player.w / 2),
+                    z: Setting.player.cd_z_index
+                })
+                .bind("UpdateFrame", function () {
+                    this.x = this.x + Setting.player.cd_speed;
+                    if (this.x > Platforms.level_x)
+                        this.destroy();
+                });
+        }
+
     }
 }
 function set_buff_timer(sprite, del_callback) {
