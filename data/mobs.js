@@ -56,18 +56,15 @@ class Monster {
 
     left_mob(x) {
         let mob_life = MonsterSpawn.mob_num_life.left_walking;
-        Crafty.e('2D, Canvas, Collision, SpriteAnimation, Gravity, Jumper, ' + this._sprites.name)
+        Crafty.e('2D, Canvas, Collision, SpriteAnimation, Gravity, '+MonsterSpawn.name_component+', Jumper, ' + this._sprites.name)
             .attr({
                 x: x + this._sprites.w,
                 y: this._height - this._sprites.h,
                 z: MonsterSpawn.z_index_mobs.left_walking,
             })
-            .gravity('Floor')
+            .gravity(Platforms.component_for_mob)
             .gravityConst(Setting.game.gravity_const)
             .jumpSpeed(MonsterSpawn.left_walking_jump_speed)
-            .onHit('player', function (e) {
-                Crafty.trigger('Death'); //kill player
-            })
             .onHit('cd', function (e) {
                 e[0].obj.destroy();
                 mob_life--;
@@ -88,7 +85,7 @@ class Monster {
                 if (!ground && this.y > 100)
                     this.canJump = true;
             })
-            .bind('LiftedOffGround', function (e) {
+            .bind('LiftedOffGround', function () {
                 this.jump();
             });
     }
@@ -107,7 +104,7 @@ class Monster {
                 if (this.x <= Platforms.level_x - this.w) {
                     if (!shoot_check) {
                         shoot_check = true;
-                        setTimeout(() => {
+                        Crafty.e("Delay").delay(() => {
                             this.animate('before');
                         }, MonsterSpawn.laser_delay);
                     }
@@ -284,7 +281,7 @@ class MonsterSpawn {
                         this.pauseAnimation();
                         (new Monster(93, laser_pos[0], MonsterSpawn.sprite_event_monsters[2], [])).spawn();
                         (new Monster(93, laser_pos[1], MonsterSpawn.sprite_event_monsters[2], [])).spawn();
-                        setTimeout(() => {
+                        Crafty.e("Delay").delay(() => {
                             this.animate('left', -1);
                             this.bind('UpdateFrame', function () {
                                 this.x = this.x + Platforms.current_speed;

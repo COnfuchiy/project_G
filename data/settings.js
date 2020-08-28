@@ -17,6 +17,8 @@ let z_index_map = {
 };
 class Setting {
     static platforms = {
+        name_component:'Floor',
+        component_for_mob:'MobFloor',
         spacing_plat: 100, //space between platform levels
         num_levels: 4,
         ground:500,
@@ -273,6 +275,7 @@ class Setting {
         buff_chance:50,
         z_index_drop:z_index_map.dropped_items,
         z_index_comp:z_index_map.computer,
+        magnet_area_name:'absorb',
         magnet_area: 100,
         magnet_speed:6,
         increase_multiplier:2,
@@ -291,6 +294,26 @@ class Setting {
 
     };
     static player = {
+        name_component:'Player',
+        sprite:{
+            name:'Player',
+            animate:[
+                {
+                    name:'run',
+                    reel:[[0, 0], [1, 0], [2, 0],
+                        [0, 1], [1, 1], [2, 1],
+                        [0, 2], [1, 2],],
+                    time:900,
+                },
+                {
+                    name:'jump',
+                    reel:[[1,1]],
+                    time:1,
+                }
+            ],
+            w:50,
+            h:60,
+        },
         buff_effect_sprites:[
             {
                 name: 'magnet',
@@ -303,6 +326,7 @@ class Setting {
                 h: 120,
             },
         ],
+        start_position:{x:0,y:0},
         cd_speed:10,
         cd_z_index:z_index_map.player,
         speed:300,

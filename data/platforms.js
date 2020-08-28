@@ -7,13 +7,13 @@ class PlatformLevel {
     }
 
     start(delay) {
-        this._loop = setTimeout(() => {
+        this._loop =Crafty.e("Delay").delay(() => {
             if (!Crafty.isPaused()) {
                 if (is_active_spawn) {
                     let item_spawn = ItemDrop.get_drop(Platforms.get_sprite_width(Platforms.random_platforms[this._random_count].name), this._level_y);
                     MonsterSpawn.get_spawn(Platforms.get_sprite_width(Platforms.random_platforms[this._random_count].name), this._level_y, item_spawn);
                 }
-                Crafty.e('2D, Canvas, Floor, ' + Platforms.random_platforms[this._random_count].name)
+                Crafty.e('2D, Canvas, ' +Platforms.name_component+', '+Platforms.component_for_mob+', '+ Platforms.random_platforms[this._random_count].name)
                     .attr({
                         x: this._level_x,
                         y: this._level_y,
@@ -36,6 +36,8 @@ class PlatformLevel {
 }
 
 class Platforms {
+    static name_component = Setting.platforms.name_component;
+    static component_for_mob = Setting.platforms.component_for_mob;
     static platforms_levels = [];
     static spacing_plat = Setting.platforms.spacing_plat;
     static num_levels = Setting.platforms.num_levels;
@@ -49,7 +51,7 @@ class Platforms {
 
     static stop_loop(){
         for (let level of Platforms.platforms_levels){
-            clearTimeout(level._loop);
+            level._loop.destroy();
         }
     }
 

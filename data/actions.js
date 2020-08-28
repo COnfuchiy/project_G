@@ -32,7 +32,7 @@ function set_cd_exchanger_daley() {
 }
 function spawn_cd_exchanger() {
     if (is_active_spawn) {
-        cd_exchanger_loop = setTimeout(function () {
+        cd_exchanger_loop = Crafty.e("Delay").delay(function () {
             Crafty.e('2D, Canvas, cd_exchanger, Collision')
                 .attr({x: Platforms.level_x, y: 450})
                 .bind("UpdateFrame", function () {
@@ -40,9 +40,9 @@ function spawn_cd_exchanger() {
                     if (this.x < -this.w)
                         this.destroy();
                 })
-                .onHit('player', function (e) {
-                    while (user_score >= 500) {
-                        user_score -= 500;
+                .onHit(Setting.player.name_component, function (e) {
+                    while (user_score >= Setting.game.price_cd) {
+                        user_score -= Setting.game.price_cd;
                         user_num_cd++;
                     }
                     cd_num_text.text(':' + user_num_cd.toString());
@@ -54,39 +54,46 @@ function spawn_cd_exchanger() {
     }
 }
 function cd_shoot() {
-    Crafty.e('2D, Canvas, Collision, cd')
-        .attr({
-            x: player.x + Math.floor(player.h / 2),
-            y: player.y + Math.floor(player.w / 2),
-            z: Setting.player.cd_z_index
-        })
-        .bind("UpdateFrame", function () {
-            this.x = this.x + Setting.player.cd_speed;
-            if (this.x > Platforms.level_x)
-                this.destroy();
-        });
+    if (Crafty.stage.elem.style.background !== "rgb(0, 0, 0)") {//check death screen
+        user_num_cd--;
+        cd_num_text.text(':'+user_num_cd.toString());
+        Crafty.e('2D, Canvas, Collision, cd')
+            .attr({
+                x: player.x + Math.floor(player.h / 2),
+                y: player.y + Math.floor(player.w / 2),
+                z: Setting.player.cd_z_index
+            })
+            .bind("UpdateFrame", function () {
+                this.x = this.x + Setting.player.cd_speed;
+                if (this.x > Platforms.level_x)
+                    this.destroy();
+            });
+    }
 }
 function set_buff_timer(sprite, del_callback) {
     let buff_time = Setting.items.buff_time;
-    let timer_img = Crafty.e('2D, Canvas, '+sprite.name)
+    let timer_img = Crafty.e('2D, Canvas, ' + sprite.name)
         .attr({
-            x:0,
-            y:580
+            x: 0,
+            y: 580
         });
-    let timer_num = setText(Math.floor(sprite.w*Setting.screen.scale)+10, Math.floor(580*Setting.screen.scale), (buff_time/1000).toString(), {size: '50px', weight: 'bold'});
-    let timer = setInterval(()=>{
-        if (buff_time===0){
+    let timer_num = setText(Math.floor(sprite.w * Setting.screen.scale) + 10, Math.floor(580 * Setting.screen.scale), (buff_time / 1000).toString(), {
+        size: '50px',
+        weight: 'bold'
+    });
+    let timer = Crafty.e("Delay").delay(() => {
+        if (buff_time === 0) {
             del_callback();
             timer_img.destroy();
             timer_num.destroy();
             ItemDrop.possibility_buff = true;
-            clearInterval(timer);
+            timer.destroy();
         }
-        else{
-            buff_time-=1000;
-            timer_num.text(buff_time/1000).toString();
+        else {
+            buff_time -= 1000;
+            timer_num.text(buff_time / 1000).toString();
         }
-    },1000);
+    }, 1000);
 }
 set_background();
 //global variable
@@ -98,32 +105,43 @@ let total_computer_score = Setting.game.start_num_comp;
 let user_num_cd = 0;
 let is_active_spawn = true;
 let boss_hit_point = 100;
-let current_increase_score=1;
+let current_increase_score = 1;
 //set floor
-Crafty.e('2D, Canvas, Floor')
-    .attr({x: 0, y: Setting.platforms.ground, w: Platforms.level_x, h: 20});
+Crafty.e('2D, Canvas, ' + Platforms.name_component)
+    .attr({x: 0, y: Setting.platforms.ground, w: Platforms.level_x, h: Platforms.sprites[0].h});
 //global events
 Crafty.bind('Death', function () {
-    if (!Crafty('shield').get(0)){
+    if (!Crafty('shield').get(0)) {
         Crafty.defineScene("died", function () {
             Crafty.background("#000");
         });
         Crafty.enterScene('died');
         Platforms.stop_loop();
-        clearTimeout(cd_exchanger_loop);
+        cd_exchanger_loop.destroy();
         $('.buttons').empty();
 
         Crafty.viewport.scale(Setting.screen.scale);
         player.bind('UpdateFrame', function () {
-                if (this.y > Math.floor(document.documentElement.clientHeight / 1.5)) {
-                    this.destroy();
-                    $('body').append('<div class="death-screen"><img src="/AniGayme/sprites/death.png"></div>');
-                    let cd_score = 'CD:' + user_num_cd.toString();
-                    let current_score ='Score:' + user_score.toString();
-                    let total_score ='Total:' + (user_score+500*user_num_cd).toString();
-                }
+            if (this.y > Math.floor(document.documentElement.clientHeight / 1.5)) {
+                this.destroy();
 
-            });
+                let death_sound = new Audio();
+                death_sound.src = './sounds/death.mp3';
+                death_sound.autoplay = true;
+
+                let cd_score = 'CD: ' + user_num_cd.toString();
+                let current_score ='Score: ' + user_score.toString();
+                let total_score ='Total: ' + (user_score+Setting.game.cd_cost*user_num_cd).toString();
+                $('body').append('<div class="death-screen"><img src="./sprites/death.png"><div class="total_stats"></div></div>');
+                $('.total_stats').append(`
+                        <span class="total_label">` + cd_score + `</span>
+                        <span class="total_label">` + current_score + `</span>
+                        <span class="total_label">` + total_score + `</span>
+                    `);
+                $('.death-screen').append('<a href="#" class="btn btn--restart" onclick="location.restart();">Restart</a>');
+            }
+
+        });
     }
 });
 Crafty.bind('Boss', function () {
@@ -134,16 +152,16 @@ Crafty.bind('Shield', function () {
     let shield = Crafty.e('2D, Canvas, shield')
         .attr(
             {
-                x: player.x - Math.floor((Setting.player.buff_effect_sprites[1].w-player.w)/2),
-                y: player.y - Math.floor((Setting.player.buff_effect_sprites[1].h-player.h)/2),
-                z:Setting.player.z_index,
+                x: player.x - Math.floor((Setting.player.buff_effect_sprites[1].w - player.w) / 2),
+                y: player.y - Math.floor((Setting.player.buff_effect_sprites[1].h - player.h) / 2),
+                z: Setting.player.z_index,
             }
         )
         .bind("UpdateFrame", function () {
-            this.x = player.x - Math.floor((Setting.player.buff_effect_sprites[1].w-player.w)/2);
-            this.y = player.y - Math.floor((Setting.player.buff_effect_sprites[1].h-player.h)/2);
+            this.x = player.x - Math.floor((Setting.player.buff_effect_sprites[1].w - player.w) / 2);
+            this.y = player.y - Math.floor((Setting.player.buff_effect_sprites[1].h - player.h) / 2);
         });
-    set_buff_timer(Setting.items.special_items.baff_items[2].sprites,() => {
+    set_buff_timer(Setting.items.special_items.baff_items[2].sprites, () => {
         shield.destroy();
     });
 });
@@ -153,8 +171,8 @@ Crafty.bind('Magnet', function () {
             {
                 x: player.x - Setting.items.magnet_area,
                 y: player.y - Setting.items.magnet_area,
-                h: Setting.items.magnet_area*2 + player.h,
-                w: Setting.items.magnet_area*2 + player.w,
+                h: Setting.items.magnet_area * 2 + player.h,
+                w: Setting.items.magnet_area * 2 + player.w,
             }
         )
         .bind("UpdateFrame", function () {
@@ -164,24 +182,24 @@ Crafty.bind('Magnet', function () {
     let magnet = Crafty.e('2D, Canvas, magnet')
         .attr(
             {
-                x: player.x + Math.floor((Setting.player.buff_effect_sprites[0].w-player.w)/2),
-                y: player.y + Math.floor((Setting.player.buff_effect_sprites[0].h-player.h)/2),
-                z:Setting.player.z_index,
+                x: player.x + Math.floor((Setting.player.buff_effect_sprites[0].w - player.w) / 2),
+                y: player.y + Math.floor((Setting.player.buff_effect_sprites[0].h - player.h) / 2),
+                z: Setting.player.z_index,
             }
         )
         .bind("UpdateFrame", function () {
-            this.x = player.x +Math.floor((Setting.player.buff_effect_sprites[0].w-player.w)/2);
-            this.y = player.y + Math.floor((Setting.player.buff_effect_sprites[0].h-player.h)/2);
+            this.x = player.x + Math.floor((Setting.player.buff_effect_sprites[0].w - player.w) / 2);
+            this.y = player.y + Math.floor((Setting.player.buff_effect_sprites[0].h - player.h) / 2);
         });
-    set_buff_timer(Setting.items.special_items.baff_items[1].sprites,() => {
+    set_buff_timer(Setting.items.special_items.baff_items[1].sprites, () => {
         absorb_field.destroy();
         magnet.destroy();
     });
 });
 Crafty.bind('Increase', function () {
     current_increase_score = Setting.items.increase_multiplier;
-    set_buff_timer(Setting.items.special_items.baff_items[0].sprites,() => {
-        current_increase_score=1;
+    set_buff_timer(Setting.items.special_items.baff_items[0].sprites, () => {
+        current_increase_score = 1;
     });
 });
 //pc spawn

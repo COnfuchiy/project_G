@@ -63,18 +63,18 @@
         $('.button-down').on('touchstart',function(){
             let evt = new KeyboardEvent('keydown', {code:'ArrowDown'});
             document.dispatchEvent(evt);
-            document.go_down = setInterval(()=>{
+            document.go_down = Crafty.e("Delay").delay(()=>{
                 if(player.ground){
                     if(player.y<=430){
                         let lost_ground =  player.ground;
                         player.ground.removeComponent('Floor');
-                        setTimeout(()=>lost_ground.addComponent('Floor'),500);
+                        Crafty.e("Delay").delay(()=>lost_ground.addComponent('Floor'),500);
                     }
                 }
-            },200);
+            },200,-1);
         });
         $('.button-down').on('touchend', function () {
-            clearInterval(document.go_down);
+            document.go_down.destroy();
         });
         $('.button-left').on('touchstart',function () {
             let evt = new KeyboardEvent('keydown', {'keyCode':37, 'which':37});
@@ -93,39 +93,29 @@
             document.dispatchEvent(evt);
         });
         $('.button-enter').on('touchend',function () {
-            if (user_num_cd){
-                user_num_cd--;
-                cd_num_text.text(':'+user_num_cd.toString());
+            if (user_num_cd)
                 cd_shoot();
-            }
-            
-
         });
         document.addEventListener('keydown', function(event) {
-            console.log(1);
         if (event.code == 'ArrowDown' || event.code == 'KeyS') {
             if(player.ground){
                     if(player.y<=430){
                     let lost_ground =  player.ground;
                     player.ground.removeComponent('Floor');
-                    setTimeout(()=>lost_ground.addComponent('Floor'),500);
+                        Crafty.e("Delay").delay(()=>lost_ground.addComponent('Floor'),500);
                     }
                 }
         }
         else if (event.code == "Space"){
-                if (user_num_cd){
-                user_num_cd--;
-                cd_num_text.text(':'+user_num_cd.toString());
-                Crafty.e('2D, Canvas, cd')
-                    .attr({x:player.x+20, y:player.y+20})
-                    .bind("UpdateFrame", function () {
-                        this.x = this.x + 10;
-                        if (this.x > document.documentElement.clientWidth+100)
-                            this.destroy();
-                    });
+                if (!document.shooter)
+                    document.shooter = Crafty.e("Delay").delay(cd_shoot(),200,-1);
             }
-        }
         });
+        document.addEventListener('keydown', function(event) {
+            if (event.code ==='Space')
+                if (!document.shooter)
+                    document.shooter = Crafty.e("Delay").delay(cd_shoot(),200,-1);
+        })
     </script>
 </body>
 </html>

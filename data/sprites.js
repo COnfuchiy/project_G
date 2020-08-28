@@ -32,7 +32,7 @@ Crafty.sprite(42,40,"sprites/items/proc_3.png",{proc_3:[0,0]});
 Crafty.sprite(42,40,"sprites/items/proc_4.png",{proc_4:[0,0]});
 Crafty.sprite(59,40,"sprites/items/usb.png",{usb:[0,0]});
 Crafty.sprite(47,40,"sprites/items/wired_keyboard.png",{wired_keyboard:[0,0]});
-Crafty.sprite(50,60,"sprites/player.png",{player:[0,0]});
+Crafty.sprite(50,60,"sprites/player.png",{Player:[0,0]});
 Crafty.sprite(32,50,"sprites/mobs/robot_1.png",{robot_1:[0,0]});
 Crafty.sprite(28,50,"sprites/mobs/yellow_robot_28x50.png",{yellow_robot:[0,0]});
 Crafty.sprite(30,50,"sprites/mobs/octopus_30x50.png",{octopus:[0,0]});

@@ -22,7 +22,7 @@ class Item {
                 y: this._height - this._sprites[0].h,
                 z: ItemDrop.z_index_comp
             })
-            .onHit('player', function () {
+            .onHit(Setting.player.name_component, function () {
                 if (this[0] !== twice_check) {
                     twice_check = this[0];
                     current_computer_score++;
@@ -61,19 +61,19 @@ class Item {
 
             });
         if (this._type === 'shield') {
-            buff_item.onHit('player', function () {
+            buff_item.onHit(Setting.player.name_component, function () {
                 this.destroy();
                 Crafty.trigger('Shield');
             })
         }
         else if (this._type === 'magnet') {
-            buff_item.onHit('player', function () {
+            buff_item.onHit(Setting.player.name_component, function () {
                 this.destroy();
                 Crafty.trigger('Magnet');
             })
         }
         else {
-            buff_item.onHit('player', function () {
+            buff_item.onHit(Setting.player.name_component, function () {
                 this.destroy();
                 Crafty.trigger('Increase');
             })
@@ -91,7 +91,7 @@ class Item {
                 y: this._height - ItemDrop.fly_drop_height - selected_sprite.h,
                 z: ItemDrop.z_index_drop
             })
-            .onHit('absorb', function (area, first_check) {
+            .onHit(ItemDrop.magnet_area_name, function (area, first_check) {
                 if (first_check){
                     this.bind("UpdateFrame", function () {
                         if (player.x+Math.floor(player.w/2)>=this.x+Math.floor(this.w/2))
@@ -105,7 +105,7 @@ class Item {
                     });
                 }
             })
-            .onHit('player', function () {
+            .onHit(Setting.player.name_component, function () {
                 user_score += item_score*current_increase_score;
                 user_score_text.text(user_score.toString());
                 this.destroy();
@@ -144,6 +144,7 @@ class ItemDrop {
     static z_index_drop = Setting.items.z_index_drop;
     static z_index_comp = Setting.items.z_index_comp;
     static magnet_speed = Setting.items.magnet_speed;
+    static magnet_area_name = Setting.items.magnet_area_name;
     static possibility_buff = true;
     static last_buff_item;
 
