@@ -10,20 +10,21 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin-top: 50px;
+    margin: 50px 0;
+    
+    z-index: 10000;
+    color: #000;
+    opacity: 0;
+    transition: all 2s ease-in;
+    animation: score 3s ease-in 2.5s;
+    animation-fill-mode: forwards;
+    -webkit-font-smoothing: antialiased;
 }
 
 .total_label {
     font-family: 'ds';
     font-weight: 400;
     font-size: 2.7em;
-    z-index: 10000;
-    color: #000;
-    opacity: 0;
-    transition: all 2s ease-in;
-    animation: score 2s ease-in 4s;
-    animation-fill-mode: forwards;
-    -webkit-font-smoothing: antialiased;
 }
 
 @keyframes score {
@@ -67,6 +68,30 @@ body {
 .buttons img {
     width: 230px;
     height: auto;
+}
+
+.btn {
+    /* Button */
+}
+
+.--restart {
+    opacity: 0;
+    color: #000;
+    transition: all 2s ease-in;
+    animation: restart 3s ease-in 4.5s;
+    animation-fill-mode: forwards;
+    -webkit-font-smoothing: antialiased;
+    font-size: 2.5em;
+}
+
+@keyframes restart {
+    0% {
+        opacity: 0;
+        color: #000;
+    } 100% {
+        opacity: 1;
+        color: darkred;
+    }
 }
 
 .death-screen {
