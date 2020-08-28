@@ -41,7 +41,7 @@ function spawn_cd_exchanger() {
                         this.destroy();
                 })
                 .onHit(Setting.player.name_component, function (item, first_check) {
-                    if (first_check){
+                    if (first_check && user_score > Setting.game.cd_cost){
                         Crafty.audio.play('cd_change',1);
                         while (user_score >= Setting.game.cd_cost) {
                             user_score -= Setting.game.cd_cost;
