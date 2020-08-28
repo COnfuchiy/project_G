@@ -72,6 +72,7 @@ body {
 
 .btn {
     /* Button */
+    padding: 15px 55px;
 }
 
 .btn--restart {
@@ -81,8 +82,21 @@ body {
     animation: restart 3s ease-in 4.5s;
     animation-fill-mode: forwards;
     -webkit-font-smoothing: antialiased;
-    font-size: 2.7em;
+    font-size: 2.9em;
     font-family: 'ds';
+    font-weight: 600;
+    
+    border: 2px solid darkred;
+    border-radius: 10px;
+    text-decoration: none;
+    
+    transition: all .2s ease;
+}
+
+.btn--restart:hover,
+.btn--restart:active {
+    background: darkred;
+    color: #000 !important;
 }
 
 @keyframes restart {
