@@ -41,8 +41,8 @@ function spawn_cd_exchanger() {
                         this.destroy();
                 })
                 .onHit(Setting.player.name_component, function (e) {
-                    while (user_score >= Setting.game.price_cd) {
-                        user_score -= Setting.game.price_cd;
+                    while (user_score >= Setting.game.cd_cost) {
+                        user_score -= Setting.game.cd_cost;
                         user_num_cd++;
                     }
                     cd_num_text.text(':' + user_num_cd.toString());
