@@ -41,8 +41,8 @@ function spawn_cd_exchanger() {
                         this.destroy();
                 })
                 .onHit('player', function (e) {
-                    while (user_score >= 500) {
-                        user_score -= 500;
+                    while (user_score >= Setting.game.cd_cost) {
+                        user_score -= Setting.game.cd_cost;
                         user_num_cd++;
                     }
                     cd_num_text.text(':' + user_num_cd.toString());
@@ -117,12 +117,21 @@ Crafty.bind('Death', function () {
         player.bind('UpdateFrame', function () {
                 if (this.y > Math.floor(document.documentElement.clientHeight / 1.5)) {
                     this.destroy();
-                    $('body').append('<div class="death-screen"><img src="/AniGayme/sprites/death.png"></div>');
-                    let cd_score = 'CD:' + user_num_cd.toString();
-                    let current_score ='Score:' + user_score.toString();
-                    let total_score ='Total:' + (user_score+500*user_num_cd).toString();
+                    
+                    let death_sound = new Audio();
+                    death_sound.src = './sounds/death.mp3';
+                    death_sound.autoplay = true;
+                    
+                    let cd_score = 'CD: ' + user_num_cd.toString();
+                    let current_score ='Score: ' + user_score.toString();
+                    let total_score ='Total: ' + (user_score+Setting.game.cd_cost*user_num_cd).toString();
+                    $('body').append('<div class="death-screen"><img src="./sprites/death.png"><div class="total_stats"></div></div>');
+                    $('.total_stats').append(`
+                        <span class="total_label">` + cd_score + `</span>
+                        <span class="total_label">` + current_score + `</span>
+                        <span class="total_label">` + total_score + `</span>
+                    `);
                 }
-
             });
     }
 });

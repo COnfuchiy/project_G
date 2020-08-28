@@ -288,7 +288,7 @@ class Setting {
         cd_exchanger_min_delay:8000,
         cd_exchanger_max_delay:14000,
         cd_exchanger_delay_step:1000,
-
+        cd_cost:500,
     };
     static player = {
         buff_effect_sprites:[

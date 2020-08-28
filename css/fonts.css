@@ -5,3 +5,11 @@
   font-style: normal;
 }
 
+@font-face {
+  font-family: 'ds';
+  src: url('../fonts/ds.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+
