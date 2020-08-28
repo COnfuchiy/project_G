@@ -81,7 +81,8 @@ body {
     animation: restart 3s ease-in 4.5s;
     animation-fill-mode: forwards;
     -webkit-font-smoothing: antialiased;
-    font-size: 2.5em;
+    font-size: 2.7em;
+    font-family: 'ds';
 }
 
 @keyframes restart {
