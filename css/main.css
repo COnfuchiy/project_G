@@ -37,3 +37,23 @@ body{
     width: 230px;
     height: auto;
 }
+.death-screen{
+    position: absolute;
+    top:40%;
+    left: 20%;
+    opacity:0; /*Элемент полностью прозрачный (невидимый)*/
+    transition: 1s; /*Скорость перехода состояния элемента*/
+    animation: show 2s 1; /* Указываем название анимации, её время и количество повторов*/
+    animation-fill-mode: forwards; /* Чтобы элемент оставался в конечном состоянии анимации */
+    animation-delay: 1s; /* Задержка перед началом */
+}
+@keyframes show{
+    0%{
+        opacity:0;
+        transform: scale(0.9);
+    }
+    100% {
+        opacity:1;
+        transform: scale(1.1);
+    }
+}

@@ -111,11 +111,16 @@ Crafty.bind('Death', function () {
         Crafty.enterScene('died');
         Platforms.stop_loop();
         clearTimeout(cd_exchanger_loop);
+        $('.buttons').empty();
+
         Crafty.viewport.scale(Setting.screen.scale);
         player.bind('UpdateFrame', function () {
                 if (this.y > Math.floor(document.documentElement.clientHeight / 1.5)) {
                     this.destroy();
-                    location.reload();
+                    $('body').append('<div class="death-screen"><img src="/AniGayme/sprites/death.png"></div>');
+                    let cd_score = 'CD:' + user_num_cd.toString();
+                    let current_score ='Score:' + user_score.toString();
+                    let total_score ='Total:' + (user_score+500*user_num_cd).toString();
                 }
 
             });
