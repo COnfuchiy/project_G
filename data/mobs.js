@@ -28,6 +28,7 @@ class Monster {
                     user_score += MonsterSpawn.destroy_score;
                     user_score_text.text(user_score.toString());
                     this.destroy();
+                    Crafty.audio.play('walk_bot',1);
                 }
             })
             .reel('back', this._sprites.time, this._sprites.reels[1])
@@ -72,7 +73,12 @@ class Monster {
                     user_score += MonsterSpawn.destroy_score;
                     user_score_text.text(user_score.toString());
                     this.destroy();
+                    if (this.w===48)
+                        Crafty.audio.play('cam_bot',1);
+                    else
+                        Crafty.audio.play('skeleton',1);
                 }
+
             })
             .reel('left', this._sprites.time, this._sprites.reels[0])
             .animate('left', -1)
@@ -102,6 +108,7 @@ class Monster {
             .reel('after', this._sprites.time, this._sprites.reels[1])
             .bind("UpdateFrame", function () {
                 if (this.x <= Platforms.level_x - this.w) {
+                    Crafty.audio.play('laser',1);
                     if (!shoot_check) {
                         shoot_check = true;
                         Crafty.e("Delay").delay(() => {

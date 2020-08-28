@@ -102,7 +102,7 @@
                     if(player.y<=430){
                     let lost_ground =  player.ground;
                     player.ground.removeComponent('Floor');
-                        Crafty.e("Delay").delay(()=>lost_ground.addComponent('Floor'),500);
+                    Crafty.e("Delay").delay(()=>lost_ground.addComponent('Floor'),500);
                     }
                 }
         }

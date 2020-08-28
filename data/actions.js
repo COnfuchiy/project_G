@@ -40,13 +40,16 @@ function spawn_cd_exchanger() {
                     if (this.x < -this.w)
                         this.destroy();
                 })
-                .onHit(Setting.player.name_component, function (e) {
-                    while (user_score >= Setting.game.cd_cost) {
-                        user_score -= Setting.game.cd_cost;
-                        user_num_cd++;
+                .onHit(Setting.player.name_component, function (item, first_check) {
+                    if (first_check){
+                        Crafty.audio.play('cd_change',1);
+                        while (user_score >= Setting.game.cd_cost) {
+                            user_score -= Setting.game.cd_cost;
+                            user_num_cd++;
+                        }
+                        cd_num_text.text(':' + user_num_cd.toString());
+                        user_score_text.text(user_score.toString());
                     }
-                    cd_num_text.text(':' + user_num_cd.toString());
-                    user_score_text.text(user_score.toString());
                 });
             spawn_cd_exchanger();
         }, set_cd_exchanger_daley());
@@ -56,6 +59,7 @@ function spawn_cd_exchanger() {
 function cd_shoot() {
     if (Crafty.stage.elem.style.background !== "rgb(0, 0, 0)") {//check death screen
         if (user_num_cd) {
+            Crafty.audio.play('shoot',1);
             user_num_cd--;
             cd_num_text.text(':'+user_num_cd.toString());
             Crafty.e('2D, Canvas, Collision, cd')

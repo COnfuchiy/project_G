@@ -24,6 +24,7 @@ class Item {
             })
             .onHit(Setting.player.name_component, function () {
                 if (this[0] !== twice_check) {
+                    Crafty.audio.play('comp',1);
                     twice_check = this[0];
                     current_computer_score++;
                     comp_score_text.text(current_computer_score.toString() + '/' + total_computer_score);
@@ -106,6 +107,7 @@ class Item {
                 }
             })
             .onHit(Setting.player.name_component, function () {
+                Crafty.audio.play('item',1);
                 user_score += item_score*current_increase_score;
                 user_score_text.text(user_score.toString());
                 this.destroy();
