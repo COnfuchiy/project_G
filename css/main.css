@@ -5,6 +5,38 @@
     margin-top: 10px;
 }
 
+.total_stats {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 50px 0;
+    
+    z-index: 10000;
+    color: #000;
+    opacity: 0;
+    transition: all 2s ease-in;
+    animation: score 3s ease-in 2.5s;
+    animation-fill-mode: forwards;
+    -webkit-font-smoothing: antialiased;
+}
+
+.total_label {
+    font-family: 'ds';
+    font-weight: 400;
+    font-size: 2.7em;
+}
+
+@keyframes score {
+    0% {
+        opacity: 0;
+        color: #000;
+    } 100% {
+        opacity: .8;
+        color: #fff;
+    }
+}
+
 img, .DOM {
     pointer-events: none;
     -webkit-touch-callout: none;
@@ -15,7 +47,7 @@ img, .DOM {
     user-select: none;
 }
 
-body{
+body {
     margin: 0;
 }
 
@@ -37,23 +69,57 @@ body{
     width: 230px;
     height: auto;
 }
-.death-screen{
-    position: absolute;
-    top:40%;
-    left: 20%;
-    opacity:0; /*Элемент полностью прозрачный (невидимый)*/
-    transition: 1s; /*Скорость перехода состояния элемента*/
-    animation: show 2s 1; /* Указываем название анимации, её время и количество повторов*/
-    animation-fill-mode: forwards; /* Чтобы элемент оставался в конечном состоянии анимации */
-    animation-delay: 1s; /* Задержка перед началом */
+
+.btn {
+    /* Button */
 }
-@keyframes show{
-    0%{
-        opacity:0;
-        transform: scale(0.9);
+
+.btn--restart {
+    opacity: 0;
+    color: #000;
+    transition: all 2s ease-in;
+    animation: restart 3s ease-in 4.5s;
+    animation-fill-mode: forwards;
+    -webkit-font-smoothing: antialiased;
+    font-size: 2.7em;
+    font-family: 'ds';
+}
+
+@keyframes restart {
+    0% {
+        opacity: 0;
+        color: #000;
+    } 100% {
+        opacity: 1;
+        color: darkred;
     }
-    100% {
+}
+
+.death-screen {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    min-height: 100vh;
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    
+    opacity: 0; /*Элемент полностью прозрачный (невидимый)*/
+    transition: .5s ease-in; /*Скорость перехода состояния элемента*/
+    animation: show 6s 1; /* Указываем название анимации, её время и количество повторов*/
+    animation-fill-mode: forwards; /* Чтобы элемент оставался в конечном состоянии анимации */
+    animation-delay: 0s; /* Задержка перед началом */
+}
+
+@keyframes show {
+    0% {
+        opacity:0;
+        transform: scale(.5);
+    } 100% {
         opacity:1;
-        transform: scale(1.1);
+        transform: scale(1.0);
     }
 }
