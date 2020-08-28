@@ -131,7 +131,7 @@ Crafty.bind('Death', function () {
                         <span class="total_label">` + current_score + `</span>
                         <span class="total_label">` + total_score + `</span>
                     `);
-                    $('.death-screen').append('<a href="#" class="btn --restart" onclick="location.restart();">Restart</a>');
+                    $('.death-screen').append('<a href="#" class="btn btn--restart" onclick="location.restart();">Restart</a>');
                 }
             });
     }
