@@ -23,6 +23,7 @@
     transition: all 2s ease-in;
     animation: score 2s ease-in 4s;
     animation-fill-mode: forwards;
+    -webkit-font-smoothing: antialiased;
 }
 
 @keyframes score {
@@ -47,7 +48,6 @@ img, .DOM {
 
 body {
     margin: 0;
-    overflow: hidden;
 }
 
 .buttons {
@@ -94,6 +94,6 @@ body {
         transform: scale(.5);
     } 100% {
         opacity:1;
-        transform: scale(1.1);
+        transform: scale(1.0);
     }
 }
