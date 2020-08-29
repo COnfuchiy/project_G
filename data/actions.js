@@ -158,6 +158,7 @@ Crafty.bind('Boss', function () {
 });
 Crafty.bind('Shield', function () {
     Crafty.audio.play(Setting.soundboard.sound.player[1].name,1,Setting.soundboard.sound.player[1].volume);
+    Crafty.audio.play(Setting.soundboard.sound.player[4].name,1,Setting.soundboard.sound.player[4].volume);
     let shield = Crafty.e('2D, Canvas, shield')
         .attr(
             {
@@ -172,9 +173,11 @@ Crafty.bind('Shield', function () {
         });
     set_buff_timer(Setting.items.special_items.baff_items[2].sprites, () => {
         shield.destroy();
+        Crafty.audio.stop(Setting.soundboard.sound.player[4].name);
     });
 });
 Crafty.bind('Magnet', function () {
+    Crafty.audio.play(Setting.soundboard.sound.player[3].name,-1,Setting.soundboard.sound.player[3].volume);
     let absorb_field = Crafty.e('2D, Canvas, Collision, absorb')
         .attr(
             {
@@ -201,11 +204,13 @@ Crafty.bind('Magnet', function () {
             this.y = player.y + Math.floor((Setting.player.buff_effect_sprites[0].h - player.h) / 2);
         });
     set_buff_timer(Setting.items.special_items.baff_items[1].sprites, () => {
+        Crafty.audio.stop(Setting.soundboard.sound.player[3].name);
         absorb_field.destroy();
         magnet.destroy();
     });
 });
 Crafty.bind('Increase', function () {
+    Crafty.audio.play(Setting.soundboard.sound.player[5].name,1,Setting.soundboard.sound.player[5].volume);
     current_increase_score = Setting.items.increase_multiplier;
     set_buff_timer(Setting.items.special_items.baff_items[0].sprites, () => {
         current_increase_score = 1;

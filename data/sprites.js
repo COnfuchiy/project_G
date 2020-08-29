@@ -46,6 +46,9 @@ Crafty.sprite(62,50,"sprites/items/computer.png",{comp_off:[0,0],comp_on:[1,0]})
 Crafty.sprite(567,520,"sprites/fon.png",{fon:[0,0]});
 Crafty.audio.add("shoot", "sounds/player/Player_Shoot.ogg");
 Crafty.audio.add("shield", "sounds/player/Player_Shield.wav");
+Crafty.audio.add("shield_active", "sounds/player/Shield_Activated.mp3");
+Crafty.audio.add("magnet", "sounds/player/Player_Magnet.mp3");
+Crafty.audio.add("increase", "sounds/player/Double_Points_Pickup.mp3");
 Crafty.audio.add("laser", "sounds/laser/Laser_Full.mp3");
 Crafty.audio.add("cd_change", "sounds/player/Player_CD_Change.mp3");
 Crafty.audio.add("comp", "sounds/player/Player_Computer_Touch.wav");

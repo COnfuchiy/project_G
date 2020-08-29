@@ -66,7 +66,20 @@ class Setting {
                 {
                     name:'cd_change',
                     volume:1
-                }
+                },
+                {
+                    name:'magnet',
+                    volume:0.4
+                },
+                {
+                    name:'shield_active',
+                    volume:1
+                },
+                {
+                    name:'increase',
+                    volume:1
+                },
+
             ],
             items:[
                 {
