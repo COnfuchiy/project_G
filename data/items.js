@@ -24,7 +24,7 @@ class Item {
             })
             .onHit(Setting.player.name_component, function () {
                 if (this[0] !== twice_check) {
-                    Crafty.audio.play('comp',1);
+                    Crafty.audio.play(ItemDrop.sounds[1].name,1,ItemDrop.sounds[1].volume);
                     twice_check = this[0];
                     current_computer_score++;
                     comp_score_text.text(current_computer_score.toString() + '/' + total_computer_score);
@@ -107,7 +107,7 @@ class Item {
                 }
             })
             .onHit(Setting.player.name_component, function () {
-                Crafty.audio.play('item',1);
+                Crafty.audio.play(ItemDrop.sounds[0].name,1,ItemDrop.sounds[0].volume);
                 user_score += item_score*current_increase_score;
                 user_score_text.text(user_score.toString());
                 this.destroy();
@@ -147,6 +147,7 @@ class ItemDrop {
     static z_index_comp = Setting.items.z_index_comp;
     static magnet_speed = Setting.items.magnet_speed;
     static magnet_area_name = Setting.items.magnet_area_name;
+    static sounds = Setting.soundboard.sound.items;
     static possibility_buff = true;
     static last_buff_item;
 

@@ -44,7 +44,8 @@ Crafty.sprite(35,52,"sprites/mobs/fly_bot.png",{fly_bot:[0,0]});
 Crafty.sprite(211,221,"sprites/mobs/proff_G.png",{proff_G:[0,0]});
 Crafty.sprite(62,50,"sprites/items/computer.png",{comp_off:[0,0],comp_on:[1,0]});
 Crafty.sprite(567,520,"sprites/fon.png",{fon:[0,0]});
-Crafty.audio.add("shoot", "sounds/player/Player_Shoot.mp3");
+Crafty.audio.add("shoot", "sounds/player/Player_Shoot.ogg");
+Crafty.audio.add("shield", "sounds/player/Player_Shield.wav");
 Crafty.audio.add("laser", "sounds/laser/Laser_Full.mp3");
 Crafty.audio.add("cd_change", "sounds/player/Player_CD_Change.mp3");
 Crafty.audio.add("comp", "sounds/player/Player_Computer_Touch.wav");
@@ -52,4 +53,13 @@ Crafty.audio.add("item", "sounds/items/Item_Pickip_Full.mp3");
 Crafty.audio.add("cam_bot", "sounds/robots/Cam_Robot_Death.mp3");
 Crafty.audio.add("walk_bot", "sounds/robots/Default_Robot_Death.wav");
 Crafty.audio.add("skeleton", "sounds/robots/Skeleton_Death.mp3");
+Crafty.audio.add("fly", "sounds/robots/Fly_Death.wav");
+Crafty.audio.add("g_app", "sounds/g/G_Appearance.mp3");
+Crafty.audio.add("g_hit", "sounds/g/G_Hit.mp3");
+Crafty.audio.add("g_laugh", "sounds/g/G_Laugh.mp3");
+Crafty.audio.add("g_move", "sounds/g/G_Move.mp3");
+Crafty.audio.add("main_theme1", "sounds/music/Main_1.mp3");
+Crafty.audio.add("main_theme2", "sounds/music/Main_2.mp3");
+Crafty.audio.add("boss_theme", "sounds/music/Fight.mp3");
+
 

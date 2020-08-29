@@ -42,7 +42,7 @@ function spawn_cd_exchanger() {
                 })
                 .onHit(Setting.player.name_component, function (item, first_check) {
                     if (first_check && user_score > Setting.game.cd_cost){
-                        Crafty.audio.play('cd_change',1);
+                        Crafty.audio.play(Setting.soundboard.sound.player[2].name,1,Setting.soundboard.sound.player[2].volume);
                         while (user_score >= Setting.game.cd_cost) {
                             user_score -= Setting.game.cd_cost;
                             user_num_cd++;
@@ -59,7 +59,7 @@ function spawn_cd_exchanger() {
 function cd_shoot() {
     if (Crafty.stage.elem.style.background !== "rgb(0, 0, 0)") {//check death screen
         if (user_num_cd) {
-            Crafty.audio.play('shoot',1);
+            Crafty.audio.play(Setting.soundboard.sound.player[0].name,1,Setting.soundboard.sound.player[0].volume);
             user_num_cd--;
             cd_num_text.text(':'+user_num_cd.toString());
             Crafty.e('2D, Canvas, Collision, cd')
@@ -123,6 +123,7 @@ Crafty.bind('Death', function () {
             Crafty.background("#000");
         });
         Crafty.enterScene('died');
+        Crafty.audio.stop();
         Platforms.stop_loop();
         cd_exchanger_loop.destroy();
         $('.buttons').empty();
@@ -156,6 +157,7 @@ Crafty.bind('Boss', function () {
     MonsterSpawn.boss_spawn();
 });
 Crafty.bind('Shield', function () {
+    Crafty.audio.play(Setting.soundboard.sound.player[1].name,1,Setting.soundboard.sound.player[1].volume);
     let shield = Crafty.e('2D, Canvas, shield')
         .attr(
             {

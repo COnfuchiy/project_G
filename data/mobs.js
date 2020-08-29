@@ -28,7 +28,7 @@ class Monster {
                     user_score += MonsterSpawn.destroy_score;
                     user_score_text.text(user_score.toString());
                     this.destroy();
-                    Crafty.audio.play('walk_bot',1);
+                    Crafty.audio.play(MonsterSpawn.mobs_sounds[2].name,1,MonsterSpawn.mobs_sounds[2].volume);
                 }
             })
             .reel('back', this._sprites.time, this._sprites.reels[1])
@@ -74,9 +74,9 @@ class Monster {
                     user_score_text.text(user_score.toString());
                     this.destroy();
                     if (this.w===48)
-                        Crafty.audio.play('cam_bot',1);
+                        Crafty.audio.play(MonsterSpawn.mobs_sounds[1].name,1,MonsterSpawn.mobs_sounds[1].volume);
                     else
-                        Crafty.audio.play('skeleton',1);
+                        Crafty.audio.play(MonsterSpawn.mobs_sounds[3].name,1,MonsterSpawn.mobs_sounds[3].volume);
                 }
 
             })
@@ -108,8 +108,8 @@ class Monster {
             .reel('after', this._sprites.time, this._sprites.reels[1])
             .bind("UpdateFrame", function () {
                 if (this.x <= Platforms.level_x - this.w) {
-                    Crafty.audio.play('laser',1);
                     if (!shoot_check) {
+                        Crafty.audio.play(MonsterSpawn.mobs_sounds[0].name,1,MonsterSpawn.mobs_sounds[0].volume);
                         shoot_check = true;
                         Crafty.e("Delay").delay(() => {
                             this.animate('before');
@@ -151,6 +151,7 @@ class Monster {
                 e[0].obj.destroy();
                 mob_life--;
                 if (mob_life === 0) {
+                    Crafty.audio.play(MonsterSpawn.mobs_sounds[4].name,1,MonsterSpawn.mobs_sounds[4].volume);
                     user_score += MonsterSpawn.destroy_score;
                     user_score_text.text(user_score.toString());
                     this.destroy();
@@ -231,6 +232,8 @@ class MonsterSpawn {
     static boss_delay = Setting.game.boss_delay;
     static boss_available_levels = Setting.mobs.boss_available_levels;
     static mob_num_life = Setting.mobs.mob_num_life;
+    static mobs_sounds = Setting.soundboard.sound.mobs;
+    static G_sounds = Setting.soundboard.sound.boss;
     static pseudo_random_events = [];
 
     static get_spawn(platforms_width, height, items) {
@@ -255,6 +258,10 @@ class MonsterSpawn {
         let level_y = MonsterSpawn.boss_available_levels[getRandomInt(MonsterSpawn.boss_available_levels.length)];
         let laser_pos = MonsterSpawn.calc_y_laser(level_y);
         let boss_plat;
+        let hit_delay=false;
+        Crafty.audio.stop(Setting.soundboard.music[0].name);
+        Crafty.audio.play(MonsterSpawn.G_sounds[3].name,-1,MonsterSpawn.G_sounds[3].volume);
+        Crafty.audio.play(Setting.soundboard.music[2].name,1,Setting.soundboard.music[2].volume);
         let boss_g = Crafty.e('2D, Canvas, Collision, '+MonsterSpawn.name_component+',SpriteAnimation, ' + MonsterSpawn.G.name)
             .attr({
                 x: Platforms.level_x + MonsterSpawn.G.w,
@@ -263,6 +270,12 @@ class MonsterSpawn {
             })
             .onHit('cd', function (e) {
                 e[0].obj.destroy();
+                if (!hit_delay){
+                    Crafty.audio.play(MonsterSpawn.G_sounds[1].name,-1,MonsterSpawn.G_sounds[1].volume);
+                    hit_delay = true;
+                    Crafty.e("Delay").delay(()=>hit_delay=false,800);
+                }
+
                 boss_hit_point -= MonsterSpawn.cd_value_boss;
                 boss_hp_text.text(boss_hit_point.toString() + '/100');
                 if (boss_hit_point === 0) {
@@ -280,6 +293,8 @@ class MonsterSpawn {
                 if (!is_active_spawn) {
                     this.x = this.x - Platforms.current_speed;
                     if (this.x < Platforms.level_x - this.w) {
+                        Crafty.audio.play(MonsterSpawn.G_sounds[0].name,-1,MonsterSpawn.G_sounds[0].volume);
+                        Crafty.audio.stop(MonsterSpawn.G_sounds[3].name);
                         is_active_spawn = true;
                         boss_hp_text = setText(document.documentElement.clientWidth / 2, 50, boss_hit_point.toString() + '/100', {
                             size: '50px',
@@ -290,11 +305,15 @@ class MonsterSpawn {
                         (new Monster(93, laser_pos[1], MonsterSpawn.sprite_event_monsters[2], [])).spawn();
                         Crafty.e("Delay").delay(() => {
                             this.animate('left', -1);
+                            Crafty.audio.play(MonsterSpawn.G_sounds[3].name,-1,MonsterSpawn.G_sounds[3].volume);
+                            Crafty.audio.play(MonsterSpawn.G_sounds[2].name,-1,MonsterSpawn.G_sounds[2].volume);
                             this.bind('UpdateFrame', function () {
                                 this.x = this.x + Platforms.current_speed;
                                 if (this.x > Platforms.level_x + this.w) {
                                     boss_hp_text.destroy();
                                     this.destroy();
+                                    Crafty.audio.stop(Setting.soundboard.music[2].name);
+                                    Crafty.audio.stop(MonsterSpawn.G_sounds[3].name);
                                 }
                             });
                             if (boss_plat !== undefined) {
