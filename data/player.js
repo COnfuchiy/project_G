@@ -13,6 +13,10 @@ let player = Crafty.e('2D, Canvas, Persist, Twoway, Gravity, Collision, Motion, 
         if (check_twice)
             Crafty.trigger('Death');
     })
+    .onHit(BossFight.name_component, function(boss, check_twice) {
+        if (check_twice)
+            Crafty.trigger('Death');
+    })
     .onHit(Platforms.name_component, function(e) {
         let to_ground = e[0].obj;
         to_ground.removeComponent(Platforms.name_component);
