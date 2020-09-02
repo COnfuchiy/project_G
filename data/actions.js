@@ -31,28 +31,31 @@ function set_cd_exchanger_daley() {
     return Setting.game.cd_exchanger_min_delay + getRandomInt(middle_in_sec) * Setting.game.cd_exchanger_delay_step;
 }
 function spawn_cd_exchanger() {
+    Crafty.e('2D, Canvas, cd_exchanger, Collision')
+        .attr({x: Platforms.level_x, y: 450})
+        .bind("UpdateFrame", function () {
+            this.x = this.x - Platforms.current_speed;
+            if (this.x < -this.w)
+                this.destroy();
+        })
+        .onHit(Setting.player.name_component, function (item, first_check) {
+            if (first_check && user_score > Setting.game.cd_cost){
+                Crafty.audio.play(Setting.soundboard.sound.player[2].name,1,Setting.soundboard.sound.player[2].volume);
+                while (user_score >= Setting.game.cd_cost) {
+                    user_score -= Setting.game.cd_cost;
+                    user_num_cd++;
+                }
+                cd_num_text.text(':' + user_num_cd.toString());
+                user_score_text.text(user_score.toString());
+            }
+        });
+}
+function cd_exchanger_loop(delay) {
     if (is_active_spawn) {
-        cd_exchanger_loop = Crafty.e("Delay").delay(function () {
-            Crafty.e('2D, Canvas, cd_exchanger, Collision')
-                .attr({x: Platforms.level_x, y: 450})
-                .bind("UpdateFrame", function () {
-                    this.x = this.x - Platforms.current_speed;
-                    if (this.x < -this.w)
-                        this.destroy();
-                })
-                .onHit(Setting.player.name_component, function (item, first_check) {
-                    if (first_check && user_score > Setting.game.cd_cost){
-                        Crafty.audio.play(Setting.soundboard.sound.player[2].name,1,Setting.soundboard.sound.player[2].volume);
-                        while (user_score >= Setting.game.cd_cost) {
-                            user_score -= Setting.game.cd_cost;
-                            user_num_cd++;
-                        }
-                        cd_num_text.text(':' + user_num_cd.toString());
-                        user_score_text.text(user_score.toString());
-                    }
-                });
+        cd_exchanger = Crafty.e("Delay").delay(function () {
             spawn_cd_exchanger();
-        }, set_cd_exchanger_daley());
+            cd_exchanger_loop(set_cd_exchanger_daley());
+        }, delay);
 
     }
 }
@@ -105,7 +108,7 @@ function set_buff_timer(sprite, del_callback) {
 set_background();
 //global variable
 let user_score = 0;
-let cd_exchanger_loop;
+let cd_exchanger;
 let current_computer_score = 0;
 let special_mob_counter = 0;
 let total_computer_score = Setting.game.start_num_comp;
@@ -125,7 +128,7 @@ Crafty.bind('Death', function () {
         Crafty.enterScene('died');
         Crafty.audio.stop();
         Platforms.stop_loop();
-        cd_exchanger_loop.destroy();
+        cd_exchanger.destroy();
         $('.buttons').empty();
 
         Crafty.viewport.scale(Setting.screen.scale);
@@ -154,7 +157,17 @@ Crafty.bind('Death', function () {
 });
 Crafty.bind('Boss', function () {
     is_active_spawn = false;
-    MonsterSpawn.boss_spawn();
+    cd_exchanger.destroy();
+    cd_exchanger_loop(set_cd_exchanger_daley());
+    BossFight.set_boss_fight();
+});
+Crafty.bind('Boss Death', function () {
+    is_active_spawn = true;
+    current_computer_score = 0;
+    total_computer_score += Setting.game.increase_num_comp;
+    comp_score_text.text(current_computer_score.toString() + '/' + total_computer_score.toString());
+    boss_hp_text.destroy();
+    boss_hit_point = 100;
 });
 Crafty.bind('Shield', function () {
     Crafty.audio.play(Setting.soundboard.sound.player[1].name,1,Setting.soundboard.sound.player[1].volume);
@@ -218,7 +231,7 @@ Crafty.bind('Increase', function () {
 });
 //pc spawn
 
-spawn_cd_exchanger(set_cd_exchanger_daley());
+cd_exchanger_loop(set_cd_exchanger_daley());
 //set scale
 Crafty.viewport.scale(Setting.screen.scale);
 // cd pic
@@ -232,6 +245,6 @@ setText(300, 780, 'Score:', {size: '50px', weight: 'bold'});
 // user score number
 let user_score_text = setText(500, 780, user_score.toString(), {size: '50px', weight: 'bold'});
 // comp score number
-let comp_score_text = setText(100, 780, '0/10', {size: '50px', weight: 'bold'});
+let comp_score_text = setText(100, 780, '0/'+total_computer_score.toString(), {size: '50px', weight: 'bold'});
 //game left move
 Platforms.loop();

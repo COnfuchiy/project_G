@@ -15,24 +15,19 @@ class Item {
     comp_drop() {
         let x = ItemDrop.calc_middle_of_plat(this._platforms_width);
         let comp_on = this._sprites[1].name;
-        let twice_check = 0;
         Crafty.e('2D, Canvas, Collision,' + this._sprites[0].name)
             .attr({
                 x: x - parseInt(this._sprites[0].w / 2),
                 y: this._height - this._sprites[0].h,
                 z: ItemDrop.z_index_comp
             })
-            .onHit(Setting.player.name_component, function () {
-                if (this[0] !== twice_check) {
+            .onHit(Setting.player.name_component, function (player, twice_check) {
+                if (twice_check) {
                     Crafty.audio.play(ItemDrop.sounds[1].name,1,ItemDrop.sounds[1].volume);
-                    twice_check = this[0];
                     current_computer_score++;
-                    comp_score_text.text(current_computer_score.toString() + '/' + total_computer_score);
-                    if (current_computer_score === total_computer_score) {
+                    comp_score_text.text(current_computer_score.toString() + '/' + total_computer_score.toString());
+                    if (current_computer_score === total_computer_score)
                         Crafty.trigger('Boss');
-                        current_computer_score = 0;
-                        comp_score_text.text(current_computer_score.toString() + '/' + total_computer_score);
-                    }
                     this.sprite(comp_on);
                 }
 

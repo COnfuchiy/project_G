@@ -40,8 +40,10 @@ Crafty.sprite(26,50,"sprites/mobs/robocat_26x50.png",{robocat:[0,0]});
 Crafty.sprite(49,60,"sprites/mobs/skeleton.png",{skeleton:[0,0]});
 Crafty.sprite(48,82,"sprites/mobs/cam_shoot.png",{cam:[0,0]});
 Crafty.sprite(1300,64,"sprites/mobs/laser-evtanazer.png",{laser:[0,6]});
+Crafty.sprite(64,500,"sprites/mobs/laser-evtanazer-red.png",{laser_red:[6,0]});
 Crafty.sprite(35,52,"sprites/mobs/fly_bot.png",{fly_bot:[0,0]});
 Crafty.sprite(211,221,"sprites/mobs/proff_G.png",{proff_G:[0,0]});
+Crafty.sprite(166,145,"sprites/mobs/proff_G_head.png",{proff_G_head:[0,0]});
 Crafty.sprite(62,50,"sprites/items/computer.png",{comp_off:[0,0],comp_on:[1,0]});
 Crafty.sprite(567,520,"sprites/fon.png",{fon:[0,0]});
 Crafty.audio.add("shoot", "sounds/player/Player_Shoot.ogg");
@@ -64,5 +66,6 @@ Crafty.audio.add("g_move", "sounds/g/G_Move.mp3");
 Crafty.audio.add("main_theme1", "sounds/music/Main_1.mp3");
 Crafty.audio.add("main_theme2", "sounds/music/Main_2.mp3");
 Crafty.audio.add("boss_theme", "sounds/music/Fight.mp3");
+
 
 

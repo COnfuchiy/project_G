@@ -13,7 +13,7 @@ let z_index_map = {
         laser:7,
         fly:8,
     },
-    boss:9
+    boss:3
 };
 class Setting {
     static soundboard = {
@@ -377,11 +377,37 @@ class Setting {
         buff_time:7000,//time in msc
         buff_cooldown:3000
     };
+    static boss = {
+        name_component:'boss',
+        min_num_stage:3,
+        fly_mob_delay:800,
+        fly_mob_speed:2,
+        wall_delay:2000,
+        boss_fly_speed:{x:(Setting.screen.width>1000?2*Setting.platforms.current_speed:1.2*Setting.platforms.current_speed),y:Setting.platforms.current_speed},
+        cd_value_boss:5, //hp decrease for each hit
+        boss_delay:2000, // num sec when the boss is standing
+        boss_stage:['two_laser', 'two_fly', 'red_laser', 'shield', 'fly_head1','fly_head2'],
+        boss_sprite: {
+            name: 'proff_G',
+            reels: [
+                [[0, 0], [1, 0], [2, 0], [3, 0], [4, 0], [5, 0]],// to left
+            ],
+            w: 221,
+            h: 221,
+            time: 300
+        },
+        boss_head_sprite:{
+            name: 'proff_G_head',
+            w: 166,
+            h: 145,},
+        boss_available_levels:[Setting.platforms.ground,
+            Setting.platforms.ground-Setting.platforms.spacing_plat,
+        ],
+        z_index_boss:z_index_map.boss,
+    };
     static game = {
         start_num_comp: 10, //start number computer for spawn boss
         increase_num_comp: 5, //after boss dead + num_comp
-        cd_value_boss:5, //hp decrease for each hit
-        boss_delay:3000, // num sec when the boss is standing
         gravity_const:2050,
         cd_exchanger_min_delay:8000,
         cd_exchanger_max_delay:14000,
@@ -524,29 +550,28 @@ class Setting {
                 h: 52,
                 time: 300
             },
+            {
+                name: 'laser_red',
+                type: 'laser_red',
+                reels: [
+                    [[5, 0], [4, 0], [3, 0], [2, 0], [1, 0], [0, 0]],// before shoot
+                    [[0, 0], [1, 0], [2, 0], [3, 0], [4, 0], [5, 0],[6,0]],// after shoot
+                ],
+                w: 64,
+                h: 500,
+                time: 500
+            },
         ],
         left_walking_jump_speed:650,
         laser_delay:2000, //delay before shoot
         fly_mob_y_speed:Setting.platforms.current_speed,
-        boss_sprite: {
-            name: 'proff_G',
-            reels: [
-                [[0, 0], [1, 0], [2, 0], [3, 0], [4, 0], [5, 0]],// to left
-            ],
-            w: 221,
-            h: 221,
-            time: 300
-        },
         walking_speed: 1,
+        wall_x_level:Math.floor(Setting.screen.width / 2) - Math.floor(Setting.screen.width * 0.25),
+        wall_speed:(Setting.screen.width>1000?Setting.platforms.current_speed:Setting.platforms.current_speed/2),
         destroy_score: 200,
         chance_spawn: 30,
         event_counter: 3,//if current_counter is equal special_mob_counter then spawn mob of sprite_event_monsters
         z_index_mobs:z_index_map.mobs,
-        z_index_boss:z_index_map.boss,
-        boss_available_levels:[Setting.platforms.ground,
-            Setting.platforms.ground-Setting.platforms.spacing_plat,
-            Setting.platforms.ground-2*Setting.platforms.spacing_plat,
-        ],
         mob_num_life:{
             sort_walking:2,
             left_walking:2,
