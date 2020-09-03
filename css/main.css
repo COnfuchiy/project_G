@@ -20,6 +20,7 @@ body {
 }
 
 .buttons {
+    display: none;
     position: absolute;
     z-index: 100;
     bottom: 150px;
@@ -100,6 +101,35 @@ body {
     animation-delay: 0s; /* Задержка перед началом */
 }
 
+.menu-screen{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    min-height: 100vh;
+    z-index: 21;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.comp{
+    position: fixed;
+    z-index: 10;
+    width: 700px;
+}
+.comp-gif{
+    position: absolute;
+    left: 160px;
+    top: 0;
+    z-index: 3;
+}
+.start{
+    z-index: -1;
+    top: 0;
+    height: 370px;
+    width: 400px;
+}
 @keyframes show {
     0% {
         opacity:0;

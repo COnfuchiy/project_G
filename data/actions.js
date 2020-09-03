@@ -105,7 +105,7 @@ function set_buff_timer(sprite, del_callback) {
         }
     }, 1000,-1);
 }
-set_background();
+
 //global variable
 let user_score = 0;
 let cd_exchanger;
@@ -116,43 +116,16 @@ let user_num_cd = 0;
 let is_active_spawn = true;
 let boss_hit_point = 100;
 let current_increase_score = 1;
-//set floor
-Crafty.e('2D, Canvas, ' + Platforms.name_component)
-    .attr({x: 0, y: Setting.platforms.ground, w: Platforms.level_x, h: Platforms.sprites[0].h});
+let player;
+let boss_hp_text;
+let cd_num_text;
+let user_score_text;
+let comp_score_text;
 //global events
 Crafty.bind('Death', function () {
     if (!Crafty('shield').get(0)) {
-        Crafty.defineScene("died", function () {
-            Crafty.background("#000");
-        });
-        Crafty.enterScene('died');
-        Crafty.audio.stop();
-        Platforms.stop_loop();
-        cd_exchanger.destroy();
-        $('.buttons').empty();
+        Crafty.enterScene('Death Screen');
 
-        Crafty.viewport.scale(Setting.screen.scale);
-        player.bind('UpdateFrame', function () {
-            if (this.y > Math.floor(document.documentElement.clientHeight / 1.5)) {
-                this.destroy();
-
-                let death_sound = new Audio();
-                death_sound.src = './sounds/death.mp3';
-                death_sound.autoplay = true;
-
-                let cd_score = 'CD: ' + user_num_cd.toString();
-                let current_score ='Score: ' + user_score.toString();
-                let total_score ='Total: ' + (user_score+Setting.game.cd_cost*user_num_cd).toString();
-                $('body').append('<div class="death-screen"><img src="./sprites/death.png"><div class="total_stats"></div></div>');
-                $('.total_stats').append(`
-                        <span class="total_label">` + cd_score + `</span>
-                        <span class="total_label">` + current_score + `</span>
-                        <span class="total_label">` + total_score + `</span>
-                    `);
-                $('.death-screen').append('<button class="btn btn--restart" onclick="location.reload();">Restart</button>');
-            }
-
-        });
     }
 });
 Crafty.bind('Boss', function () {
@@ -231,20 +204,4 @@ Crafty.bind('Increase', function () {
 });
 //pc spawn
 
-cd_exchanger_loop(set_cd_exchanger_daley());
-//set scale
-Crafty.viewport.scale(Setting.screen.scale);
-// cd pic
-Crafty.e('2D, Canvas, cd').attr({x: 450, y: 525});
-//view boss hp
-let boss_hp_text;
-// cd score number
-let cd_num_text = setText(790, 780, ':' + user_num_cd.toString(), {size: '50px', weight: 'bold'});
-// score field
-setText(300, 780, 'Score:', {size: '50px', weight: 'bold'});
-// user score number
-let user_score_text = setText(500, 780, user_score.toString(), {size: '50px', weight: 'bold'});
-// comp score number
-let comp_score_text = setText(100, 780, '0/'+total_computer_score.toString(), {size: '50px', weight: 'bold'});
-//game left move
-Platforms.loop();
+
