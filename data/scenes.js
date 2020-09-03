@@ -37,6 +37,20 @@ Crafty.defineScene("Menu", function () {
     $('.comp-gif')[0].onclick = function () {
         Crafty.enterScene('Game');
     };
+    $('.menu-screen').append(`
+        <div class="sound_control sound_muted"></div>
+    `);
+    
+    $('.sound_control')[0].onclick = function() {
+        if ($('.sound')[0] !== undefined) {
+            $('.sound').addClass('sound_muted');
+            $('.sound').removeClass('sound');
+        }
+        else if ($('.sound_muted')[0] !== undefined) {
+            $('.sound_muted').addClass('sound');
+            $('.sound_muted').removeClass('sound_muted');
+        }
+    }
 });
 
 Crafty.defineScene("Game", function () {

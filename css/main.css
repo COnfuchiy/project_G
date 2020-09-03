@@ -106,22 +106,56 @@ body {
     top: 0;
     left: 0;
     width: 100%;
-    min-height: 100vh;
     z-index: 21;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
+    
+    height: 100vh;
+    
+    /* background: url(../sprites/start_bg.png) center no-repeat; */
+    background: radial-gradient(#333 30%, #111);
+    background-size: cover;
+    
+    /* animation: light .8s infinite linear; */
 }
+
+@keyframes light {
+    0% {
+        background: radial-gradient(#333 30%, #000);
+    } 10% {
+        background: radial-gradient(#333 32%, #000);
+    } 20% {
+        background: radial-gradient(#333 34%, #000);
+    } 30% {
+        background: radial-gradient(#333 36%, #000);
+    } 40% {
+        background: radial-gradient(#333 38%, #000);
+    } 50%  {
+        background: radial-gradient(#333 40%, #000);
+    } 60% {
+        background: radial-gradient(#333 38%, #000);
+    } 70% {
+        background: radial-gradient(#333 36%, #000);
+    } 80% {
+        background: radial-gradient(#333 34%, #000);
+    } 90% {
+        background: radial-gradient(#333 32%, #000);
+    } 1000% {
+        background: radial-gradient(#333 30%, #000);
+    }
+}
+
 .comp{
-    position: fixed;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
     z-index: 10;
     width: 700px;
 }
 .comp-gif{
     position: absolute;
-    left: 160px;
-    top: 0;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -75%);
     z-index: 3;
 }
 .start{
@@ -170,4 +204,26 @@ body {
         opacity: .8;
         color: #fff;
     }
+}
+
+/* Sound controlls */
+.sound_control {
+    position: absolute;
+    left: 50%;
+    bottom: 5%;
+    transform: translate(-50%, -50%);
+}
+
+.sound {
+    width: 100px;
+    height: 100px;
+    background: url(../sprites/sound_btn.png) center no-repeat;
+    background-size: cover;
+}
+
+.sound_muted {
+    width: 100px !important;
+    height: 100px !important;
+    background: url(../sprites/sound_muted_btn.png) center no-repeat;
+    background-size: cover !important;
 }
