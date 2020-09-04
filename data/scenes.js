@@ -63,7 +63,7 @@ Crafty.defineScene("Logo",function () {
     };
     Crafty.e("Delay").delay(function () {
         Crafty.enterScene('Menu');
-    }, 2500);
+    }, 5500);
 });
 
 Crafty.defineScene("Sound Check",function () {
