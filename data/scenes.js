@@ -74,7 +74,7 @@ Crafty.defineScene("Sound Check",function () {
     (`
         <div class="sound-check">
             <img src="./sprites/cookie.png" class="cookie">
-            <h2 class="cookie_request">Due to f*cking google policies, we have to make you tap on this screen.</h2>
+            <h2 class="cookie_request">Due to f*cking google audio policies, we have to make you tap on this screen.</h2>
         </div>
     `);
     $('.sound-check')[0].onclick = function () {
