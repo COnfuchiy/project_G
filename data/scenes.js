@@ -56,18 +56,24 @@ Crafty.defineScene("Menu", function () {
 
 Crafty.defineScene("Logo",function () {
     $('.sound-check').detach();
-    $('body').append('<div class="logo"></div>');
-    $('.logo').load('logo.html');
+    $('body').append('<div class="logo"><div class="logo_image"></div></div>');
+    $('.logo_image').load('logo.html');
     $('.logo')[0].onclick = function () {
         Crafty.enterScene('Menu');
     };
     Crafty.e("Delay").delay(function () {
         Crafty.enterScene('Menu');
-    }, 2000);
+    }, 2500);
 });
 
 Crafty.defineScene("Sound Check",function () {
-    $('body').append('<div class="sound-check"><img src="./sprites/cookie.jpeg" class="cookie">We use cookies for fun. May we?</div>');
+    $('body').append
+    (`
+        <div class="sound-check">
+            <img src="./sprites/cookie.jpeg" class="cookie">
+            <h2 class="cookie_request">We\'re using cookies for fun. Can we?</h2>
+        </div>
+    `);
     $('.sound-check')[0].onclick = function () {
         Crafty.enterScene('Logo');
     };
