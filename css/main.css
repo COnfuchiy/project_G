@@ -39,8 +39,9 @@ body {
     height: auto;
 }
 
+/* Button */
+
 .btn {
-    /* Button */
     padding: 20px 70px;
     background: none;
     outline: none;
@@ -131,8 +132,7 @@ body {
 
 /* Main screen */
 
-.sound-check, .logo
-{
+.sound-check, .logo {
     position: absolute;
     top: 0;
     left: 0;
@@ -155,10 +155,21 @@ body {
     flex-direction: column;
 }
 
-.menu-screen{
+.menu-screen {
     position: absolute;
     top: 0;
     left: 0;
+    
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    
     width: 100%;
     z-index: 21;
     
@@ -167,63 +178,46 @@ body {
     /* background: url(../sprites/start_bg.png) center no-repeat; */
     background: radial-gradient(#333 30%, #111);
     background-size: cover;
+}
+
+/*
+.comp-glow {
+    -webkit-animation: glow_scale .8s infinite ease;
+    animation: glow_scale .8s infinite ease;
     
-    /* animation: light .8s infinite linear; */
+    z-index: 10000;
+    opacity: .4;
 }
 
-@-webkit-keyframes light {
+@-webkit-keyframes glow_scale {
     0% {
-        background: radial-gradient(#333 30%, #000);
-    } 10% {
-        background: radial-gradient(#333 32%, #000);
-    } 20% {
-        background: radial-gradient(#333 34%, #000);
-    } 30% {
-        background: radial-gradient(#333 36%, #000);
-    } 40% {
-        background: radial-gradient(#333 38%, #000);
-    } 50%  {
-        background: radial-gradient(#333 40%, #000);
-    } 60% {
-        background: radial-gradient(#333 38%, #000);
-    } 70% {
-        background: radial-gradient(#333 36%, #000);
-    } 80% {
-        background: radial-gradient(#333 34%, #000);
-    } 90% {
-        background: radial-gradient(#333 32%, #000);
-    } 1000% {
-        background: radial-gradient(#333 30%, #000);
+        -webkit-transform: scale(1);
+        transform: scale(1);
+    } 50% {
+        -webkit-transform: scale(1.5);
+        transform: scale(1.5);
+    } 100% {
+        -webkit-transform: scale(1);
+        transform: scale(1);
     }
 }
 
-@keyframes light {
+
+@keyframes glow_scale {
     0% {
-        background: radial-gradient(#333 30%, #000);
-    } 10% {
-        background: radial-gradient(#333 32%, #000);
-    } 20% {
-        background: radial-gradient(#333 34%, #000);
-    } 30% {
-        background: radial-gradient(#333 36%, #000);
-    } 40% {
-        background: radial-gradient(#333 38%, #000);
-    } 50%  {
-        background: radial-gradient(#333 40%, #000);
-    } 60% {
-        background: radial-gradient(#333 38%, #000);
-    } 70% {
-        background: radial-gradient(#333 36%, #000);
-    } 80% {
-        background: radial-gradient(#333 34%, #000);
-    } 90% {
-        background: radial-gradient(#333 32%, #000);
-    } 1000% {
-        background: radial-gradient(#333 30%, #000);
+        -webkit-transform: scale(1);
+        transform: scale(1);
+    } 50% {
+        -webkit-transform: scale(1.5);
+        transform: scale(1.5);
+    } 100% {
+        -webkit-transform: scale(1);
+        transform: scale(1);
     }
 }
+*/
 
-.comp{
+.comp {
     position: absolute;
     left: 50%;
     top: 50%;
@@ -232,7 +226,7 @@ body {
     z-index: 10;
     width: 700px;
 }
-.comp-gif{
+.comp-gif {
     position: absolute;
     left: 50%;
     top: 50%;
@@ -240,7 +234,7 @@ body {
     transform: translate(-50%, -75%);
     z-index: 3;
 }
-.start{
+.start {
     z-index: -1;
     top: 0;
     height: 370px;
