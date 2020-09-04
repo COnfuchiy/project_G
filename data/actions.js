@@ -111,7 +111,7 @@ function play_game_audio(sound_name, delay = 1, volume = 1) {
 }
 function stop_music() {
     if (is_audio){
-        Crafty.audio.pause(Setting.soundboard.music[3].name);
+        Crafty.audio.pause(Setting.soundboard.music[3].name,-1, Setting.soundboard.music[3].vol);
         is_audio = false;
     }
     else {

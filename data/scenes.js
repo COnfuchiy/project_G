@@ -44,7 +44,7 @@ Crafty.defineScene("Menu", function () {
     `);
     
     $('.sound_control')[0].onclick = function() {
-        stop_music()
+        stop_music();
         if ($('.sound')[0] !== undefined) {
             $('.sound').addClass('sound_muted');
             $('.sound').removeClass('sound');
@@ -64,7 +64,7 @@ Crafty.defineScene("Logo",function () {
         Crafty.enterScene('Menu');
     };
     Crafty.e("Delay").delay(function () {
-        if (!is_game)
+        if (!is_game && document.body.style.backgroundColor !== 'grey')
             Crafty.enterScene('Menu');
     }, 5500);
 });
