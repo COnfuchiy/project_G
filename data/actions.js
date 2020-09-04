@@ -40,7 +40,7 @@ function spawn_cd_exchanger() {
         })
         .onHit(Setting.player.name_component, function (item, first_check) {
             if (first_check && user_score > Setting.game.cd_cost){
-                Crafty.audio.play(Setting.soundboard.sound.player[2].name,1,Setting.soundboard.sound.player[2].volume);
+                play_game_audio(Setting.soundboard.sound.player[2].name,1,Setting.soundboard.sound.player[2].volume);
                 while (user_score >= Setting.game.cd_cost) {
                     user_score -= Setting.game.cd_cost;
                     user_num_cd++;
@@ -62,7 +62,7 @@ function cd_exchanger_loop(delay) {
 function cd_shoot() {
     if (Crafty.stage.elem.style.background !== "rgb(0, 0, 0)") {//check death screen
         if (user_num_cd) {
-            Crafty.audio.play(Setting.soundboard.sound.player[0].name,1,Setting.soundboard.sound.player[0].volume);
+            play_game_audio(Setting.soundboard.sound.player[0].name,1,Setting.soundboard.sound.player[0].volume);
             user_num_cd--;
             cd_num_text.text(':'+user_num_cd.toString());
             Crafty.e('2D, Canvas, Collision, cd')
@@ -105,8 +105,25 @@ function set_buff_timer(sprite, del_callback) {
         }
     }, 1000,-1);
 }
+function play_game_audio(sound_name, delay = 1, volume = 1) {
+    if (is_audio)
+        Crafty.audio.play(sound_name,delay,volume);
+}
+function stop_music() {
+    if (is_audio){
+        Crafty.audio.pause(Setting.soundboard.music[3].name);
+        is_audio = false;
+    }
+    else {
+        Crafty.audio.unpause(Setting.soundboard.music[3].name);
+        is_audio = true;
+    }
 
+}
 //global variable
+let is_audio = true;
+let is_pause;
+let is_game=false;
 let user_score = 0;
 let cd_exchanger;
 let current_computer_score = 0;
@@ -143,8 +160,8 @@ Crafty.bind('Boss Death', function () {
     boss_hit_point = 100;
 });
 Crafty.bind('Shield', function () {
-    Crafty.audio.play(Setting.soundboard.sound.player[1].name,1,Setting.soundboard.sound.player[1].volume);
-    Crafty.audio.play(Setting.soundboard.sound.player[4].name,1,Setting.soundboard.sound.player[4].volume);
+    play_game_audio(Setting.soundboard.sound.player[1].name,1,Setting.soundboard.sound.player[1].volume);
+    play_game_audio(Setting.soundboard.sound.player[4].name,1,Setting.soundboard.sound.player[4].volume);
     let shield = Crafty.e('2D, Canvas, shield')
         .attr(
             {
@@ -163,7 +180,7 @@ Crafty.bind('Shield', function () {
     });
 });
 Crafty.bind('Magnet', function () {
-    Crafty.audio.play(Setting.soundboard.sound.player[3].name,-1,Setting.soundboard.sound.player[3].volume);
+    play_game_audio(Setting.soundboard.sound.player[3].name,-1,Setting.soundboard.sound.player[3].volume);
     let absorb_field = Crafty.e('2D, Canvas, Collision, absorb')
         .attr(
             {
@@ -196,12 +213,12 @@ Crafty.bind('Magnet', function () {
     });
 });
 Crafty.bind('Increase', function () {
-    Crafty.audio.play(Setting.soundboard.sound.player[5].name,1,Setting.soundboard.sound.player[5].volume);
+    play_game_audio(Setting.soundboard.sound.player[5].name,1,Setting.soundboard.sound.player[5].volume);
     current_increase_score = Setting.items.increase_multiplier;
     set_buff_timer(Setting.items.special_items.baff_items[0].sprites, () => {
         current_increase_score = 1;
     });
 });
-//pc spawn
+
 
 

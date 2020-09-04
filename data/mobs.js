@@ -28,7 +28,7 @@ class Monster {
                     user_score += MonsterSpawn.destroy_score;
                     user_score_text.text(user_score.toString());
                     this.destroy();
-                    Crafty.audio.play(MonsterSpawn.mobs_sounds[2].name, 1, MonsterSpawn.mobs_sounds[2].volume);
+                    play_game_audio(MonsterSpawn.mobs_sounds[2].name, 1, MonsterSpawn.mobs_sounds[2].volume);
                 }
             })
             .reel('back', this._sprites.time, this._sprites.reels[1])
@@ -74,9 +74,9 @@ class Monster {
                     user_score_text.text(user_score.toString());
                     this.destroy();
                     if (this.w === 48)
-                        Crafty.audio.play(MonsterSpawn.mobs_sounds[1].name, 1, MonsterSpawn.mobs_sounds[1].volume);
+                        play_game_audio(MonsterSpawn.mobs_sounds[1].name, 1, MonsterSpawn.mobs_sounds[1].volume);
                     else
-                        Crafty.audio.play(MonsterSpawn.mobs_sounds[3].name, 1, MonsterSpawn.mobs_sounds[3].volume);
+                        play_game_audio(MonsterSpawn.mobs_sounds[3].name, 1, MonsterSpawn.mobs_sounds[3].volume);
                 }
 
             })
@@ -109,7 +109,7 @@ class Monster {
             .bind("UpdateFrame", function () {
                 if (this.x <= Platforms.level_x - this.w) {
                     if (!shoot_check) {
-                        Crafty.audio.play(MonsterSpawn.mobs_sounds[0].name, 1, MonsterSpawn.mobs_sounds[0].volume);
+                        play_game_audio(MonsterSpawn.mobs_sounds[0].name, 1, MonsterSpawn.mobs_sounds[0].volume);
                         shoot_check = true;
                         Crafty.e("Delay").delay(() => {
                             this.animate('before');
@@ -152,7 +152,7 @@ class Monster {
             .reel('after', this._sprites.time, this._sprites.reels[1])
             .bind("UpdateFrame", function () {
                 if (!shoot_check) {
-                    Crafty.audio.play(MonsterSpawn.mobs_sounds[0].name, 1, MonsterSpawn.mobs_sounds[0].volume);
+                    play_game_audio(MonsterSpawn.mobs_sounds[0].name, 1, MonsterSpawn.mobs_sounds[0].volume);
                     shoot_check = true;
                     Crafty.e("Delay").delay(() => {
                         this.animate('before');
@@ -198,7 +198,7 @@ class Monster {
                 e[0].obj.destroy();
                 mob_life--;
                 if (mob_life === 0) {
-                    Crafty.audio.play(MonsterSpawn.mobs_sounds[4].name, 1, MonsterSpawn.mobs_sounds[4].volume);
+                    play_game_audio(MonsterSpawn.mobs_sounds[4].name, 1, MonsterSpawn.mobs_sounds[4].volume);
                     user_score += MonsterSpawn.destroy_score;
                     user_score_text.text(user_score.toString());
                     this.destroy();

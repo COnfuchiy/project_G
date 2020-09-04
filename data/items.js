@@ -23,7 +23,7 @@ class Item {
             })
             .onHit(Setting.player.name_component, function (player, twice_check) {
                 if (twice_check) {
-                    Crafty.audio.play(ItemDrop.sounds[1].name,1,ItemDrop.sounds[1].volume);
+                    play_game_audio(ItemDrop.sounds[1].name,1,ItemDrop.sounds[1].volume);
                     current_computer_score++;
                     comp_score_text.text(current_computer_score.toString() + '/' + total_computer_score.toString());
                     if (current_computer_score === total_computer_score)
@@ -102,7 +102,7 @@ class Item {
                 }
             })
             .onHit(Setting.player.name_component, function () {
-                Crafty.audio.play(ItemDrop.sounds[0].name,1,ItemDrop.sounds[0].volume);
+                play_game_audio(ItemDrop.sounds[0].name,1,ItemDrop.sounds[0].volume);
                 user_score += item_score*current_increase_score;
                 user_score_text.text(user_score.toString());
                 this.destroy();

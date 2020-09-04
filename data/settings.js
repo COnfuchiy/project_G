@@ -20,7 +20,7 @@ class Setting {
         music:[
             {
                 name:'main_theme1',
-                volume:1
+                volume:0.8
             },
             {
                 name:'main_theme2',
@@ -28,7 +28,11 @@ class Setting {
             },
             {
                 name:'boss_theme',
-                volume:1
+                volume:0.8
+            },
+            {
+                name:'menu',
+                volume:0.7
             }
         ],
         sound:{
@@ -406,7 +410,7 @@ class Setting {
         z_index_boss:z_index_map.boss,
     };
     static game = {
-        start_num_comp: 10, //start number computer for spawn boss
+        start_num_comp: 1, //start number computer for spawn boss
         increase_num_comp: 5, //after boss dead + num_comp
         gravity_const:2050,
         cd_exchanger_min_delay:8000,

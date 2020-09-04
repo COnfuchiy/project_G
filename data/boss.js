@@ -33,6 +33,8 @@ class BossFight {
                 is_active_spawn = true;
                 current_computer_score = 0;
                 comp_score_text.text(current_computer_score.toString() + '/' + total_computer_score.toString());
+                Crafty.audio.stop(BossFight.G_music.name);
+                play_game_audio(Setting.soundboard.music[0].name,-1,Setting.soundboard.music[0].volume);
                 return;
             }
 
@@ -45,6 +47,8 @@ class BossFight {
         }
         let random_stage = Crafty.math.randomElementOfArray(not_involved_stage);
         BossFight.pseudo_random_stages.push(random_stage);
+        if (BossFight.num_stages===0 && random_stage==='shield')
+            BossFight.num_stages++;
         BossFight.boss_spawn(random_stage);
     }
 
@@ -57,8 +61,9 @@ class BossFight {
             weight: 'bold'
         });
         Crafty.audio.stop(Setting.soundboard.music[0].name);
-        Crafty.audio.play(BossFight.G_sounds[3].name, -1, BossFight.G_sounds[3].volume);
-        Crafty.audio.play(BossFight.G_music.name, -1, BossFight.G_music.volume);
+        play_game_audio(BossFight.G_sounds[3].name, 1, BossFight.G_sounds[3].volume);
+        if (BossFight.pseudo_random_stages.length===1)
+            play_game_audio(BossFight.G_music.name, -1, BossFight.G_music.volume);
         let boss_g = Crafty.e('2D, Canvas, Collision, ' + BossFight.name_component + ',SpriteAnimation, ' + BossFight.G.name)
             .attr({
                 x: Platforms.level_x + BossFight.G.w,
@@ -69,7 +74,7 @@ class BossFight {
                 if (!BossFight.boss_head){
                     e[0].obj.destroy();
                     if (!BossFight.is_hit) {
-                        Crafty.audio.play(BossFight.G_sounds[1].name, -1, BossFight.G_sounds[1].volume);
+                        play_game_audio(BossFight.G_sounds[1].name, 1, BossFight.G_sounds[1].volume);
                         BossFight.is_hit = true;
                         Crafty.e("Delay").delay(() => BossFight.is_hit = false, BossFight.hit_delay);
                     }
@@ -87,7 +92,8 @@ class BossFight {
                 if (!boss_spawn) {
                     this.x = this.x - Platforms.current_speed;
                     if (this.x < Platforms.level_x - this.w) {
-                        Crafty.audio.play(BossFight.G_sounds[0].name, -1, BossFight.G_sounds[0].volume);
+                        if (BossFight.pseudo_random_stages.length===1)
+                            play_game_audio(BossFight.G_sounds[0].name, 1, BossFight.G_sounds[0].volume);
                         Crafty.audio.stop(BossFight.G_sounds[3].name);
                         boss_spawn = true;
                         this.pauseAnimation();
@@ -189,7 +195,7 @@ class BossFight {
                     if (!BossFight.boss_head){
                         e[0].obj.destroy();
                         if (!BossFight.is_hit) {
-                            Crafty.audio.play(BossFight.G_sounds[1].name, -1, BossFight.G_sounds[1].volume);
+                            play_game_audio(BossFight.G_sounds[1].name, 1, BossFight.G_sounds[1].volume);
                             BossFight.is_hit = true;
                             Crafty.e("Delay").delay(() => BossFight.is_hit = false, BossFight.hit_delay);
                         }
@@ -244,7 +250,6 @@ class BossFight {
                                     else
                                         this.y = this.y - BossFight.boss_fly_speed.y;
                                 }
-                                    this.y = this.y - BossFight.boss_fly_speed.y;
                                 if (this.x >= boss_pos[0] && this.y >= boss_pos[1]) {
                                     boss_head_back();
                                 }
@@ -308,7 +313,7 @@ class BossFight {
             .onHit('cd', function (e) {
                     e[0].obj.destroy();
                     if (!BossFight.is_hit) {
-                        Crafty.audio.play(BossFight.G_sounds[1].name, -1, BossFight.G_sounds[1].volume);
+                        play_game_audio(BossFight.G_sounds[1].name, 1, BossFight.G_sounds[1].volume);
                         BossFight.is_hit = true;
                         Crafty.e("Delay").delay(() => BossFight.is_hit = false, BossFight.hit_delay);
                     }
@@ -328,14 +333,14 @@ class BossFight {
 
     static boss_rollback(boss, boss_plat){
         boss.animate('left', -1);
-        Crafty.audio.play(BossFight.G_sounds[3].name, -1, BossFight.G_sounds[3].volume);
-        Crafty.audio.play(BossFight.G_sounds[2].name, -1, BossFight.G_sounds[2].volume);
+        play_game_audio(BossFight.G_sounds[3].name, 1, BossFight.G_sounds[3].volume);
+        if (BossFight.num_stages===0)
+            play_game_audio(BossFight.G_sounds[2].name, 1, BossFight.G_sounds[2].volume);
         boss.bind('UpdateFrame', function () {
             this.x = this.x + Platforms.current_speed;
             if (this.x > Platforms.level_x + this.w) {
                 boss_hp_text.destroy();
                 this.destroy();
-                Crafty.audio.stop(BossFight.G_music.name);
                 Crafty.audio.stop(BossFight.G_sounds[3].name);
                 BossFight.set_boss_fight();
             }

@@ -100,9 +100,6 @@
                 cd_shoot();
         });
         document.addEventListener('keydown', function(event) {
-            if (!Crafty.audio.isPlaying(Setting.soundboard.music[0].name)){
-                Crafty.audio.play(Setting.soundboard.music[0].name,-1,Setting.soundboard.music[0].volume);
-            }
         if (event.code == 'ArrowDown' || event.code == 'KeyS') {
             if(player.ground){
                     if(player.y<=430){
