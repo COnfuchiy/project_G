@@ -32,6 +32,7 @@ Crafty.defineScene("Death Screen", function () {
 });
 
 Crafty.defineScene("Menu", function () {
+    $('.logo').detach();
     document.body.style.backgroundColor = 'grey';
     $('body').append('<div class="menu-screen"><img src="./sprites/menu-comp.png" class="comp"><div class="comp-gif"><img src="./sprites/start.gif" class="start"></div></div>');
     $('.comp-gif')[0].onclick = function () {
@@ -51,6 +52,25 @@ Crafty.defineScene("Menu", function () {
             $('.sound_muted').removeClass('sound_muted');
         }
     }
+});
+
+Crafty.defineScene("Logo",function () {
+    $('.sound-check').detach();
+    $('body').append('<div class="logo"></div>');
+    $('.logo').load('logo.html');
+    $('.logo')[0].onclick = function () {
+        Crafty.enterScene('Menu');
+    };
+    Crafty.e("Delay").delay(function () {
+        Crafty.enterScene('Menu');
+    }, 2000);
+});
+
+Crafty.defineScene("Sound Check",function () {
+    $('body').append('<div class="sound-check"><img src="./sprites/cookie.jpeg" class="cookie">We use cookies for fun. May we?</div>');
+    $('.sound-check')[0].onclick = function () {
+        Crafty.enterScene('Logo');
+    };
 });
 
 Crafty.defineScene("Game", function () {
@@ -79,5 +99,5 @@ Crafty.defineScene("Game", function () {
 });
 
 $(document).ready(function () {
-    Crafty.enterScene('Menu');
+    Crafty.enterScene('Sound Check');
 });

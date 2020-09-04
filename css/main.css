@@ -101,6 +101,20 @@ body {
     animation-delay: 0s; /* Задержка перед началом */
 }
 
+.sound-check, .logo{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 21;
+
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
 .menu-screen{
     position: absolute;
     top: 0;
