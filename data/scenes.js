@@ -70,7 +70,7 @@ Crafty.defineScene("Sound Check",function () {
     $('body').append
     (`
         <div class="sound-check">
-            <img src="./sprites/cookie.jpeg" class="cookie">
+            <img src="./sprites/cookie.png" class="cookie">
             <h2 class="cookie_request">We\'re using cookies for fun. Can we?</h2>
         </div>
     `);
