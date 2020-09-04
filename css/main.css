@@ -9,7 +9,6 @@ img, .DOM {
     pointer-events: none;
     -webkit-touch-callout: none;
     -webkit-user-select: none;
-    -khtml-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
@@ -25,6 +24,7 @@ body {
     z-index: 100;
     bottom: 150px;
     left: 50%;
+    -webkit-transform: translateX(-50%);
     transform: translateX(-50%);
     border-collapse: collapse;
 }
@@ -51,8 +51,11 @@ body {
 .btn--restart {
     opacity: 0;
     color: #000;
+    -webkit-transition: all 2s ease-in;
     transition: all 2s ease-in;
+    -webkit-animation: restart 1.5s ease-in 3.5s;
     animation: restart 1.5s ease-in 3.5s;
+    -webkit-animation-fill-mode: forwards;
     animation-fill-mode: forwards;
     -webkit-font-smoothing: antialiased;
     font-size: 2.9em;
@@ -63,6 +66,8 @@ body {
     border-radius: 10px;
     text-decoration: none;
     
+    -webkit-transition: all .1s linear;
+    
     transition: all .1s linear;
 }
 
@@ -70,6 +75,16 @@ body {
 .btn--restart:active {
     background: darkred;
     color: #000 !important;
+}
+
+@-webkit-keyframes restart {
+    0% {
+        opacity: 0;
+        color: #000;
+    } 100% {
+        opacity: 1;
+        color: darkred;
+    }
 }
 
 @keyframes restart {
@@ -89,17 +104,32 @@ body {
     width: 100%;
     min-height: 100vh;
     z-index: 21;
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
     justify-content: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
     align-items: center;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
     flex-direction: column;
     
     opacity: 0; /*Элемент полностью прозрачный (невидимый)*/
+    -webkit-transition: .5s ease-in;
     transition: .5s ease-in; /*Скорость перехода состояния элемента*/
+    -webkit-animation: show 6s 1;
     animation: show 6s 1; /* Указываем название анимации, её время и количество повторов*/
+    -webkit-animation-fill-mode: forwards;
     animation-fill-mode: forwards; /* Чтобы элемент оставался в конечном состоянии анимации */
+    -webkit-animation-delay: 0s;
     animation-delay: 0s; /* Задержка перед началом */
 }
+
+/* Main screen */
 
 .sound-check, .logo{
     position: absolute;
@@ -109,9 +139,18 @@ body {
     z-index: 21;
 
     height: 100vh;
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
     justify-content: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
     align-items: center;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
     flex-direction: column;
 }
 
@@ -129,6 +168,32 @@ body {
     background-size: cover;
     
     /* animation: light .8s infinite linear; */
+}
+
+@-webkit-keyframes light {
+    0% {
+        background: radial-gradient(#333 30%, #000);
+    } 10% {
+        background: radial-gradient(#333 32%, #000);
+    } 20% {
+        background: radial-gradient(#333 34%, #000);
+    } 30% {
+        background: radial-gradient(#333 36%, #000);
+    } 40% {
+        background: radial-gradient(#333 38%, #000);
+    } 50%  {
+        background: radial-gradient(#333 40%, #000);
+    } 60% {
+        background: radial-gradient(#333 38%, #000);
+    } 70% {
+        background: radial-gradient(#333 36%, #000);
+    } 80% {
+        background: radial-gradient(#333 34%, #000);
+    } 90% {
+        background: radial-gradient(#333 32%, #000);
+    } 1000% {
+        background: radial-gradient(#333 30%, #000);
+    }
 }
 
 @keyframes light {
@@ -161,6 +226,7 @@ body {
     position: absolute;
     left: 50%;
     top: 50%;
+    -webkit-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
     z-index: 10;
     width: 700px;
@@ -169,6 +235,7 @@ body {
     position: absolute;
     left: 50%;
     top: 50%;
+    -webkit-transform: translate(-50%, -75%);
     transform: translate(-50%, -75%);
     z-index: 3;
 }
@@ -178,28 +245,53 @@ body {
     height: 370px;
     width: 400px;
 }
-@keyframes show {
+@-webkit-keyframes show {
     0% {
         opacity:0;
+        -webkit-transform: scale(.5);
         transform: scale(.5);
     } 100% {
         opacity:1;
+        -webkit-transform: scale(1.0);
+        transform: scale(1.0);
+    }
+}
+@keyframes show {
+    0% {
+        opacity:0;
+        -webkit-transform: scale(.5);
+        transform: scale(.5);
+    } 100% {
+        opacity:1;
+        -webkit-transform: scale(1.0);
         transform: scale(1.0);
     }
 }
 
 .total_stats {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
     flex-direction: column;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
     justify-content: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
     align-items: center;
     margin: 50px 0;
     
     z-index: 10000;
     color: #000;
     opacity: 0;
+    -webkit-transition: all 2s ease-in;
     transition: all 2s ease-in;
+    -webkit-animation: score 2s ease-in 2.5s;
     animation: score 2s ease-in 2.5s;
+    -webkit-animation-fill-mode: forwards;
     animation-fill-mode: forwards;
     -webkit-font-smoothing: antialiased;
 }
@@ -208,6 +300,16 @@ body {
     font-family: 'ds';
     font-weight: 400;
     font-size: 2.7em;
+}
+
+@-webkit-keyframes score {
+    0% {
+        opacity: 0;
+        color: #000;
+    } 100% {
+        opacity: .8;
+        color: #fff;
+    }
 }
 
 @keyframes score {
@@ -221,10 +323,12 @@ body {
 }
 
 /* Sound controlls */
+
 .sound_control {
     position: absolute;
     left: 50%;
     bottom: 5%;
+    -webkit-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
 }
 
@@ -240,4 +344,91 @@ body {
     height: 100px !important;
     background: url(../sprites/sound_muted_btn.png) center no-repeat;
     background-size: cover !important;
+}
+
+/* Cookies */
+
+.cookie_request {
+    font-family: 'ds';
+    font-family: 'Raleway', sans-serif;
+    font-weight: 400;
+    font-size: 2.7em;
+}
+
+.cookie {
+    max-width: 600px;
+    max-height: 600px;
+    width: 100%;
+    height: 100%;
+}
+
+/* Logo screen */
+
+.logo,
+.logo_image {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+}
+
+.logo {
+    width: 100%;
+    height: 100vh;
+}
+
+.logo_image {
+    width: 100%;
+    height: 100%;
+    max-width: 600px;
+    max-height: 600px;
+}
+
+.logo_image svg {
+    width: 100%;
+    height: 100%;
+    
+    -webkit-animation: fadeIn 2s ease;
+    animation: fadeIn 2s ease;
+    -webkit-animation-fill-mode: forwards;
+    animation-fill-mode: forwards;
+    
+    opacity: 0;
+}
+
+@-webkit-keyframes fadeIn {
+    0% {
+        -webkit-transform: scale(.7);
+        transform: scale(.6);
+        opacity: 0;
+    } 50% {
+        -webkit-transform: scale(1.1);
+        transform: scale(1.1);
+        /* opacity: .7; */
+    } 100% {
+        -webkit-transform: scale(1);
+        transform: scale(1);
+        opacity: .8;
+    }
+}
+
+@keyframes fadeIn {
+    0% {
+        -webkit-transform: scale(.7);
+        transform: scale(.6);
+        opacity: 0;
+    } 40% {
+        -webkit-transform: scale(1.1);
+        transform: scale(1.1);
+        /* opacity: .7; */
+    } 100% {
+        -webkit-transform: scale(1);
+        transform: scale(1);
+        opacity: .8;
+    }
 }
