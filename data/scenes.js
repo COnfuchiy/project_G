@@ -106,7 +106,7 @@ Crafty.defineScene("Game", function () {
     set_background();
 //set floor
     Crafty.e('2D, Canvas, ' + Platforms.name_component)
-        .attr({x: 0, y: Setting.platforms.ground, w: Platforms.level_x, h: Platforms.sprites[0].h});
+        .attr({x: -100, y: Setting.platforms.ground, w: Platforms.level_x+200, h: Platforms.sprites[0].h});
     cd_exchanger_loop(set_cd_exchanger_daley());
 //set scale
     Crafty.viewport.scale(Setting.screen.scale);

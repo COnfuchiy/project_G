@@ -89,7 +89,7 @@ function clear_death_data() {
     user_num_cd = 0;
     is_active_spawn = true;
     boss_hit_point = 100;
-    current_increase_score = 0;
+    current_increase_score = 1;
     boss_hp_text = undefined;
     cd_num_text = undefined;
     user_score_text = undefined;
