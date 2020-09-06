@@ -51,6 +51,7 @@ Crafty.defineScene("Menu", function () {
     };
     $('.menu-screen').append(`
         <div class="sound_control sound"></div>
+         <div class="Text game-name">Project G</div>
     `);
     
     $('.sound_control')[0].onclick = function() {
