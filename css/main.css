@@ -40,8 +40,12 @@ body {
 }
 
 .btn {
+<<<<<<< Updated upstream
     /* Button */
     padding: 20px 70px;
+=======
+    padding: 10px 50px;
+>>>>>>> Stashed changes
     background: none;
     outline: none;
 }
@@ -454,3 +458,87 @@ body {
         opacity: .8;
     }
 }
+<<<<<<< Updated upstream
+=======
+.info_table{
+    width: 100%;
+    position: absolute;
+    top: 780px;
+}
+.comp-score{
+    text-align: center;
+    width:25%
+}
+.main-score{
+    text-align: center;
+    width:50%
+}
+.cd-num{
+    text-align: center;
+    width:25%
+}
+.cd-img{
+    margin: 15px;
+    float: left;
+    -webkit-transform: scale(1.5,1.5);
+    transform: scale(1.5,1.5);
+    background: url(../stok/cd.png) no-repeat;
+    width: 70px;
+    height: 30px;
+}
+.cd-text{
+    float: left;
+}
+
+.baff_table{
+    width: 150px;
+    position: absolute;
+    top: 860px;
+}
+.baff-item{
+    width: 100%;
+    text-align: center;
+}
+.timer{
+    margin-left: 5px;
+}
+.baff-img{
+    margin: 15px;
+    -webkit-transform: scale(1.5,1.5);
+    transform: scale(1.5,1.5);
+    height: 40px;
+}
+.boss_hp_pool{
+    z-index: 21;
+    position: absolute;
+    top: 180px;
+    text-align: center;
+    width: 100%;
+}
+.game-name {
+    position: absolute;
+    top:20%;
+    width: 100%;
+    text-align: center;
+    background: -webkit-gradient(linear, left top, right top, from(cyan), color-stop(blue), to(violet));
+    background: linear-gradient(to right, cyan, blue, violet);
+    background-size: 400% 400%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    -webkit-animation: rainbow 15s ease infinite;
+    animation: rainbow 15s ease infinite;
+    font-size: 4.2em !important;
+}
+
+@-webkit-keyframes rainbow {
+    0% { background-position: 0% 50% }
+    50% { background-position: 100% 50% }
+    100% { background-position: 0% 50% }
+}
+
+@keyframes rainbow {
+    0% { background-position: 0% 50% }
+    50% { background-position: 100% 50% }
+    100% { background-position: 0% 50% }
+}
+>>>>>>> Stashed changes
