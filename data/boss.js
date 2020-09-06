@@ -18,6 +18,7 @@ class BossFight {
     static boss_stages = Setting.boss.boss_stage;
     static wall_delay = Setting.boss.wall_delay;
     static pseudo_random_stages = [];
+    static mob_stage_delay;
     static num_stages = 0;
     static is_hit = false;
     static boss_head = false; //if true then using fly stage
@@ -32,7 +33,8 @@ class BossFight {
                 BossFight.pseudo_random_stages = [];
                 is_active_spawn = true;
                 current_computer_score = 0;
-                comp_score_text.text(current_computer_score.toString() + '/' + total_computer_score.toString());
+                $('.boss_hp_pool').detach();
+                set_text(current_computer_score.toString() + '/' + total_computer_score.toString(), '.comp-score');
                 Crafty.audio.stop(BossFight.G_music.name);
                 play_game_audio(Setting.soundboard.music[0].name,-1,Setting.soundboard.music[0].volume);
                 return;
@@ -56,10 +58,9 @@ class BossFight {
         let y_level = BossFight.boss_available_levels[getRandomInt(BossFight.boss_available_levels.length)];
         let boss_plat;
         let boss_spawn = false;
-        boss_hp_text = setText(document.documentElement.clientWidth / 2, 50, boss_hit_point.toString() + '/100', {
-            size: '50px',
-            weight: 'bold'
-        });
+        if (!$('.boss_hp_pool')[0])
+            $('body').append(`<div class="boss_hp_pool Text"></div>`);
+        set_text(boss_hit_point.toString()+'/'+total_boss_hit_point.toString(), '.boss_hp_pool');
         Crafty.audio.stop(Setting.soundboard.music[0].name);
         play_game_audio(BossFight.G_sounds[3].name, 1, BossFight.G_sounds[3].volume);
         if (BossFight.pseudo_random_stages.length===1)
@@ -79,7 +80,7 @@ class BossFight {
                         Crafty.e("Delay").delay(() => BossFight.is_hit = false, BossFight.hit_delay);
                     }
                     boss_hit_point -= BossFight.cd_value_boss;
-                    boss_hp_text.text(boss_hit_point.toString() + '/100');
+                    set_text(boss_hit_point.toString()+'/'+total_boss_hit_point.toString(), '.boss_hp_pool');
                     if (boss_hit_point === 0) {
                         this.destroy();
                         Crafty.trigger('Boss Death');
@@ -134,7 +135,7 @@ class BossFight {
                 let fly_pos = [Platforms.spacing_plat, Setting.platforms.ground];
                 (new Monster(0, fly_pos[0], MonsterSpawn.sprite_event_monsters[3], [])).fly_mob(Platforms.level_x);
                 (new Monster(0, fly_pos[1], MonsterSpawn.sprite_event_monsters[3], [])).fly_mob(Platforms.level_x);
-                Crafty.e("Delay").delay(() => {
+                BossFight.mob_stage_delay = Crafty.e("Delay").delay(() => {
                     (new Monster(0, fly_pos[0], MonsterSpawn.sprite_event_monsters[3], [])).fly_mob(Platforms.level_x, BossFight.fly_mob_speed);
                     (new Monster(0, fly_pos[1], MonsterSpawn.sprite_event_monsters[3], [])).fly_mob(Platforms.level_x,BossFight.fly_mob_speed);
                 }, BossFight.fly_mob_delay);
@@ -161,7 +162,7 @@ class BossFight {
                         this.destroy();
                         Crafty.trigger('Shield');
                     });
-                Crafty.e("Delay").delay(() => {
+                BossFight.mob_stage_delay = Crafty.e("Delay").delay(() => {
                     let all_levels = Platforms.levels_y;
                     all_levels.push(Setting.platforms.ground);
                     for (let y of all_levels){
@@ -176,7 +177,6 @@ class BossFight {
 
         }
     }
-
 
     static fly_stage(boss, plat, type) {
         boss.reelPosition(0);
@@ -200,7 +200,7 @@ class BossFight {
                             Crafty.e("Delay").delay(() => BossFight.is_hit = false, BossFight.hit_delay);
                         }
                         boss_hit_point -= BossFight.cd_value_boss;
-                        boss_hp_text.text(boss_hit_point.toString() + '/100');
+                        set_text(boss_hit_point.toString()+'/'+total_boss_hit_point.toString(), '.boss_hp_pool');
                         if (boss_hit_point === 0) {
                             this.destroy();
                             Crafty.trigger('Boss Death');
@@ -318,7 +318,7 @@ class BossFight {
                         Crafty.e("Delay").delay(() => BossFight.is_hit = false, BossFight.hit_delay);
                     }
                     boss_hit_point -= BossFight.cd_value_boss;
-                    boss_hp_text.text(boss_hit_point.toString() + '/100');
+                    set_text(boss_hit_point.toString()+'/'+total_boss_hit_point.toString(), '.boss_hp_pool');
                     if (boss_hit_point === 0) {
                         this.destroy();
                         boss.destroy();
@@ -339,7 +339,6 @@ class BossFight {
         boss.bind('UpdateFrame', function () {
             this.x = this.x + Platforms.current_speed;
             if (this.x > Platforms.level_x + this.w) {
-                boss_hp_text.destroy();
                 this.destroy();
                 Crafty.audio.stop(BossFight.G_sounds[3].name);
                 BossFight.set_boss_fight();

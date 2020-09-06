@@ -26,7 +26,7 @@ class Monster {
                 mob_life--;
                 if (mob_life === 0) {
                     user_score += MonsterSpawn.destroy_score;
-                    user_score_text.text(user_score.toString());
+                    set_text('Score:'+user_score.toString(), '.main-score');
                     this.destroy();
                     play_game_audio(MonsterSpawn.mobs_sounds[2].name, 1, MonsterSpawn.mobs_sounds[2].volume);
                 }
@@ -71,7 +71,7 @@ class Monster {
                 mob_life--;
                 if (mob_life === 0) {
                     user_score += MonsterSpawn.destroy_score;
-                    user_score_text.text(user_score.toString());
+                    set_text('Score:'+user_score.toString(), '.main-score');
                     this.destroy();
                     if (this.w === 48)
                         play_game_audio(MonsterSpawn.mobs_sounds[1].name, 1, MonsterSpawn.mobs_sounds[1].volume);
@@ -200,7 +200,7 @@ class Monster {
                 if (mob_life === 0) {
                     play_game_audio(MonsterSpawn.mobs_sounds[4].name, 1, MonsterSpawn.mobs_sounds[4].volume);
                     user_score += MonsterSpawn.destroy_score;
-                    user_score_text.text(user_score.toString());
+                    set_text('Score:'+user_score.toString(), '.main-score');
                     this.destroy();
                 }
             })
@@ -269,7 +269,7 @@ class MonsterSpawn {
     static laser_delay = Setting.mobs.laser_delay;
     static fly_mob_y_speed = Setting.mobs.fly_mob_y_speed;
     static walking_speed = Setting.mobs.walking_speed;
-    static destroy_score = Setting.mobs.destroy_score;
+    static destroy_score = Setting.game.cd_cost;
     static chance_spawn = Setting.mobs.chance_spawn;
     static event_counter = Setting.mobs.event_counter;
     static z_index_mobs = Setting.mobs.z_index_mobs;

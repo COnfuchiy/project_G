@@ -449,3 +449,57 @@ body {
         opacity: .8;
     }
 }
+.info_table{
+    width: 100%;
+    position: absolute;
+    top: 780px;
+}
+.comp-score{
+    text-align: center;
+    width:25%
+}
+.main-score{
+    text-align: center;
+    width:50%
+}
+.cd-num{
+    text-align: center;
+    width:25%
+}
+.cd-img{
+    margin: 15px;
+    float: left;
+    transform: scale(1.5,1.5);
+    background: url(../stok/cd.png) no-repeat;
+    width: 70px;
+    height: 30px;
+}
+.cd-text{
+    float: left;
+}
+
+.baff_table{
+    width: 150px;
+    position: absolute;
+    top: 860px;
+}
+.baff-item{
+    width: 100%;
+    text-align: center;
+}
+.timer{
+    margin-left: 5px;
+}
+.baff-img{
+    margin: 15px;
+    transform: scale(1.5,1.5);
+    height: 40px;
+}
+.boss_hp_pool{
+    z-index: 21;
+    position: absolute;
+    top: 180px;
+    text-align: center;
+    width: 100%;
+}
+

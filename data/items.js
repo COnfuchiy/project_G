@@ -15,6 +15,7 @@ class Item {
     comp_drop() {
         let x = ItemDrop.calc_middle_of_plat(this._platforms_width);
         let comp_on = this._sprites[1].name;
+        let use_comp = false;
         Crafty.e('2D, Canvas, Collision,' + this._sprites[0].name)
             .attr({
                 x: x - parseInt(this._sprites[0].w / 2),
@@ -22,10 +23,11 @@ class Item {
                 z: ItemDrop.z_index_comp
             })
             .onHit(Setting.player.name_component, function (player, twice_check) {
-                if (twice_check) {
+                if (twice_check && !use_comp) {
+                    use_comp = true;
                     play_game_audio(ItemDrop.sounds[1].name,1,ItemDrop.sounds[1].volume);
                     current_computer_score++;
-                    comp_score_text.text(current_computer_score.toString() + '/' + total_computer_score.toString());
+                    set_text(current_computer_score.toString() + '/' + total_computer_score.toString(), '.comp-score');
                     if (current_computer_score === total_computer_score)
                         Crafty.trigger('Boss');
                     this.sprite(comp_on);
@@ -104,7 +106,7 @@ class Item {
             .onHit(Setting.player.name_component, function () {
                 play_game_audio(ItemDrop.sounds[0].name,1,ItemDrop.sounds[0].volume);
                 user_score += item_score*current_increase_score;
-                user_score_text.text(user_score.toString());
+                set_text('Score:'+user_score.toString(), '.main-score');
                 this.destroy();
             })
             .bind("UpdateFrame", function () {

@@ -20,7 +20,7 @@ class Setting {
         music:[
             {
                 name:'main_theme1',
-                volume:0.8
+                volume:0.7
             },
             {
                 name:'main_theme2',
@@ -28,11 +28,11 @@ class Setting {
             },
             {
                 name:'boss_theme',
-                volume:0.8
+                volume:0.7
             },
             {
                 name:'menu',
-                volume:0.7
+                volume:0.6
             }
         ],
         sound:{
@@ -43,7 +43,7 @@ class Setting {
                 },
                 {
                     name:'cam_bot',
-                    volume:1
+                    volume:0.6
                 },
                 {
                     name:'walk_bot',
@@ -55,7 +55,7 @@ class Setting {
                 },
                 {
                     name:'fly',
-                    volume:1
+                    volume:0.8
                 },
             ],
             player:[
@@ -88,21 +88,21 @@ class Setting {
             items:[
                 {
                     name:'item',
-                    volume:1
+                    volume:0.8
                 },
                 {
                     name:'comp',
-                    volume:1
+                    volume:0.6
                 },
             ],
             boss:[
                 {
                     name:'g_app',
-                    volume:1
+                    volume:0.8
                 },
                 {
                     name:'g_hit',
-                    volume:1
+                    volume:0.8
                 },
                 {
                     name:'g_laugh',
@@ -113,6 +113,14 @@ class Setting {
                     volume:1
                 },
             ],
+            logo:{
+                name:'logo',
+                volume:0.5
+            },
+            death:{
+                name:'death',
+                volume:0.7
+            }
         },
     };
     static platforms = {
@@ -410,7 +418,7 @@ class Setting {
         z_index_boss:z_index_map.boss,
     };
     static game = {
-        start_num_comp: 1, //start number computer for spawn boss
+        start_num_comp: 10, //start number computer for spawn boss
         increase_num_comp: 5, //after boss dead + num_comp
         gravity_const:2050,
         cd_exchanger_min_delay:8000,
@@ -542,7 +550,7 @@ class Setting {
                 ],
                 w: 1300,
                 h: 64,
-                time: 500
+                time: 400
             },
             {
                 name: 'fly_bot',

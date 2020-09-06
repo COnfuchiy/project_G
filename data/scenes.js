@@ -2,20 +2,31 @@
  * Created by Dima on 02.09.2020.
  */
 
+function next_scene(block, scene, sound) {
+    $('.'+block).detach();
+    Crafty.enterScene(scene);
+    if (sound)
+        Crafty.audio.remove(sound);
+}
+
 Crafty.defineScene("Death Screen", function () {
-    Crafty.background("#000");
+    //Crafty.background("#000");
     document.body.style.backgroundColor = '#000';
     Crafty.audio.stop();
     Platforms.stop_loop();
     cd_exchanger.destroy();
-    $('.buttons').empty();
+    $('.info_table').detach();
+    if ($('.baff_table')[0])
+        $('.baff_table').detach();
+    if ($('.boss_hp_pool')[0])
+        $('.boss_hp_pool').detach();
+    $('.buttons')[0].style.display = 'none';
     Crafty.viewport.scale(Setting.screen.scale);
+    clear_death_data();
     player.bind('UpdateFrame', function () {
         if (this.y > Math.floor(document.documentElement.clientHeight / 1.5)) {
             this.destroy();
-            let death_sound = new Audio();
-            death_sound.src = './sounds/death.mp3';
-            death_sound.autoplay = true;
+            play_game_audio(Setting.soundboard.sound.death.name,1,Setting.soundboard.sound.death.volume);
             let cd_score = 'CD: ' + user_num_cd.toString();
             let current_score ='Score: ' + user_score.toString();
             let total_score ='Total: ' + (user_score+Setting.game.cd_cost*user_num_cd).toString();
@@ -25,7 +36,7 @@ Crafty.defineScene("Death Screen", function () {
                         <span class="total_label">` + current_score + `</span>
                         <span class="total_label">` + total_score + `</span>
                     `);
-            $('.death-screen').append('<button class="btn btn--restart" onclick="location.reload();">Restart</button>');
+            $('.death-screen').append(`<button class="btn btn--restart" onclick="next_scene('death-screen','Game','`+Setting.soundboard.sound.death.name+`');">Restart</button>`);
         }
 
     });
@@ -34,10 +45,9 @@ Crafty.defineScene("Death Screen", function () {
 Crafty.defineScene("Menu", function () {
     play_game_audio(Setting.soundboard.music[3].name,-1,Setting.soundboard.music[3].volume);
     $('.logo').detach();
-    document.body.style.backgroundColor = 'grey';
-    $('body').append('<div class="menu-screen"><img src="./sprites/comp_glow.png" class="comp-glow"><img src="./sprites/menu-comp.png" class="comp"><div class="comp-gif"><img src="./sprites/start.gif" class="start"></div></div>');
+    $('body').append('<div class="menu-screen"><img src="./sprites/menu-comp.png" class="comp"><div class="comp-gif"><img src="./sprites/start.gif" class="start"></div></div>');
     $('.comp-gif')[0].onclick = function () {
-        Crafty.enterScene('Game');
+        next_scene('menu-screen','Game',Setting.soundboard.music[3].name);
     };
     $('.menu-screen').append(`
         <div class="sound_control sound"></div>
@@ -57,16 +67,20 @@ Crafty.defineScene("Menu", function () {
 });
 
 Crafty.defineScene("Logo",function () {
+    Crafty.e("Delay").delay(function () {
+        play_game_audio(Setting.soundboard.sound.logo.name,1,Setting.soundboard.sound.logo.volume);
+    },300);
     $('.sound-check').detach();
     $('body').append('<div class="logo"><div class="logo_image"></div></div>');
     $('.logo_image').load('logo.html');
-    $('.logo')[0].onclick = function () {
+    let logo_delay = Crafty.e("Delay").delay(function () {
         Crafty.enterScene('Menu');
+    }, 3000);
+    $('.logo')[0].onclick = function () {
+        next_scene('logo','Menu', 'logo');
+        logo_delay.destroy();
     };
-    Crafty.e("Delay").delay(function () {
-        if (!is_game && document.body.style.backgroundColor !== 'grey')
-            Crafty.enterScene('Menu');
-    }, 5000);
+
 });
 
 Crafty.defineScene("Sound Check",function () {
@@ -78,19 +92,16 @@ Crafty.defineScene("Sound Check",function () {
         </div>
     `);
     $('.sound-check')[0].onclick = function () {
-        Crafty.enterScene('Logo');
+        next_scene('sound-check','Logo');
     };
 });
 
 Crafty.defineScene("Game", function () {
-    Crafty.audio.stop('menu');
-    is_game = true;
-    Crafty.e("Delay").destroy();
+    document.body.style.backgroundColor = 'grey';
     if (!Crafty.audio.isPlaying(Setting.soundboard.music[0].name)){
         play_game_audio(Setting.soundboard.music[0].name,-1,Setting.soundboard.music[0].volume);
     }
     $('.buttons')[0].style.display = 'block';
-    $('.menu-screen')[0].style.display = 'none';
     player = create_player();
     set_background();
 //set floor
@@ -100,16 +111,10 @@ Crafty.defineScene("Game", function () {
 //set scale
     Crafty.viewport.scale(Setting.screen.scale);
 // cd pic
-    Crafty.e('2D, Canvas, cd').attr({x: 450, y: 525});
-// cd score number
-    cd_num_text = setText(790, 780, ':' + user_num_cd.toString(), {size: '50px', weight: 'bold'});
-// score field
-    setText(300, 780, 'Score:', {size: '50px', weight: 'bold'});
-// user score number
-    user_score_text = setText(500, 780, user_score.toString(), {size: '50px', weight: 'bold'});
-// comp score number
-    comp_score_text = setText(100, 780, '0/'+total_computer_score.toString(), {size: '50px', weight: 'bold'});
-//game left move
+    create_score_tab();
+    set_text(':' + user_num_cd.toString(),'.cd-text');
+    set_text('Score:'+user_score.toString(), '.main-score');
+    set_text('0/'+total_computer_score.toString(), '.comp-score');
     Platforms.loop();
 });
 

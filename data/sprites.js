@@ -67,6 +67,8 @@ Crafty.audio.add("main_theme1", "sounds/music/Main_1.mp3");
 Crafty.audio.add("main_theme2", "sounds/music/Main_2.mp3");
 Crafty.audio.add("boss_theme", "sounds/music/Fight.mp3");
 Crafty.audio.add("menu", "sounds/music/Menu.mp3");
+Crafty.audio.add("logo", "sounds/logo.mp3");
+Crafty.audio.add("death", "sounds/death.mp3");
 
 
 
