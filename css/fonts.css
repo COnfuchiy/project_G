@@ -1,15 +1,20 @@
 @font-face {
-  font-family: 'pixel';
-  src: url('../fonts/pixel.ttf') format('truetype');
-  font-weight: normal;
-  font-style: normal;
+    font-family: 'pixel';
+    src: url('../fonts/pixel.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
 }
 
 @font-face {
-  font-family: 'ds';
-  src: url('../fonts/ds.ttf') format('truetype');
-  font-weight: normal;
-  font-style: normal;
+    font-family: 'ds';
+    src: url('../fonts/ds.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
 }
 
-
+@font-face {
+    font-family: 'nesc';
+    src: url('../fonts/nesc.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
