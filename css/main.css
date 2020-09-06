@@ -42,7 +42,7 @@ body {
 /* Button */
 
 .btn {
-    padding: 20px 70px;
+    padding: 10px 50px;
     background: none;
     outline: none;
 }
@@ -469,6 +469,7 @@ body {
 .cd-img{
     margin: 15px;
     float: left;
+    -webkit-transform: scale(1.5,1.5);
     transform: scale(1.5,1.5);
     background: url(../stok/cd.png) no-repeat;
     width: 70px;
@@ -492,6 +493,7 @@ body {
 }
 .baff-img{
     margin: 15px;
+    -webkit-transform: scale(1.5,1.5);
     transform: scale(1.5,1.5);
     height: 40px;
 }
@@ -507,6 +509,7 @@ body {
     top:20%;
     width: 100%;
     text-align: center;
+    background: -webkit-gradient(linear, left top, right top, from(cyan), color-stop(blue), to(violet));
     background: linear-gradient(to right, cyan, blue, violet);
     background-size: 400% 400%;
     -webkit-background-clip: text;
