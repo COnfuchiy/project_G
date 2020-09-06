@@ -82,11 +82,9 @@ function clear_death_data() {
     BossFight.num_stages = 0;
     BossFight.is_hit = false;
     BossFight.boss_head = false;
-    user_score = 0;
     current_computer_score = 0;
     special_mob_counter = 0;
     total_computer_score = Setting.game.start_num_comp;
-    user_num_cd = 0;
     is_active_spawn = true;
     boss_hit_point = 100;
     current_increase_score = 1;
@@ -144,15 +142,16 @@ function stop_music() {
     if (is_audio) {
         Crafty.audio.pause(Setting.soundboard.music[3].name, -1, Setting.soundboard.music[3].vol);
         is_audio = false;
+        localStorage.setItem('sound', 0);
     }
     else {
         Crafty.audio.unpause(Setting.soundboard.music[3].name);
+        localStorage.setItem('sound', 1);
         is_audio = true;
     }
-
 }
 //global variable
-let is_audio = true;
+let is_audio = parseInt(localStorage.getItem('sound')?localStorage.getItem('sound'):true);
 let is_pause;
 let user_score = 0;
 let cd_exchanger;

@@ -30,6 +30,8 @@ Crafty.defineScene("Death Screen", function () {
             let cd_score = 'CD: ' + user_num_cd.toString();
             let current_score ='Score: ' + user_score.toString();
             let total_score ='Total: ' + (user_score+Setting.game.cd_cost*user_num_cd).toString();
+            user_score = 0;
+            user_num_cd = 0;
             $('body').append('<div class="death-screen"><img src="./sprites/death.png"><div class="total_stats"></div></div>');
             $('.total_stats').append(`
                         <span class="total_label">` + cd_score + `</span>
@@ -50,7 +52,7 @@ Crafty.defineScene("Menu", function () {
         next_scene('menu-screen','Game',Setting.soundboard.music[3].name);
     };
     $('.menu-screen').append(`
-        <div class="sound_control sound"></div>
+        <div class="sound_control `+(is_audio?'sound':'sound_muted')+`"></div>
          <div class="Text game-name">Project G</div>
     `);
     

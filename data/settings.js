@@ -47,7 +47,7 @@ class Setting {
                 },
                 {
                     name:'walk_bot',
-                    volume:1
+                    volume:0.8
                 },
                 {
                     name:'skeleton',
@@ -55,7 +55,7 @@ class Setting {
                 },
                 {
                     name:'fly',
-                    volume:0.8
+                    volume:0.6
                 },
             ],
             player:[
@@ -65,7 +65,7 @@ class Setting {
                 },
                 {
                     name:'shield',
-                    volume:1
+                    volume:0.8
                 },
                 {
                     name:'cd_change',
@@ -73,11 +73,11 @@ class Setting {
                 },
                 {
                     name:'magnet',
-                    volume:0.4
+                    volume:0.3
                 },
                 {
                     name:'shield_active',
-                    volume:1
+                    volume:0.8
                 },
                 {
                     name:'increase',
@@ -92,7 +92,7 @@ class Setting {
                 },
                 {
                     name:'comp',
-                    volume:0.6
+                    volume:0.4
                 },
             ],
             boss:[
