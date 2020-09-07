@@ -53,7 +53,7 @@ Crafty.defineScene("Menu", function () {
     };
     $('.menu-screen').append(`
         <div class="sound_control `+(is_audio?'sound':'sound_muted')+`"></div>
-         <div class="Text game-name">Project G</div>
+         <div class="Text game_name"><img class="game_logo" src="./sprites/logo.png"></div>
     `);
     
     $('.sound_control')[0].onclick = function() {
@@ -91,7 +91,7 @@ Crafty.defineScene("Sound Check",function () {
     (`
         <div class="sound-check">
             <img src="./sprites/cookie.png" class="cookie">
-            <h2 class="cookie_request">Due to f*cking google audio policies, we have to make you tap on this screen.</h2>
+            <h2 class="cookie_request">Due to f*cking Google audio policies, we have to make you tap on this screen.</h2>
         </div>
     `);
     $('.sound-check')[0].onclick = function () {

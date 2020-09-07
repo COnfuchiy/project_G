@@ -180,43 +180,6 @@ body {
     background-size: cover;
 }
 
-/*
-.comp-glow {
-    -webkit-animation: glow_scale .8s infinite ease;
-    animation: glow_scale .8s infinite ease;
-    
-    z-index: 10000;
-    opacity: .4;
-}
-
-@-webkit-keyframes glow_scale {
-    0% {
-        -webkit-transform: scale(1);
-        transform: scale(1);
-    } 50% {
-        -webkit-transform: scale(1.5);
-        transform: scale(1.5);
-    } 100% {
-        -webkit-transform: scale(1);
-        transform: scale(1);
-    }
-}
-
-
-@keyframes glow_scale {
-    0% {
-        -webkit-transform: scale(1);
-        transform: scale(1);
-    } 50% {
-        -webkit-transform: scale(1.5);
-        transform: scale(1.5);
-    } 100% {
-        -webkit-transform: scale(1);
-        transform: scale(1);
-    }
-}
-*/
-
 .comp {
     position: absolute;
     left: 50%;
@@ -226,6 +189,7 @@ body {
     z-index: 10;
     width: 700px;
 }
+
 .comp-gif {
     position: absolute;
     left: 50%;
@@ -234,12 +198,14 @@ body {
     transform: translate(-50%, -75%);
     z-index: 3;
 }
+
 .start {
     z-index: -1;
     top: 0;
     height: 370px;
     width: 400px;
 }
+
 @-webkit-keyframes show {
     0% {
         opacity:0;
@@ -251,6 +217,7 @@ body {
         transform: scale(1.0);
     }
 }
+
 @keyframes show {
     0% {
         opacity:0;
@@ -322,7 +289,7 @@ body {
 .sound_control {
     position: absolute;
     left: 50%;
-    bottom: 5%;
+    bottom: 10%;
     -webkit-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
 }
@@ -353,7 +320,7 @@ body {
 }
 
 .cookie {
-    max-width: 600px;
+    max-width: 800px;
     width: 100%;
 }
 
@@ -449,24 +416,29 @@ body {
         opacity: .8;
     }
 }
-.info_table{
+
+.info_table {
     width: 100%;
     position: absolute;
     top: 780px;
 }
-.comp-score{
+
+.comp-score {
     text-align: center;
     width:25%
 }
-.main-score{
+
+.main-score {
     text-align: center;
     width:50%
 }
-.cd-num{
+
+.cd-num {
     text-align: center;
     width:25%
 }
-.cd-img{
+
+.cd-img {
     margin: 15px;
     float: left;
     -webkit-transform: scale(1.5,1.5);
@@ -475,40 +447,47 @@ body {
     width: 70px;
     height: 30px;
 }
-.cd-text{
+
+.cd-text {
     float: left;
 }
 
-.baff_table{
+.baff_table {
     width: 150px;
     position: absolute;
     top: 860px;
 }
-.baff-item{
+
+.baff-item {
     width: 100%;
     text-align: center;
 }
-.timer{
+
+.timer {
     margin-left: 5px;
 }
-.baff-img{
+
+.baff-img {
     margin: 15px;
     -webkit-transform: scale(1.5,1.5);
     transform: scale(1.5,1.5);
     height: 40px;
 }
-.boss_hp_pool{
+
+.boss_hp_pool {
     z-index: 21;
     position: absolute;
     top: 180px;
     text-align: center;
     width: 100%;
 }
-.game-name {
+
+.game_name {
     position: absolute;
-    top:20%;
+    top: 10%;
     width: 100%;
     text-align: center;
+    /*
     background: -webkit-gradient(linear, left top, right top, from(cyan), color-stop(blue), to(violet));
     background: linear-gradient(to right, cyan, blue, violet);
     background-size: 400% 400%;
@@ -517,8 +496,31 @@ body {
     -webkit-animation: rainbow 15s ease infinite;
     animation: rainbow 15s ease infinite;
     font-size: 4.2em !important;
+    */
 }
 
+.game_logo {
+    width: 100%;
+    max-width: 700px;
+    
+    animation: rotation 3s infinite linear;
+}
+
+@keyframes rotation {
+    0% {
+        transform: rotate(0deg) scale(1);
+    } 25% {
+        transform: rotate(3deg) scale(1.05);
+    } 50% {
+        transform: rotate(0deg) scale(1);
+    } 75% {
+        transform: rotate(-3deg) scale(1.05);
+    } 100% {
+        transform: rotate(0deg) scale(1);
+    }
+}
+
+/*
 @-webkit-keyframes rainbow {
     0% { background-position: 0% 50% }
     50% { background-position: 100% 50% }
@@ -530,3 +532,4 @@ body {
     50% { background-position: 100% 50% }
     100% { background-position: 0% 50% }
 }
+*/
