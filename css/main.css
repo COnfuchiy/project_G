@@ -14,6 +14,10 @@ img, .DOM {
     user-select: none;
 }
 
+html {
+    overflow: hidden;
+}
+
 body {
     margin: 0;
 }
