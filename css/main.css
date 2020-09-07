@@ -504,7 +504,7 @@ body {
     width: 100%;
     max-width: 700px;
     
-    animation: rotation 3s infinite linear;
+    animation: rotation 2.5s infinite linear;
 }
 
 @keyframes rotation {
