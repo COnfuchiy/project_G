@@ -48,6 +48,9 @@ Crafty.defineScene("Menu", function () {
     play_game_audio(Setting.soundboard.music[3].name,-1,Setting.soundboard.music[3].volume);
     $('.logo').detach();
     $('body').append('<div class="menu-screen"><img src="./sprites/menu-comp.png" class="comp"><div class="comp-gif"><img src="./sprites/start.gif" class="start"></div></div>');
+    
+    $('.menu-screen').hide();
+    
     $('.comp-gif')[0].onclick = function () {
         next_scene('menu-screen','Game',Setting.soundboard.music[3].name);
     };
@@ -55,6 +58,8 @@ Crafty.defineScene("Menu", function () {
         <div class="sound_control `+(is_audio?'sound':'sound_muted')+`"></div>
          <div class="Text game_name"><img class="game_logo" src="./sprites/logo.png"></div>
     `);
+    
+    $('.menu-screen').fadeIn('slow');
     
     $('.sound_control')[0].onclick = function() {
         stop_music();
@@ -80,6 +85,7 @@ Crafty.defineScene("Logo",function () {
         Crafty.enterScene('Menu');
     }, 3000);
     $('.logo')[0].onclick = function () {
+        $('.logo').fadeOut();
         next_scene('logo','Menu', 'logo');
         logo_delay.destroy();
     };
