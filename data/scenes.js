@@ -96,8 +96,10 @@ Crafty.defineScene("Sound Check",function () {
     $('body').append
     (`
         <div class="sound-check">
-            <img src="./sprites/cookie.png" class="cookie">
-            <h2 class="cookie_request">Due to f*cking Google audio policies, we have to make you tap on this screen.</h2>
+            <div class="content">
+                <img src="./sprites/cookie.png" class="cookie">
+                <h2 class="cookie_request">Due to f*cking Google audio policies, we have to make you tap on this screen.</h2>
+            </div>
         </div>
     `);
     $('.sound-check')[0].onclick = function () {
@@ -106,7 +108,7 @@ Crafty.defineScene("Sound Check",function () {
 });
 
 Crafty.defineScene("Game", function () {
-    document.body.style.backgroundColor = 'grey';
+    document.body.style.backgroundColor = '#aaa';
     if (!Crafty.audio.isPlaying(Setting.soundboard.music[0].name)){
         play_game_audio(Setting.soundboard.music[0].name,-1,Setting.soundboard.music[0].volume);
     }
