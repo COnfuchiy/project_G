@@ -38,26 +38,24 @@ function spawn_cd_exchanger() {
                     user_score -= Setting.game.cd_cost;
                     user_num_cd++;
                 }
-                set_text(':' + user_num_cd.toString(),'.cd-text');
-                set_text('Score:'+user_score.toString(), '.main-score');
+                set_text(':' + user_num_cd.toString(), '.cd-text');
+                set_text('Score:' + user_score.toString(), '.main-score');
             }
         });
 }
 function cd_exchanger_loop(delay) {
-    if (is_active_spawn) {
-        cd_exchanger = Crafty.e("Delay").delay(function () {
+    cd_exchanger = Crafty.e("Delay").delay(function () {
+        if (is_active_spawn)
             spawn_cd_exchanger();
-            cd_exchanger_loop(set_cd_exchanger_daley());
-        }, delay);
-
-    }
+        cd_exchanger_loop(set_cd_exchanger_daley());
+    }, delay);
 }
 function cd_shoot() {
     if (Crafty.stage.elem.style.background !== "rgb(0, 0, 0)") {//check death screen
         if (user_num_cd) {
             play_game_audio(Setting.soundboard.sound.player[0].name, 1, Setting.soundboard.sound.player[0].volume);
             user_num_cd--;
-            set_text(':' + user_num_cd.toString(),'.cd-text');
+            set_text(':' + user_num_cd.toString(), '.cd-text');
             Crafty.e('2D, Canvas, Collision, cd')
                 .attr({
                     x: player.x + Math.floor(player.h / 2),
@@ -117,12 +115,12 @@ function set_buff_timer(sprite, del_callback) {
                     <table class="baff_table">
                         <tr>
                             <td class="baff-item">
-                                <div class="baff-img" style="background:`+'url(./sprites/items/'+sprite.name+'.png) no-repeat'+`"></div>
+                                <div class="baff-img" style="background:` + 'url(./sprites/items/' + sprite.name + '.png) no-repeat' + `"></div>
                             </td>
                             <td class="timer Text"></td>
                         </tr>
                     </table>`);
-    set_text(':'+(buff_time / 1000).toString(),'.timer');
+    set_text(':' + (buff_time / 1000).toString(), '.timer');
     let timer = Crafty.e("Delay").delay(() => {
         buff_time -= 1000;
         if (buff_time === 0) {
@@ -132,7 +130,7 @@ function set_buff_timer(sprite, del_callback) {
             timer.destroy();
         }
         else
-            set_text(':'+(buff_time / 1000).toString(),'.timer');
+            set_text(':' + (buff_time / 1000).toString(), '.timer');
     }, 1000, -1);
 }
 function play_game_audio(sound_name, delay = 1, volume = 1) {
@@ -152,17 +150,19 @@ function stop_music() {
     }
 }
 //global variable
-let is_audio = parseInt(localStorage.getItem('sound')?localStorage.getItem('sound'):true);
+let is_audio = parseInt(localStorage.getItem('sound') ? localStorage.getItem('sound') : true);
 let is_pause;
 let menu_sound = new Audio('sounds/music/Menu.mp3');
 menu_sound.preload = 'auto';
 menu_sound.oncanplaythrough = function () {
     window.loading_bar.set(100);
     $('.sound-check')[0].onclick = function () {
-        next_scene('sound-check','Logo');
+        next_scene('sound-check', 'Logo');
     };
     $('.cookie_request').empty();
     $('.cookie_request').removeClass('ldBar');
+    $('.cookie_request').removeClass('loader');
+    $('.cookie_request')[0].style = {};
     $('.cookie_request').append('Due to f*cking Google audio policies, we have to make you tap on this screen.');
 };
 let user_score = 0;
@@ -198,13 +198,13 @@ Crafty.bind('Boss Death', function () {
     if (BossFight.mob_stage_delay)
         BossFight.mob_stage_delay.destroy();
     Crafty.audio.stop(BossFight.G_music.name);
-    play_game_audio(Setting.soundboard.music[0].name,-1,Setting.soundboard.music[0].volume);
-    user_score += Math.floor(Setting.game.cd_cost*(100/Setting.boss.cd_value_boss));
-    set_text('Score:'+user_score.toString(), '.main-score');
+    play_game_audio(Setting.soundboard.music[0].name, -1, Setting.soundboard.music[0].volume);
+    user_score += Math.floor(Setting.game.cd_cost * (100 / Setting.boss.cd_value_boss));
+    set_text('Score:' + user_score.toString(), '.main-score');
     is_active_spawn = true;
     current_computer_score = 0;
     total_computer_score += Setting.game.increase_num_comp;
-    set_text('0/'+total_computer_score.toString(), '.comp-score');
+    set_text('0/' + total_computer_score.toString(), '.comp-score');
     $('.boss_hp_pool').detach();
     boss_hit_point = 100;
 });

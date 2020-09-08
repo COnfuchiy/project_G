@@ -66,7 +66,7 @@ let assetsObj = {
             "tile": 61,
             "tileh": 50,
             "map": {
-                "cd": [0,0]
+                "cd_exchanger": [0,0]
             }
         },
         "sprites/effects/magnet.png":{

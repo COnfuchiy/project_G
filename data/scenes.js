@@ -98,10 +98,12 @@ Crafty.defineScene("Sound Check",function () {
     (`
         <div class="sound-check">
             <img src="./sprites/cookie.png" class="cookie">
-            <div class="cookie_request"></div>
+            <div class="cookie_request loader"></div>
         </div>
     `);
-    window.loading_bar = new ldBar(".cookie_request");
+
+    window.loading_bar = new ldBar(".cookie_request",{
+        "preset": "bubble",});
 });
 
 Crafty.defineScene("Game", function () {

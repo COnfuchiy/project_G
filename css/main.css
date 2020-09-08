@@ -547,17 +547,6 @@ body {
     100% { background-position: 0% 50% }
 }
 */
-.cookie_request{
-    width: 50%;
-    height: 100px;
-}
-.ldBar path.mainline {
-    stroke-width: 10;
-    stroke: #09f;
-    stroke-linecap: round;
-}
-.ldBar path.baseline {
-    stroke-width: 14;
-    stroke: #f1f2f3;
-    stroke-linecap: round;
+.loader {
+   zoom: 2;
 }
