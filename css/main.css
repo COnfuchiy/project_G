@@ -364,6 +364,12 @@ body {
     max-height: 600px;
     width: 100%;
     height: 100%;
+<<<<<<< Updated upstream
+=======
+    max-height: 800px;
+    -o-object-fit: contain;
+       object-fit: contain;
+>>>>>>> Stashed changes
 }
 
 @-webkit-keyframes cookie {
@@ -419,8 +425,9 @@ body {
     width: 100%;
     height: 100%;
     
-    -webkit-animation: fadeIn 3s ease;
-    animation: fadeIn 3s ease;
+
+    -webkit-animation: fadeIn .5s ease-in-out;
+            animation: fadeIn .5s ease-in-out;
     -webkit-animation-fill-mode: forwards;
     animation-fill-mode: forwards;
     
@@ -429,20 +436,29 @@ body {
 
 @-webkit-keyframes fadeIn {
     0% {
-        -webkit-transform: scale(.5);
-        transform: scale(.5);
+        -webkit-transform: scale(1.8);
+                transform: scale(1.8);
         opacity: 0;
-    } 40% {
-        -webkit-transform: scale(1.1);
-        transform: scale(1.1);
-        /* opacity: .7; */
     } 100% {
-        -webkit-transform: scale(1);
-        transform: scale(1);
+        -webkit-transform: scale(1.1);
+                transform: scale(1.1);
         opacity: .8;
     }
 }
 
+@keyframes fadeIn {
+    0% {
+        -webkit-transform: scale(1.8);
+                transform: scale(1.8);
+        opacity: 0;
+    } 100% {
+        -webkit-transform: scale(1.1);
+                transform: scale(1.1);
+        opacity: .8;
+    }
+}
+
+/*
 @keyframes fadeIn {
     0% {
         -webkit-transform: scale(.5);
@@ -451,7 +467,6 @@ body {
     } 40% {
         -webkit-transform: scale(1.1);
         transform: scale(1.1);
-        /* opacity: .7; */
     } 100% {
         -webkit-transform: scale(1);
         transform: scale(1);
@@ -459,8 +474,15 @@ body {
     }
 }
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 =======
 .info_table{
+=======
+*/
+
+
+.info_table {
+>>>>>>> Stashed changes
     width: 100%;
     position: absolute;
     top: 780px;
@@ -528,6 +550,57 @@ body {
     -webkit-animation: rainbow 15s ease infinite;
     animation: rainbow 15s ease infinite;
     font-size: 4.2em !important;
+<<<<<<< Updated upstream
+=======
+    */
+}
+
+.game_logo {
+    width: 100%;
+    max-width: 700px;
+    
+    -webkit-animation: rotation 2.5s infinite linear;
+    
+            animation: rotation 2.5s infinite linear;
+}
+
+@-webkit-keyframes rotation {
+    0% {
+        -webkit-transform: rotate(0deg) scale(1);
+                transform: rotate(0deg) scale(1);
+    } 25% {
+        -webkit-transform: rotate(3deg) scale(1.05);
+                transform: rotate(3deg) scale(1.05);
+    } 50% {
+        -webkit-transform: rotate(0deg) scale(1);
+                transform: rotate(0deg) scale(1);
+    } 75% {
+        -webkit-transform: rotate(-3deg) scale(1.05);
+                transform: rotate(-3deg) scale(1.05);
+    } 100% {
+        -webkit-transform: rotate(0deg) scale(1);
+                transform: rotate(0deg) scale(1);
+    }
+}
+
+@keyframes rotation {
+    0% {
+        -webkit-transform: rotate(0deg) scale(1);
+                transform: rotate(0deg) scale(1);
+    } 25% {
+        -webkit-transform: rotate(3deg) scale(1.05);
+                transform: rotate(3deg) scale(1.05);
+    } 50% {
+        -webkit-transform: rotate(0deg) scale(1);
+                transform: rotate(0deg) scale(1);
+    } 75% {
+        -webkit-transform: rotate(-3deg) scale(1.05);
+                transform: rotate(-3deg) scale(1.05);
+    } 100% {
+        -webkit-transform: rotate(0deg) scale(1);
+                transform: rotate(0deg) scale(1);
+    }
+>>>>>>> Stashed changes
 }
 
 @-webkit-keyframes rainbow {
