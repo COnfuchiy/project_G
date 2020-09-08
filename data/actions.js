@@ -155,15 +155,19 @@ let is_pause;
 let menu_sound = new Audio('sounds/music/Menu.mp3');
 menu_sound.preload = 'auto';
 menu_sound.oncanplaythrough = function () {
-    window.loading_bar.set(100);
-    $('.sound-check')[0].onclick = function () {
-        next_scene('sound-check', 'Logo');
-    };
-    $('.cookie_request').empty();
-    $('.cookie_request').removeClass('ldBar');
-    $('.cookie_request').removeClass('loader');
-    $('.cookie_request')[0].style = {};
-    $('.cookie_request').append('Due to f*cking Google audio policies, we have to make you tap on this screen.');
+    if (window.loading_bar){
+        window.loading_bar.set(100);
+        $('.sound-check')[0].onclick = function () {
+            next_scene('sound-check', 'Logo');
+        };
+        $('.cookie_request').empty();
+        $('.cookie_request').removeClass('ldBar');
+        $('.cookie_request').removeClass('loader');
+        $('.cookie_request')[0].style = {};
+        $('.cookie_request').append('Due to f*cking Google audio policies, we have to make you tap on this screen.');
+        window.loading_bar = undefined;
+    }
+
 };
 let user_score = 0;
 let cd_exchanger;
