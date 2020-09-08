@@ -191,7 +191,8 @@ body {
     -webkit-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
     z-index: 10;
-    width: 700px;
+    width: 100%;
+    max-width: 700px;
 }
 
 .comp-gif {
@@ -315,13 +316,18 @@ body {
 
 /* Cookies */
 
+.content {
+    padding: 40px;
+    text-align: center;
+}
+
 .cookie_request {
     font-family: 'ds';
     font-family: 'Raleway', sans-serif;
     font-weight: 400;
     font-size: 2.7em;
     text-align: center;
-    margin: 30px 50px;
+    margin-top: 30px;
 }
 
 .cookie {
