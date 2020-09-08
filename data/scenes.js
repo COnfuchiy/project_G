@@ -98,8 +98,10 @@ Crafty.defineScene("Sound Check",function () {
     $('body').append
     (`
         <div class="sound-check">
-            <img src="./sprites/cookie.png" class="cookie">
-            <div class="cookie_request loader"></div>
+            <div class="content">
+                <img src="./sprites/cookie.png" class="cookie">
+                <div class="cookie_request loader"></div>
+            </div>
         </div>
     `);
 
