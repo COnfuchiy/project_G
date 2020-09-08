@@ -139,12 +139,12 @@ function play_game_audio(sound_name, delay = 1, volume = 1) {
 }
 function stop_music() {
     if (is_audio) {
-        Crafty.audio.pause(Setting.soundboard.music[3].name, -1, Setting.soundboard.music[3].vol);
+        menu_sound.pause();
         is_audio = false;
         localStorage.setItem('sound', 0);
     }
     else {
-        Crafty.audio.unpause(Setting.soundboard.music[3].name);
+        menu_sound.play();
         localStorage.setItem('sound', 1);
         is_audio = true;
     }

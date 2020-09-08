@@ -45,7 +45,8 @@ Crafty.defineScene("Death Screen", function () {
 });
 
 Crafty.defineScene("Menu", function () {
-    menu_sound.play();
+    if (is_audio)
+        menu_sound.play();
     $('.logo').detach();
     $('body').append('<div class="menu-screen"><img src="./sprites/menu-comp.png" class="comp"><div class="comp-gif"><img src="./sprites/start.gif" class="start"></div></div>');
     
