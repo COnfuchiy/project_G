@@ -45,14 +45,15 @@ Crafty.defineScene("Death Screen", function () {
 });
 
 Crafty.defineScene("Menu", function () {
-    play_game_audio(Setting.soundboard.music[3].name,-1,Setting.soundboard.music[3].volume);
+    menu_sound.play();
     $('.logo').detach();
     $('body').append('<div class="menu-screen"><img src="./sprites/menu-comp.png" class="comp"><div class="comp-gif"><img src="./sprites/start.gif" class="start"></div></div>');
     
     $('.menu-screen').hide();
     
     $('.comp-gif')[0].onclick = function () {
-        next_scene('menu-screen','Game',Setting.soundboard.music[3].name);
+        menu_sound.pause();
+        next_scene('menu-screen','Game');
     };
     $('.menu-screen').append(`
         <div class="sound_control `+(is_audio?'sound':'sound_muted')+`"></div>
@@ -97,12 +98,10 @@ Crafty.defineScene("Sound Check",function () {
     (`
         <div class="sound-check">
             <img src="./sprites/cookie.png" class="cookie">
-            <h2 class="cookie_request">Due to f*cking Google audio policies, we have to make you tap on this screen.</h2>
+            <div class="cookie_request"></div>
         </div>
     `);
-    $('.sound-check')[0].onclick = function () {
-        next_scene('sound-check','Logo');
-    };
+    window.loading_bar = new ldBar(".cookie_request");
 });
 
 Crafty.defineScene("Game", function () {

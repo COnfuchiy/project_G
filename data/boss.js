@@ -41,6 +41,7 @@ class BossFight {
             }
 
         }
+        BossFight.boss_head = false;
         BossFight.num_stages--;
         let not_involved_stage = JSON.parse(JSON.stringify(BossFight.boss_stages));
         for (let stage of BossFight.pseudo_random_stages){
@@ -83,6 +84,8 @@ class BossFight {
                     set_text(boss_hit_point.toString()+'/'+total_boss_hit_point.toString(), '.boss_hp_pool');
                     if (boss_hit_point === 0) {
                         this.destroy();
+                        if (boss_plat)
+                            boss_plat.destroy();
                         Crafty.trigger('Boss Death');
                     }
                 }
@@ -203,11 +206,14 @@ class BossFight {
                         set_text(boss_hit_point.toString()+'/'+total_boss_hit_point.toString(), '.boss_hp_pool');
                         if (boss_hit_point === 0) {
                             this.destroy();
+                            if (plat)
+                                plat.destroy();
                             Crafty.trigger('Boss Death');
                         }
                     }
                 });
             boss_head.destroy();
+            BossFight.boss_head = false;
             boss.destroy();
             BossFight.boss_rollback(boss_g,plat);
         };
@@ -320,12 +326,16 @@ class BossFight {
                     boss_hit_point -= BossFight.cd_value_boss;
                     set_text(boss_hit_point.toString()+'/'+total_boss_hit_point.toString(), '.boss_hp_pool');
                     if (boss_hit_point === 0) {
+                        BossFight.boss_head = false;
                         this.destroy();
                         boss.destroy();
+                        if (plat)
+                            plat.destroy();
                         Crafty.trigger('Boss Death');
                     }
 
             });
+        BossFight.boss_head= true;
         fly_way();
         boss.crop(0, BossFight.boss_head_sprite.h+3, BossFight.G.h, BossFight.G.h-BossFight.boss_head_sprite.h);
         boss.y += BossFight.boss_head_sprite.h+3;

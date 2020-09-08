@@ -86,6 +86,7 @@ function clear_death_data() {
     special_mob_counter = 0;
     total_computer_score = Setting.game.start_num_comp;
     is_active_spawn = true;
+    BossFight.boss_head = false;
     boss_hit_point = 100;
     current_increase_score = 1;
     boss_hp_text = undefined;
@@ -153,12 +154,23 @@ function stop_music() {
 //global variable
 let is_audio = parseInt(localStorage.getItem('sound')?localStorage.getItem('sound'):true);
 let is_pause;
+let menu_sound = new Audio('sounds/music/Menu.mp3');
+menu_sound.preload = 'auto';
+menu_sound.oncanplaythrough = function () {
+    window.loading_bar.set(100);
+    $('.sound-check')[0].onclick = function () {
+        next_scene('sound-check','Logo');
+    };
+    $('.cookie_request').empty();
+    $('.cookie_request').removeClass('ldBar');
+    $('.cookie_request').append('Due to f*cking Google audio policies, we have to make you tap on this screen.');
+};
 let user_score = 0;
 let cd_exchanger;
 let current_computer_score = 0;
 let special_mob_counter = 0;
 let total_computer_score = Setting.game.start_num_comp;
-let user_num_cd = 0;
+let user_num_cd = 100;//Setting.game.start_num_cd
 let is_active_spawn = true;
 let total_boss_hit_point = 100;
 let boss_hit_point = 100;

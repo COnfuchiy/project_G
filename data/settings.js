@@ -418,7 +418,8 @@ class Setting {
         z_index_boss:z_index_map.boss,
     };
     static game = {
-        start_num_comp: 10, //start number computer for spawn boss
+        start_num_cd:0,
+        start_num_comp: 1, //start number computer for spawn boss
         increase_num_comp: 5, //after boss dead + num_comp
         gravity_const:2050,
         cd_exchanger_min_delay:8000,
