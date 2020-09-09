@@ -404,7 +404,7 @@ class Setting {
             reels: [
                 [[0, 0], [1, 0], [2, 0], [3, 0], [4, 0], [5, 0]],// to left
             ],
-            w: 221,
+            w: 211,
             h: 221,
             time: 300
         },
@@ -579,7 +579,7 @@ class Setting {
         laser_delay:2000, //delay before shoot
         fly_mob_y_speed:Setting.platforms.current_speed,
         walking_speed: 1,
-        wall_x_level:Math.floor(Setting.screen.width / 2) - Math.floor(Setting.screen.width * 0.25),
+        wall_x_level:Math.floor(Setting.screen.width / 2) - Math.floor(Setting.screen.width * 0.15),
         wall_speed:(Setting.screen.width>1000?Setting.platforms.current_speed:Setting.platforms.current_speed/2),
         destroy_score: 200,
         chance_spawn: 30,

@@ -10,8 +10,10 @@ function next_scene(block, scene, sound) {
 }
 
 Crafty.defineScene("Death Screen", function () {
-    //Crafty.background("#000");
     document.body.style.backgroundColor = '#000';
+    Crafty("Delay").each(function() {
+        this.destroy();
+    });
     Crafty.audio.stop();
     Platforms.stop_loop();
     cd_exchanger.destroy();
@@ -130,5 +132,66 @@ Crafty.defineScene("Game", function () {
 });
 
 $(document).ready(function () {
+    let keyboard_shoot = true;
+    $('.button-up').on('touchstart',function(){player.jump()});
+    let btn_down = $('.button-down');
+    let btn_left = $('.button-left');
+    let btn_right = $('.button-right');
+    btn_down.on('touchstart',function(){
+        let evt = new KeyboardEvent('keydown', {code:'ArrowDown'});
+        document.dispatchEvent(evt);
+        document.go_down = Crafty.e("Delay").delay(()=>{
+            if(player.ground){
+                if(player.y<=430){
+                    let lost_ground =  player.ground;
+                    player.ground.removeComponent('Floor');
+                    Crafty.e("Delay").delay(()=>lost_ground.addComponent('Floor'),500);
+                }
+            }
+        },200,-1);
+    });
+    btn_down.on('touchend', function () {
+        document.go_down.destroy();
+    });
+    btn_left.on('touchstart',function () {
+        let evt = new KeyboardEvent('keydown', {'keyCode':37, 'which':37});
+        document.dispatchEvent(evt);
+    });
+    btn_left.on('touchend', function () {
+        let evt = new KeyboardEvent('keyup', {'keyCode':37, 'which':37});
+        document.dispatchEvent(evt);
+    });
+    btn_right.on('touchstart',function () {
+        let evt = new KeyboardEvent('keydown', {'keyCode':39, 'which':39});
+        document.dispatchEvent(evt);
+    });
+    btn_right.on('touchend',function () {
+        let evt = new KeyboardEvent('keyup', {'keyCode':39, 'which':39});
+        document.dispatchEvent(evt);
+    });
+    $('.button-enter').on('touchend',function () {
+        if (user_num_cd)
+            cd_shoot();
+    });
+    document.addEventListener('keydown', function(event) {
+        if (event.code == 'ArrowDown' || event.code == 'KeyS'){
+            if(player.ground)
+                if(player.y<=430){
+                    let lost_ground =  player.ground;
+                    player.ground.removeComponent('Floor');
+                    Crafty.e("Delay").delay(()=>lost_ground.addComponent('Floor'),500);
+                }
+        }
+        else if (event.code == "Space")
+            if (user_num_cd)
+                if (keyboard_shoot){
+                    cd_shoot();
+                    keyboard_shoot = false;
+                }
+    });
+    document.addEventListener('keyup', function(event) {
+        if (event.code == "Space")
+            keyboard_shoot = true;
+    });
     Crafty.enterScene('Sound Check');
 });

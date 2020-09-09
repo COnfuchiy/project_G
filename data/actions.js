@@ -121,7 +121,7 @@ function set_buff_timer(sprite, del_callback) {
                         </tr>
                     </table>`);
     set_text(':' + (buff_time / 1000).toString(), '.timer');
-    let timer = Crafty.e("Delay").delay(() => {
+    let timer = Crafty.e("Delay, timer").delay(() => {
         buff_time -= 1000;
         if (buff_time === 0) {
             del_callback();

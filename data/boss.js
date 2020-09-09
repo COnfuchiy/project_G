@@ -147,6 +147,10 @@ class BossFight {
                 (new Monster(0, 0, MonsterSpawn.sprite_event_monsters[4], [])).laser_wall();
                 break;
             case BossFight.boss_stages[3]:
+                if (Crafty("timer").get(0)){
+                    Crafty("timer").get(0).destroy();
+                    $('.baff_table').detach();
+                }
                 let shield = ItemDrop.special_items.baff_items[2].sprites;
                 Crafty.e('2D, Canvas, ' + ItemDrop.name_component + ',Collision, ' + shield.name)
                     .attr({

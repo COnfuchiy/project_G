@@ -32,11 +32,21 @@ function create_player() {
                 player.canLand = false;
         })
         .bind('UpdateFrame', function () {
-            if (this.x+this.w<0)
-                this.x = Platforms.level_x-Math.floor(this.w/2);
-            if (this.x-30>Platforms.level_x)
-                this.x = -Math.floor(this.w/2)
+            if (!Crafty(BossFight.name_component).get(0)){
+                if (this.x+this.w<0)
+                    this.x = Platforms.level_x-Math.floor(this.w/2);
+                if (this.x-30>Platforms.level_x)
+                    this.x = -Math.floor(this.w/2)
+            }
+        })
+        .bind('Move', function (e) {
+            if (!is_active_spawn){
+                if (this.x<0){
+                    this.x = 0;
+                    this.vx=0;
+                }
 
+            }
         })
         .bind('LiftedOffGround', function (e) {
             e.removeComponent(Platforms.name_component);

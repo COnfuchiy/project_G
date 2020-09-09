@@ -302,7 +302,7 @@ let assetsObj = {
         },
         "sprites/mobs/proff_G.png":{
             "tile": 211,
-            "tileh": 211,
+            "tileh": 221,
             "map": {
                 "proff_G": [0,0]
             }
