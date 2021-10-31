@@ -174,7 +174,7 @@ let cd_exchanger;
 let current_computer_score = 0;
 let special_mob_counter = 0;
 let total_computer_score = Setting.game.start_num_comp;
-let user_num_cd = 100;//Setting.game.start_num_cd
+let user_num_cd = Setting.game.start_num_cd;
 let is_active_spawn = true;
 let total_boss_hit_point = 100;
 let boss_hit_point = 100;
