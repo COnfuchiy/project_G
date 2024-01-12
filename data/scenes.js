@@ -10,6 +10,7 @@ function next_scene(block, scene, sound) {
 }
 
 Crafty.defineScene("Death Screen", function () {
+    set_buttons_display(false);
     document.body.style.backgroundColor = '#000';
     Crafty("Delay").each(function() {
         this.destroy();
@@ -130,6 +131,7 @@ Crafty.defineScene("Game", function () {
     set_text(':' + user_num_cd.toString(),'.cd-text');
     set_text('Score:'+user_score.toString(), '.main-score');
     set_text('0/'+total_computer_score.toString(), '.comp-score');
+    set_buttons_display(true);
     Platforms.loop();
 });
 

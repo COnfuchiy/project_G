@@ -23,7 +23,6 @@ body {
 }
 
 .buttons {
-    display: none;
     position: absolute;
     z-index: 100;
     bottom: 150px;
@@ -41,6 +40,12 @@ body {
 .buttons img {
     width: 230px;
     height: auto;
+}
+
+@media (min-width: 992px) {
+    .buttons {
+        display: none !important;
+    }
 }
 
 /* Button */
