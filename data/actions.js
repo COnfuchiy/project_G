@@ -149,6 +149,9 @@ function stop_music() {
         is_audio = true;
     }
 }
+function set_buttons_display(state) {
+    state ? $('table .buttons').show() : $('table .buttons').hide();
+}
 //global variable
 let is_audio = parseInt(localStorage.getItem('sound') ? localStorage.getItem('sound') : true);
 let is_pause;
